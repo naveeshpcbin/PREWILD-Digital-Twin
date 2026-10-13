@@ -25,10 +25,10 @@
       "source": {
         "device_id": "esp32_s3_devkitc1_v1_1",
         "device_name": "ESP32-S3-DevKitC-1 v1.1",
-        "connector": "Header J3",
+        "connector": "Header J1",
         "pin_position": 21,
         "pin_signal": "5V",
-        "rel_coord_3d": [1.14, 0.35, 2.42]
+        "rel_coord_3d": [-1.14, 0.35, 2.42]
       },
       "destination": {
         "device_id": "hc_sr501_reference",
@@ -39,8 +39,8 @@
         "rel_coord_3d": [-2.6, 0.45, -1.8]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
-      "verification_source": "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1",
-      "engineering_notes": "Do NOT connect HC-SR501 VCC to 3.3V rail. Diode drop across onboard 7133 regulator causes brownout under 3.3V."
+      "verification_source": "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1 (J1 Pin 21 is 5V)",
+      "engineering_notes": "Connected to verified Header J1 Pin 21 (5V rail). Do NOT connect HC-SR501 VCC to 3.3V rail. Diode drop across onboard 7133 regulator causes brownout under 3.3V."
     },
     {
       "net_id": "NET_GND_PIR",
@@ -69,8 +69,8 @@
         "rel_coord_3d": [-2.6, 0.45, -1.2]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
-      "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout & Kuongshun HC-SR501 Specification",
-      "engineering_notes": "Common ground return path for pyroelectric sensor front-end."
+      "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J3 Pin 22 is GND) & Kuongshun HC-SR501 Specification",
+      "engineering_notes": "Common ground return path for pyroelectric sensor front-end connected to verified Header J3 Pin 22."
     },
     {
       "net_id": "NET_SIG_PIR_OUT",
@@ -159,7 +159,7 @@
         "rel_coord_3d": [-2.6, 0.35, 1.5]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
-      "verification_source": "DevKitC-1 v1.1 Pin Map & LM393 Pinout",
+      "verification_source": "DevKitC-1 v1.1 Pin Map (J3 Pin 1 is GND) & LM393 Pinout",
       "engineering_notes": "Common ground return for vibration comparator circuit."
     },
     {
@@ -236,9 +236,9 @@
         "device_id": "esp32_s3_devkitc1_v1_1",
         "device_name": "ESP32-S3-DevKitC-1 v1.1",
         "connector": "Header J3",
-        "pin_position": 20,
+        "pin_position": 21,
         "pin_signal": "GND",
-        "rel_coord_3d": [1.14, 0.35, 2.18]
+        "rel_coord_3d": [1.14, 0.35, 2.42]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -249,8 +249,8 @@
         "rel_coord_3d": [2.7, 0.35, 1.1]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
-      "verification_source": "INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
-      "engineering_notes": "Tied to common GND to select Left channel mono operation."
+      "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J3 Pin 21 is GND) & INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
+      "engineering_notes": "Connected to verified Header J3 Pin 21 (GND). Tied to common GND to select Left channel mono operation."
     },
     {
       "net_id": "NET_I2S_MIC_SD",
@@ -326,9 +326,9 @@
         "device_id": "esp32_s3_devkitc1_v1_1",
         "device_name": "ESP32-S3-DevKitC-1 v1.1",
         "connector": "Header J1",
-        "pin_position": 17,
+        "pin_position": 15,
         "pin_signal": "GPIO9",
-        "rel_coord_3d": [-1.14, 0.35, 1.4]
+        "rel_coord_3d": [-1.14, 0.35, 0.90]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -339,8 +339,8 @@
         "rel_coord_3d": [2.7, 0.35, -0.4]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
-      "verification_source": "INMP441 Timing Diagram & ESP-IDF I2S Driver (BCLK = 1.024 MHz at 16kHz x 32b x 2ch)",
-      "engineering_notes": "Continuous serial bit clock driven by ESP32-S3 master controller."
+      "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J1 Pin 15 is GPIO9) & INMP441 Timing Diagram & ESP-IDF I2S Driver",
+      "engineering_notes": "Continuous serial bit clock driven by ESP32-S3 master controller from verified Header J1 Pin 15 (GPIO9)."
     }
   ]
 }

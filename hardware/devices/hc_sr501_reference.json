@@ -22,7 +22,7 @@
       "label": "VCC",
       "type": "Power Input",
       "voltage_domain": "5V DC",
-      "target_connection": "ESP32-S3 J3 Pin 21 (5V VBUS rail)",
+      "target_connection": "ESP32-S3 J1 Pin 21 (5V VBUS rail)",
       "notes": "Must be powered by 5V rail due to input drop on onboard 7133 LDO."
     },
     {

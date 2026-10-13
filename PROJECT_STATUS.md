@@ -13,9 +13,18 @@
 * **Wire Net Category Filters:** Instant net isolation via `ALL (11)`, `⚡ POWER (3)`, `⏚ GND (3)`, `📡 GPIO (2)`, `🎙️ I2S (3)`, and wire visibility toggling.
 
 #### B. Verified Reference Hardware (ESP32-S3-DevKitC-1 v1.1)
-* **Revision v1.1 Compliance:** Onboard WS2812 RGB LED hardwired to **GPIO38** (v1.0 was GPIO48). GPIO48 is an accessible general I/O header pin on J3 Pin 17.
+* **Revision v1.1 Compliance:** Onboard WS2812 RGB LED hardwired to **GPIO38** (v1.0 was GPIO48). On v1.1, GPIO48 is on Header J3 Pin 16, and GPIO47 is on Header J3 Pin 17.
+* **Official Header Verification:**
+  - **Header J1 Pin 21** = Verified 5V power supply rail (powers HC-SR501 PIR VCC).
+  - **Header J1 Pin 22** = Verified Ground.
+  - **Header J1 Pin 15** = Verified GPIO9 (INMP441 I2S SCK / Bit Clock).
+  - **Header J3 Pin 20** = Verified GPIO19 / Native USB_D-.
+  - **Header J3 Pin 21** = Verified Ground (INMP441 GND & L/R channel select).
+  - **Header J3 Pin 22** = Verified Ground (HC-SR501 PIR GND).
+  - **Header J3 Pin 16** = Verified GPIO48.
+  - **Header J3 Pin 17** = Verified GPIO47.
 * **Octal SPI Memory Bus:** High-speed SPI pins **GPIO35, GPIO36, and GPIO37** are strictly isolated as `RESERVED`.
-* **Voltage Domain Verification:** HC-SR501 PIR powered from 5V (Header J3 Pin 21); SW-420 and INMP441 powered from 3.3V (Header J1 Pins 1 & 2); 24-bit I2S bus configured for mono Left channel audio stream.
+* **Voltage Domain Verification:** HC-SR501 PIR powered from 5V (Header J1 Pin 21); SW-420 and INMP441 powered from 3.3V (Header J1 Pins 1 & 2); 24-bit I2S bus configured for mono Left channel audio stream.
 
 #### C. Realistic 3D Megafauna & Human Community
 * **Articulated Anatomical Elephant (`ELEPHANT_01`):** Articulated 5-segment trunk that dynamically curls and sways, flapping ears with rhythmic sinusoidal sway, curved ivory tusks, tail, and 4 multi-segment legs executing a contralateral diagonal quadruped gait synchronized to simulation speed and heading.
@@ -33,14 +42,14 @@
 
 ## 2. Automated Test Suite Results
 
-* **Total Tests Executed:** **61 passed out of 61 tests (100% pass rate)**
-* **Execution Duration:** **0.87 seconds**
+* **Total Tests Executed:** **62 passed out of 62 tests (100% pass rate)**
+* **Execution Duration:** **3.86 seconds**
 * **Test Modules:**
   - `tests/test_config.py` (13 tests)
   - `tests/test_dispatch.py` (4 tests)
   - `tests/test_fusion.py` (8 tests)
   - `tests/test_geometry.py` (14 tests)
-  - `tests/test_hardware.py` (4 tests)
+  - `tests/test_hardware.py` (5 tests)
   - `tests/test_leakage.py` (2 tests)
   - `tests/test_scenarios_e2e.py` (5 tests)
   - `tests/test_sensor_models.py` (7 tests)

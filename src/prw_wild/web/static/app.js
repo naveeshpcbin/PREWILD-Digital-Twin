@@ -3183,10 +3183,10 @@
         source: {
           device_id: "esp32_s3_devkitc1_v1_1",
           device_name: "ESP32-S3-DevKitC-1 v1.1",
-          connector: "Header J3",
+          connector: "Header J1",
           pin_position: 21,
           pin_signal: "5V",
-          rel_coord_3d: [1.14, 0.35, 2.42]
+          rel_coord_3d: [-1.14, 0.35, 2.42]
         },
         destination: {
           device_id: "hc_sr501_reference",
@@ -3197,8 +3197,8 @@
           rel_coord_3d: [-2.8, 0.35, -1.8]
         },
         verification_status: "VERIFIED_OFFICIAL_DOCUMENTATION",
-        verification_source: "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1",
-        engineering_notes: "Do NOT connect HC-SR501 VCC to 3.3V rail. Diode drop across onboard 7133 regulator causes brownout under 3.3V."
+        verification_source: "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1 (J1 Pin 21 is 5V)",
+        engineering_notes: "Connected to verified Header J1 Pin 21 (5V rail). Do NOT connect HC-SR501 VCC to 3.3V rail. Diode drop across onboard 7133 regulator causes brownout under 3.3V."
       },
       {
         net_id: "NET_GND_PIR",
@@ -3394,9 +3394,9 @@
           device_id: "esp32_s3_devkitc1_v1_1",
           device_name: "ESP32-S3-DevKitC-1 v1.1",
           connector: "Header J3",
-          pin_position: 20,
+          pin_position: 21,
           pin_signal: "GND",
-          rel_coord_3d: [1.14, 0.35, 2.18]
+          rel_coord_3d: [1.14, 0.35, 2.42]
         },
         destination: {
           device_id: "inmp441_breakout_reference",
@@ -3407,8 +3407,8 @@
           rel_coord_3d: [2.7, 0.35, 1.1]
         },
         verification_status: "VERIFIED_OFFICIAL_DOCUMENTATION",
-        verification_source: "INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
-        engineering_notes: "Tied to common GND to select Left channel mono operation."
+        verification_source: "Espressif DevKitC-1 v1.1 Pin Layout (J3 Pin 21 is GND) & INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
+        engineering_notes: "Connected to verified Header J3 Pin 21 (GND). Tied to common GND to select Left channel mono operation."
       },
       {
         net_id: "NET_I2S_MIC_SD",
@@ -3484,9 +3484,9 @@
           device_id: "esp32_s3_devkitc1_v1_1",
           device_name: "ESP32-S3-DevKitC-1 v1.1",
           connector: "Header J1",
-          pin_position: 17,
+          pin_position: 15,
           pin_signal: "GPIO9",
-          rel_coord_3d: [-1.14, 0.35, 1.4]
+          rel_coord_3d: [-1.14, 0.35, 0.90]
         },
         destination: {
           device_id: "inmp441_breakout_reference",
@@ -3497,8 +3497,8 @@
           rel_coord_3d: [2.7, 0.35, -0.4]
         },
         verification_status: "VERIFIED_OFFICIAL_DOCUMENTATION",
-        verification_source: "INMP441 Timing Diagram & ESP-IDF I2S Driver (BCLK = 1.024 MHz at 16kHz x 32b x 2ch)",
-        engineering_notes: "Continuous serial bit clock driven by ESP32-S3 master controller."
+        verification_source: "Espressif DevKitC-1 v1.1 Pin Layout (J1 Pin 15 is GPIO9) & INMP441 Timing Diagram & ESP-IDF I2S Driver",
+        engineering_notes: "Continuous serial bit clock driven by ESP32-S3 master controller from verified Header J1 Pin 15 (GPIO9)."
       }
     ]
   };
@@ -3520,52 +3520,52 @@
     },
     headers: {
       J1: [
-        { pos: 1, signal: '3V3', type: 'Power', desc: '3.3V Power Output', volt_v: 3.3, notes: 'Supplies SW-420 and INMP441', verified: true, assigned_to: 'SW-420 VCC' },
-        { pos: 2, signal: '3V3', type: 'Power', desc: '3.3V Power Output', volt_v: 3.3, notes: 'Auxiliary 3.3V rail', verified: true, assigned_to: 'INMP441 VDD' },
-        { pos: 3, signal: 'RST', type: 'Input', desc: 'CHIP_PU (Reset)', volt_v: 3.3, notes: 'Active low reset with internal pull-up', verified: true },
-        { pos: 4, signal: 'GPIO4', type: 'I/O', desc: 'ADC1_CH3, TOUCH4', volt_v: 3.3, assigned_to: 'HC-SR501 PIR Output', notes: 'Configured as digital input for PIR motion pulse', verified: true },
-        { pos: 5, signal: 'GPIO5', type: 'I/O', desc: 'ADC1_CH4, TOUCH5', volt_v: 3.3, assigned_to: 'SW-420 Vibration DO', notes: 'Configured as digital input for seismic shock trigger', verified: true },
-        { pos: 6, signal: 'GPIO6', type: 'I/O', desc: 'ADC1_CH5, TOUCH6', volt_v: 3.3, notes: 'Available GPIO', verified: true },
-        { pos: 7, signal: 'GPIO7', type: 'I/O', desc: 'ADC1_CH6, TOUCH7', volt_v: 3.3, assigned_to: 'INMP441 SD (Data)', notes: 'Configured as I2S0_DATA_IN for acoustic rumbles', verified: true },
-        { pos: 8, signal: 'GPIO15', type: 'I/O', desc: 'ADC2_CH4, TOUCH14', volt_v: 3.3, notes: 'Available GPIO', verified: true },
-        { pos: 9, signal: 'GPIO16', type: 'I/O', desc: 'ADC2_CH5', volt_v: 3.3, notes: 'Available GPIO', verified: true },
-        { pos: 10, signal: 'GPIO17', type: 'I/O', desc: 'ADC2_CH6', volt_v: 3.3, notes: 'Available GPIO', verified: true },
-        { pos: 11, signal: 'GPIO18', type: 'I/O', desc: 'ADC2_CH7, USB JTAG D-', volt_v: 3.3, notes: 'USB JTAG or GPIO', verified: true },
-        { pos: 12, signal: 'GPIO8', type: 'I/O', desc: 'ADC1_CH7', volt_v: 3.3, assigned_to: 'INMP441 WS (Word Select)', notes: 'Configured as I2S0_WS / LRCLK master clock', verified: true },
-        { pos: 13, signal: 'GPIO19', type: 'I/O', desc: 'USB D- (Native USB)', volt_v: 3.3, notes: 'Wired to native USB port D-', verified: true },
-        { pos: 14, signal: 'GPIO20', type: 'I/O', desc: 'USB D+ (Native USB)', volt_v: 3.3, notes: 'Wired to native USB port D+', verified: true },
-        { pos: 15, signal: 'GPIO3', type: 'I/O', desc: 'ADC1_CH2, TOUCH3', volt_v: 3.3, notes: 'Available GPIO', verified: true },
-        { pos: 16, signal: 'GPIO46', type: 'Input', desc: 'BOOT Strapping Pin', volt_v: 3.3, notes: 'Input-only pin, pull-down at boot determines ROM logging', verified: true },
-        { pos: 17, signal: 'GPIO9', type: 'I/O', desc: 'ADC1_CH8, FSPIHD', volt_v: 3.3, assigned_to: 'INMP441 SCK (Bit Clock)', notes: 'Configured as I2S0_BCLK master clock', verified: true },
-        { pos: 18, signal: 'GPIO10', type: 'I/O', desc: 'ADC1_CH9, FSPICS0', volt_v: 3.3, notes: 'FSPI CS / General GPIO', verified: true },
-        { pos: 19, signal: 'GPIO11', type: 'I/O', desc: 'ADC2_CH0, FSPID', volt_v: 3.3, notes: 'FSPI MOSI / General GPIO', verified: true },
-        { pos: 20, signal: 'GPIO12', type: 'I/O', desc: 'ADC2_CH1, FSPICLK', volt_v: 3.3, notes: 'FSPI CLK / General GPIO', verified: true },
-        { pos: 21, signal: 'GPIO13', type: 'I/O', desc: 'ADC2_CH2, FSPIQ', volt_v: 3.3, notes: 'FSPI MISO / General GPIO', verified: true },
-        { pos: 22, signal: 'GPIO14', type: 'I/O', desc: 'ADC2_CH3, FSPIWP', volt_v: 3.3, notes: 'FSPI WP / General GPIO', verified: true }
+        { pos: 1, signal: '3V3', type: 'Power', desc: '3.3 V power supply', volt_v: 3.3, notes: 'Supplies SW-420 VCC', verified: true, assigned_to: 'SW-420 VCC' },
+        { pos: 2, signal: '3V3', type: 'Power', desc: '3.3 V power supply', volt_v: 3.3, notes: 'Supplies INMP441 VDD', verified: true, assigned_to: 'INMP441 VDD' },
+        { pos: 3, signal: 'RST', type: 'Input', desc: 'EN / CHIP_PU (Reset)', volt_v: 3.3, notes: 'Active low reset with internal pull-up', verified: true },
+        { pos: 4, signal: 'GPIO4', type: 'I/O', desc: 'RTC_GPIO4, GPIO4, TOUCH4, ADC1_CH3', volt_v: 3.3, assigned_to: 'HC-SR501 PIR Output', notes: 'Configured as digital input for PIR motion pulse', verified: true },
+        { pos: 5, signal: 'GPIO5', type: 'I/O', desc: 'RTC_GPIO5, GPIO5, TOUCH5, ADC1_CH4', volt_v: 3.3, assigned_to: 'SW-420 Vibration DO', notes: 'Configured as digital input for seismic shock trigger', verified: true },
+        { pos: 6, signal: 'GPIO6', type: 'I/O', desc: 'RTC_GPIO6, GPIO6, TOUCH6, ADC1_CH5', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 7, signal: 'GPIO7', type: 'I/O', desc: 'RTC_GPIO7, GPIO7, TOUCH7, ADC1_CH6', volt_v: 3.3, assigned_to: 'INMP441 SD (Data)', notes: 'Configured as I2S0_DATA_IN for acoustic rumbles', verified: true },
+        { pos: 8, signal: 'GPIO15', type: 'I/O', desc: 'RTC_GPIO15, GPIO15, U0RTS, ADC2_CH4, XTAL_32K_P', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 9, signal: 'GPIO16', type: 'I/O', desc: 'RTC_GPIO16, GPIO16, U0CTS, ADC2_CH5, XTAL_32K_N', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 10, signal: 'GPIO17', type: 'I/O', desc: 'RTC_GPIO17, GPIO17, U1TXD, ADC2_CH6', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 11, signal: 'GPIO18', type: 'I/O', desc: 'RTC_GPIO18, GPIO18, U1RXD, ADC2_CH7, CLK_OUT3', volt_v: 3.3, notes: 'Available GPIO / USB JTAG', verified: true },
+        { pos: 12, signal: 'GPIO8', type: 'I/O', desc: 'RTC_GPIO8, GPIO8, TOUCH8, ADC1_CH7, SUBSPICS1', volt_v: 3.3, assigned_to: 'INMP441 WS (Word Select)', notes: 'Configured as I2S0_WS / LRCLK master clock', verified: true },
+        { pos: 13, signal: 'GPIO3', type: 'I/O', desc: 'RTC_GPIO3, GPIO3, TOUCH3, ADC1_CH2', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 14, signal: 'GPIO46', type: 'Input', desc: 'GPIO46', volt_v: 3.3, notes: 'Input-only pin, ROM boot log strapping pin', verified: true },
+        { pos: 15, signal: 'GPIO9', type: 'I/O', desc: 'RTC_GPIO9, GPIO9, TOUCH9, ADC1_CH8, FSPIHD, SUBSPIHD', volt_v: 3.3, assigned_to: 'INMP441 SCK (Bit Clock)', notes: 'Configured as I2S0_BCLK master clock', verified: true },
+        { pos: 16, signal: 'GPIO10', type: 'I/O', desc: 'RTC_GPIO10, GPIO10, TOUCH10, ADC1_CH9, FSPICS0, FSPIIO4, SUBSPICS0', volt_v: 3.3, notes: 'FSPI CS / Available GPIO', verified: true },
+        { pos: 17, signal: 'GPIO11', type: 'I/O', desc: 'RTC_GPIO11, GPIO11, TOUCH11, ADC2_CH0, FSPID, FSPIIO5, SUBSPID', volt_v: 3.3, notes: 'FSPI MOSI / Available GPIO', verified: true },
+        { pos: 18, signal: 'GPIO12', type: 'I/O', desc: 'RTC_GPIO12, GPIO12, TOUCH12, ADC2_CH1, FSPICLK, FSPIIO6, SUBSPICLK', volt_v: 3.3, notes: 'FSPI CLK / Available GPIO', verified: true },
+        { pos: 19, signal: 'GPIO13', type: 'I/O', desc: 'RTC_GPIO13, GPIO13, TOUCH13, ADC2_CH2, FSPIQ, FSPIIO7, SUBSPIQ', volt_v: 3.3, notes: 'FSPI MISO / Available GPIO', verified: true },
+        { pos: 20, signal: 'GPIO14', type: 'I/O', desc: 'RTC_GPIO14, GPIO14, TOUCH14, ADC2_CH3, FSPIWP, FSPIDQS, SUBSPIWP', volt_v: 3.3, notes: 'FSPI WP / Available GPIO', verified: true },
+        { pos: 21, signal: '5V', type: 'Power', desc: '5 V power supply', volt_v: 5.0, assigned_to: 'HC-SR501 PIR VCC', notes: 'Directly connected to USB 5V rail. Supplies HC-SR501 PIR sensor module', verified: true },
+        { pos: 22, signal: 'GND', type: 'Power', desc: 'Ground', volt_v: 0.0, notes: 'Common ground rail', verified: true }
       ],
       J3: [
-        { pos: 1, signal: 'GND', type: 'Power', desc: 'Ground (Common)', volt_v: 0.0, notes: 'Common system ground rail', verified: true, assigned_to: 'SW-420 GND' },
-        { pos: 2, signal: 'GPIO43', type: 'I/O', desc: 'U0TXD (Default UART TX)', volt_v: 3.3, notes: 'Wired to CP2102N UART RX', verified: true },
-        { pos: 3, signal: 'GPIO44', type: 'I/O', desc: 'U0RXD (Default UART RX)', volt_v: 3.3, notes: 'Wired to CP2102N UART TX', verified: true },
-        { pos: 4, signal: 'GPIO1', type: 'I/O', desc: 'ADC1_CH0, TOUCH1', volt_v: 3.3, notes: 'General purpose ADC/GPIO', verified: true },
-        { pos: 5, signal: 'GPIO2', type: 'I/O', desc: 'ADC1_CH1, TOUCH2', volt_v: 3.3, notes: 'General purpose ADC/GPIO', verified: true },
-        { pos: 6, signal: 'GPIO42', type: 'I/O', desc: 'MTMS (JTAG)', volt_v: 3.3, notes: 'JTAG test mode select', verified: true },
-        { pos: 7, signal: 'GPIO41', type: 'I/O', desc: 'MTDI (JTAG)', volt_v: 3.3, notes: 'JTAG data in', verified: true },
-        { pos: 8, signal: 'GPIO40', type: 'I/O', desc: 'MTDO (JTAG)', volt_v: 3.3, notes: 'JTAG data out', verified: true },
-        { pos: 9, signal: 'GPIO39', type: 'I/O', desc: 'MTCK (JTAG)', volt_v: 3.3, notes: 'JTAG clock', verified: true },
-        { pos: 10, signal: 'GPIO38', type: 'I/O', desc: 'Onboard RGB LED Data', volt_v: 3.3, assigned_to: 'Onboard WS2812 RGB LED', notes: 'Hardwired to WS2812 RGB LED on v1.1. (On v1.0 this was GPIO48)', verified: true },
-        { pos: 11, signal: 'GPIO37', type: 'Reserved', desc: 'SPIDQS (Octal SPI Internal)', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
-        { pos: 12, signal: 'GPIO36', type: 'Reserved', desc: 'SPIIO7 (Octal SPI Internal)', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
-        { pos: 13, signal: 'GPIO35', type: 'Reserved', desc: 'SPIIO6 (Octal SPI Internal)', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
-        { pos: 14, signal: 'GPIO0', type: 'I/O', desc: 'BOOT Button / Strapping Pin', volt_v: 3.3, notes: 'Connected to BOOT tactile switch. Low = download bootloader', verified: true },
-        { pos: 15, signal: 'GPIO45', type: 'I/O', desc: 'Strapping Pin (VDD_SPI)', volt_v: 3.3, notes: 'Strapping pin for VDD_SPI flash voltage selector', verified: true },
-        { pos: 16, signal: 'GPIO47', type: 'I/O', desc: 'SPICLK_P / General GPIO', volt_v: 3.3, notes: 'Available general purpose GPIO', verified: true },
-        { pos: 17, signal: 'GPIO48', type: 'I/O', desc: 'SPICLK_N / General GPIO', volt_v: 3.3, notes: 'Available external GPIO on v1.1 (used for RGB LED on v1.0)', verified: true },
-        { pos: 18, signal: 'GPIO21', type: 'I/O', desc: 'RTC_GPIO21', volt_v: 3.3, notes: 'Available general purpose / RTC GPIO', verified: true },
-        { pos: 19, signal: 'NC / GND', type: 'Power', desc: 'Not Connected / Ground', volt_v: 0.0, notes: 'Reserved or secondary ground', verified: true },
-        { pos: 20, signal: 'GND', type: 'Power', desc: 'Ground (Common)', volt_v: 0.0, notes: 'Common ground rail for sensors', verified: true, assigned_to: 'INMP441 GND & L/R' },
-        { pos: 21, signal: '5V', type: 'Power', desc: '5V Input / USB VBUS Power', volt_v: 5.0, assigned_to: 'HC-SR501 PIR VCC', notes: 'Directly connected to USB 5V rail. Supplies HC-SR501 PIR sensor module', verified: true },
-        { pos: 22, signal: 'GND', type: 'Power', desc: 'Ground (Common)', volt_v: 0.0, notes: 'Common ground rail', verified: true, assigned_to: 'HC-SR501 PIR GND' }
+        { pos: 1, signal: 'GND', type: 'Power', desc: 'Ground', volt_v: 0.0, notes: 'Common system ground rail', verified: true, assigned_to: 'SW-420 GND' },
+        { pos: 2, signal: 'GPIO43', type: 'I/O', desc: 'U0TXD, GPIO43, CLK_OUT1', volt_v: 3.3, notes: 'Default UART TX (wired to CP2102N UART RX)', verified: true },
+        { pos: 3, signal: 'GPIO44', type: 'I/O', desc: 'U0RXD, GPIO44, CLK_OUT2', volt_v: 3.3, notes: 'Default UART RX (wired to CP2102N UART TX)', verified: true },
+        { pos: 4, signal: 'GPIO1', type: 'I/O', desc: 'RTC_GPIO1, GPIO1, TOUCH1, ADC1_CH0', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 5, signal: 'GPIO2', type: 'I/O', desc: 'RTC_GPIO2, GPIO2, TOUCH2, ADC1_CH1', volt_v: 3.3, notes: 'Available GPIO', verified: true },
+        { pos: 6, signal: 'GPIO42', type: 'I/O', desc: 'MTMS, GPIO42', volt_v: 3.3, notes: 'JTAG test mode select', verified: true },
+        { pos: 7, signal: 'GPIO41', type: 'I/O', desc: 'MTDI, GPIO41, CLK_OUT1', volt_v: 3.3, notes: 'JTAG data in', verified: true },
+        { pos: 8, signal: 'GPIO40', type: 'I/O', desc: 'MTDO, GPIO40, CLK_OUT2', volt_v: 3.3, notes: 'JTAG data out', verified: true },
+        { pos: 9, signal: 'GPIO39', type: 'I/O', desc: 'MTCK, GPIO39, CLK_OUT3, SUBSPICS1', volt_v: 3.3, notes: 'JTAG clock', verified: true },
+        { pos: 10, signal: 'GPIO38', type: 'I/O', desc: 'GPIO38, FSPIWP, SUBSPIWP, RGB LED', volt_v: 3.3, assigned_to: 'Onboard WS2812 RGB LED', notes: 'Hardwired to WS2812 RGB LED on v1.1. (On v1.0 this was GPIO48)', verified: true },
+        { pos: 11, signal: 'GPIO37', type: 'Reserved', desc: 'SPIDQS, GPIO37, FSPIQ, SUBSPIQ', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
+        { pos: 12, signal: 'GPIO36', type: 'Reserved', desc: 'SPIIO7, GPIO36, FSPICLK, SUBSPICLK', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
+        { pos: 13, signal: 'GPIO35', type: 'Reserved', desc: 'SPIIO6, GPIO35, FSPID, SUBSPID', volt_v: 3.3, notes: 'RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.', verified: true },
+        { pos: 14, signal: 'GPIO0', type: 'I/O', desc: 'RTC_GPIO0, GPIO0', volt_v: 3.3, notes: 'Connected to BOOT tactile switch. Low = download bootloader', verified: true },
+        { pos: 15, signal: 'GPIO45', type: 'I/O', desc: 'GPIO45', volt_v: 3.3, notes: 'Strapping pin for VDD_SPI flash voltage selector', verified: true },
+        { pos: 16, signal: 'GPIO48', type: 'I/O', desc: 'GPIO48, SPICLK_N, SUBSPICLK_N_DIFF', volt_v: 3.3, notes: 'Available external GPIO on v1.1 (used for RGB LED on v1.0)', verified: true },
+        { pos: 17, signal: 'GPIO47', type: 'I/O', desc: 'GPIO47, SPICLK_P, SUBSPICLK_P_DIFF', volt_v: 3.3, notes: 'Available general purpose GPIO', verified: true },
+        { pos: 18, signal: 'GPIO21', type: 'I/O', desc: 'RTC_GPIO21, GPIO21', volt_v: 3.3, notes: 'Available general purpose / RTC GPIO', verified: true },
+        { pos: 19, signal: 'GPIO20', type: 'I/O', desc: 'RTC_GPIO20, GPIO20, U1CTS, ADC2_CH9, CLK_OUT1, USB_D+', volt_v: 3.3, notes: 'Wired to native USB OTG port D+', verified: true },
+        { pos: 20, signal: 'GPIO19', type: 'I/O', desc: 'RTC_GPIO19, GPIO19, U1RTS, ADC2_CH8, CLK_OUT2, USB_D-', volt_v: 3.3, notes: 'Wired to native USB OTG port D-', verified: true },
+        { pos: 21, signal: 'GND', type: 'Power', desc: 'Ground', volt_v: 0.0, assigned_to: 'INMP441 GND & L/R', notes: 'Common ground rail for sensors', verified: true },
+        { pos: 22, signal: 'GND', type: 'Power', desc: 'Ground', volt_v: 0.0, assigned_to: 'HC-SR501 PIR GND', notes: 'Common ground rail', verified: true }
       ]
     }
   };

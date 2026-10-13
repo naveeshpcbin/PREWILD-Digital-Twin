@@ -12,7 +12,8 @@ This register documents all technical, mathematical, electrical, architectural, 
 | **FIND-02** | **HIGH** | Hardware / 3D Assembly | Coordinate divergence between wiring manifest and 3D pin meshes | **`REPAIRED`** | `tests/test_hardware.py` & `hardware/wiring_manifest.json` |
 | **FIND-03** | **HIGH** | UI / Runtime Execution | Blocking browser `alert()` modal calls halting automated runners | **`REPAIRED`** | `src/prw_wild/web/static/app.js` (`showToastNotification`) |
 | **FIND-04** | **MEDIUM** | UI / Robustness | `TypeError: Cannot read properties of undefined (reading 'toFixed')` | **`REPAIRED`** | `src/prw_wild/web/static/app.js` (strict type guards) |
-| **FIND-05** | **LOW** | Documentation | Test suite count documentation discrepancy (50 vs 61 tests) | **`REPAIRED`** | `PROJECT_STATUS.md` & `VERIFICATION_RESULTS.md` |
+| **FIND-05** | **LOW** | Documentation | Test suite count documentation discrepancy (50 vs 62 tests) | **`REPAIRED`** | `PROJECT_STATUS.md` & `VERIFICATION_RESULTS.md` |
+| **FIND-06** | **CRITICAL** | Hardware Mapping | ESP32-S3-DevKitC-1 v1.1 header assignment errors vs official Espressif guide | **`REPAIRED`** | `tests/test_hardware.py`, `wiring_manifest.json`, `app.js` |
 
 ---
 
@@ -79,7 +80,27 @@ This register documents all technical, mathematical, electrical, architectural, 
 ### Finding FIND-05 (LOW): Test Suite Count Documentation Desynchronization
 * **Module Affected:** `PROJECT_STATUS.md`
 * **Defect Description:**
-  `PROJECT_STATUS.md` referenced 50 passing tests from an earlier milestone, whereas the test suite has grown to 61 passing automated tests.
+  `PROJECT_STATUS.md` referenced 50 passing tests from an earlier milestone, whereas the test suite has grown to 62 passing automated tests.
 * **Self-Repair Performed:**
-  - Updated `PROJECT_STATUS.md` and created `VERIFICATION_RESULTS.md` with complete logs of all 61 tests.
+  - Updated `PROJECT_STATUS.md` and created `VERIFICATION_RESULTS.md` with complete logs of all 62 tests.
 * **Retest Result:** **`PASS`**.
+
+---
+
+### Finding FIND-06 (CRITICAL): ESP32-S3-DevKitC-1 v1.1 Header Assignment Errors
+* **Module Affected:** `hardware/wiring_manifest.json`, `hardware/devices/esp32_s3_devkitc1_v1_1.json`, `src/prw_wild/web/static/app.js`, `HARDWARE_REFERENCES.md`, `WIRING_VALIDATION.md`
+* **Defect Description:**
+  Cross-verification against the official Espressif Systems DevKitC-1 v1.1 User Guide (`https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html`) identified four critical pin assignment defects in earlier manifests:
+  1. **HC-SR501 VCC was assigned to Header J3 Pin 21:** On official DevKitC-1 v1.1, Header J3 Pin 21 is **GND**, not 5V. Supplying 0V to PIR VCC renders the sensor unpowered. The verified 5V supply is on **Header J1 Pin 21**.
+  2. **INMP441 L/R was connected to Header J3 Pin 20:** On official DevKitC-1 v1.1, Header J3 Pin 20 is **GPIO19 (USB_D-)**, not Ground. Tying channel select to USB D- disrupts native USB communication and floats the channel select logic. The verified Ground pin is **Header J3 Pin 21 (GND)**.
+  3. **GPIO48 / GPIO47 Inversion:** Earlier tables listed J3 Pin 16 as GPIO47 and J3 Pin 17 as GPIO48. The official schematic specifies **J3 Pin 16 = GPIO48** and **J3 Pin 17 = GPIO47**.
+  4. **INMP441 SCK (GPIO9) Pin Position:** Earlier manifests mapped GPIO9 to Header J1 Pin 17. On official DevKitC-1 v1.1, Header J1 Pin 17 is **GPIO11**, while **Header J1 Pin 15 is GPIO9**.
+* **Self-Repair Performed:**
+  - Updated centralized `hardware/wiring_manifest.json` and static mirror:
+    - `NET_5V_PIR_PWR`: Source Header J1 Pin 21 (5V), 3D coords `[-1.14, 0.35, 2.42]`.
+    - `NET_GND_INMP441`: Source Header J3 Pin 21 (GND), 3D coords `[1.14, 0.35, 2.42]`.
+    - `NET_I2S_MIC_SCK`: Source Header J1 Pin 15 (GPIO9), 3D coords `[-1.14, 0.35, 0.90]`.
+  - Replaced complete 22-pin arrays for Header J1 and Header J3 in `hardware/devices/esp32_s3_devkitc1_v1_1.json`, its web static mirror, and `src/prw_wild/web/static/app.js`.
+  - Updated all hardware documentation files (`HARDWARE_REFERENCES.md`, `WIRING_VALIDATION.md`).
+  - Added strict automated regression tests in `tests/test_hardware.py` asserting every official pin signal, type, and coordinate.
+* **Retest Result:** **`PASS`** (All 62 tests passing).

@@ -22,7 +22,7 @@
       "label": "SCK",
       "type": "I2S Bit Clock (BCLK Input)",
       "voltage_domain": "3.3V CMOS",
-      "target_connection": "ESP32-S3 J1 Pin 17 (GPIO9)",
+      "target_connection": "ESP32-S3 J1 Pin 15 (GPIO9)",
       "notes": "Serial clock supplied by ESP32-S3 I2S master peripheral (1.024 MHz at 16kHz sampling)."
     },
     {
@@ -38,7 +38,7 @@
       "label": "L/R",
       "type": "Channel Select Input",
       "voltage_domain": "3.3V CMOS",
-      "target_connection": "ESP32-S3 J3 Pin 20 (Common GND)",
+      "target_connection": "ESP32-S3 J3 Pin 21 (Common GND)",
       "notes": "Pulled LOW to ground selects Left audio channel for mono recording mode."
     },
     {
@@ -62,7 +62,7 @@
       "label": "GND",
       "type": "Ground Reference",
       "voltage_domain": "0.0V",
-      "target_connection": "ESP32-S3 J3 Pin 20 (Common GND)",
+      "target_connection": "ESP32-S3 J3 Pin 21 (Common GND)",
       "notes": "Common audio ground return."
     }
   ],
