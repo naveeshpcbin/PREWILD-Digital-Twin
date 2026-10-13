@@ -36,7 +36,7 @@
         "connector": "3-Pin Header",
         "pin_position": 1,
         "pin_signal": "VCC",
-        "rel_coord_3d": [-3.2, 0.45, -1.8]
+        "rel_coord_3d": [-2.6, 0.45, -1.8]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1",
@@ -66,7 +66,7 @@
         "connector": "3-Pin Header",
         "pin_position": 3,
         "pin_signal": "GND",
-        "rel_coord_3d": [-3.2, 0.45, -1.2]
+        "rel_coord_3d": [-2.6, 0.45, -1.2]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout & Kuongshun HC-SR501 Specification",
@@ -88,7 +88,7 @@
         "connector": "3-Pin Header",
         "pin_position": 2,
         "pin_signal": "OUT",
-        "rel_coord_3d": [-3.2, 0.45, -1.5]
+        "rel_coord_3d": [-2.6, 0.45, -1.5]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -126,7 +126,7 @@
         "connector": "3-Pin Header",
         "pin_position": 1,
         "pin_signal": "VCC",
-        "rel_coord_3d": [-3.0, 0.35, 1.2]
+        "rel_coord_3d": [-2.6, 0.35, 1.2]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "LM393 Dual Comparator Datasheet & Waveshare Vibration Sensor Wiki",
@@ -156,7 +156,7 @@
         "connector": "3-Pin Header",
         "pin_position": 2,
         "pin_signal": "GND",
-        "rel_coord_3d": [-3.0, 0.35, 1.5]
+        "rel_coord_3d": [-2.6, 0.35, 1.5]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "DevKitC-1 v1.1 Pin Map & LM393 Pinout",
@@ -178,7 +178,7 @@
         "connector": "3-Pin Header",
         "pin_position": 3,
         "pin_signal": "DO",
-        "rel_coord_3d": [-3.0, 0.35, 1.8]
+        "rel_coord_3d": [-2.6, 0.35, 1.8]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -216,7 +216,7 @@
         "connector": "6-Pin Header",
         "pin_position": 5,
         "pin_signal": "VDD",
-        "rel_coord_3d": [3.2, 0.35, 0.8]
+        "rel_coord_3d": [2.7, 0.35, 0.8]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "InvenSense INMP441 Datasheet Table 3 (Operating range 1.62V - 3.63V)",
@@ -246,7 +246,7 @@
         "connector": "6-Pin Header",
         "pin_position": 6,
         "pin_signal": "GND & L/R",
-        "rel_coord_3d": [3.2, 0.35, 1.1]
+        "rel_coord_3d": [2.7, 0.35, 1.1]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
@@ -268,7 +268,7 @@
         "connector": "6-Pin Header",
         "pin_position": 4,
         "pin_signal": "SD",
-        "rel_coord_3d": [3.2, 0.35, 0.5]
+        "rel_coord_3d": [2.7, 0.35, 0.5]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -306,7 +306,7 @@
         "connector": "6-Pin Header",
         "pin_position": 2,
         "pin_signal": "WS",
-        "rel_coord_3d": [3.2, 0.35, -0.1]
+        "rel_coord_3d": [2.7, 0.35, -0.1]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "ESP32-S3 Technical Reference Manual (I2S0_WS master frame sync at 16 kHz)",
@@ -336,7 +336,7 @@
         "connector": "6-Pin Header",
         "pin_position": 1,
         "pin_signal": "SCK",
-        "rel_coord_3d": [3.2, 0.35, -0.4]
+        "rel_coord_3d": [2.7, 0.35, -0.4]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "INMP441 Timing Diagram & ESP-IDF I2S Driver (BCLK = 1.024 MHz at 16kHz x 32b x 2ch)",

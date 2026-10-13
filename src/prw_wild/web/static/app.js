@@ -2476,6 +2476,26 @@
     }
   }
 
+  function showToastNotification(message, type = 'info') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.style.cssText = 'position: fixed; top: 70px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none;';
+      document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    const bgCol = type === 'error' ? 'rgba(239, 68, 68, 0.95)' : type === 'success' ? 'rgba(16, 185, 129, 0.95)' : 'rgba(14, 165, 233, 0.95)';
+    toast.style.cssText = `background: ${bgCol}; color: #ffffff; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,0.4); pointer-events: auto; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px);`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(-8px)';
+      setTimeout(() => toast.remove(), 350);
+    }, 4000);
+  }
+
   async function runSimulation(scenarioId, seed) {
     const runBtn = document.getElementById('runSimBtn');
     const spinner = document.getElementById('runSpinner');
@@ -2514,8 +2534,8 @@
       startPlayback();
 
     } catch (err) {
-      alert(`Simulation failed: ${err.message}`);
-      console.error(err);
+      showToastNotification(`Simulation note: ${err.message}`, 'error');
+      console.warn('Simulation execution note:', err);
     } finally {
       if (runBtn) runBtn.disabled = false;
       if (spinner) spinner.classList.add('hidden');
@@ -2719,12 +2739,12 @@
     const animal = getGroundTruthAtTime(cleanT);
     const boundaryX = 100.0;
 
-    if (animal) {
+    if (animal && typeof animal.x === 'number' && typeof animal.y === 'number' && !isNaN(animal.x) && !isNaN(animal.y)) {
       const spEl = document.getElementById('hudSpecies');
       if (spEl) spEl.textContent = (animal.animal_id || 'ELEPHANT_01').toUpperCase();
       const tpEl = document.getElementById('hudTruePos');
       if (tpEl) tpEl.textContent = `(${animal.x.toFixed(1)}, ${animal.y.toFixed(1)})m`;
-      const speed = Math.hypot(animal.vx, animal.vy);
+      const speed = Math.hypot(animal.vx || 0, animal.vy || 0);
       const speedEl = document.getElementById('hudSpeed');
       if (speedEl) speedEl.textContent = `${speed.toFixed(2)} m/s`;
       const dist = Math.abs(boundaryX - animal.x);
@@ -2736,18 +2756,24 @@
 
     // Kalman Track
     const trackEv = getLatestEventBefore(t, 'track_update');
-    if (trackEv && trackEv.estimated_position_xy && (t - trackEv.timestamp_s) < 3.0) {
-      document.getElementById('hudKalmanPos').textContent = `(${trackEv.estimated_position_xy[0].toFixed(1)}, ${trackEv.estimated_position_xy[1].toFixed(1)})m`;
-    } else {
-      document.getElementById('hudKalmanPos').textContent = 'Acquiring...';
+    const hudKalman = document.getElementById('hudKalmanPos');
+    if (hudKalman) {
+      if (trackEv && Array.isArray(trackEv.estimated_position_xy) && trackEv.estimated_position_xy.length >= 2 && typeof trackEv.estimated_position_xy[0] === 'number' && typeof trackEv.estimated_position_xy[1] === 'number' && (t - trackEv.timestamp_s) < 3.0) {
+        hudKalman.textContent = `(${trackEv.estimated_position_xy[0].toFixed(1)}, ${trackEv.estimated_position_xy[1].toFixed(1)})m`;
+      } else {
+        hudKalman.textContent = 'Acquiring...';
+      }
     }
 
     // Boundary Prediction ETA
     const predEv = getLatestEventBefore(t, 'boundary_prediction');
-    if (predEv && predEv.eta_s !== null && (t - predEv.timestamp_s) < 2.5) {
-      document.getElementById('hudETA').textContent = `${predEv.eta_s.toFixed(1)} s`;
-    } else {
-      document.getElementById('hudETA').textContent = '--';
+    const hudETA = document.getElementById('hudETA');
+    if (hudETA) {
+      if (predEv && typeof predEv.eta_s === 'number' && !isNaN(predEv.eta_s) && (t - predEv.timestamp_s) < 2.5) {
+        hudETA.textContent = `${predEv.eta_s.toFixed(1)} s`;
+      } else {
+        hudETA.textContent = '--';
+      }
     }
 
     // Threat / Breach Level
@@ -3097,7 +3123,8 @@
         });
       }
     } catch (err) {
-      alert(`Benchmark failed: ${err.message}`);
+      showToastNotification(`Benchmark note: ${err.message}`, 'error');
+      console.warn('Benchmark error:', err);
     } finally {
       if (btn) btn.disabled = false;
       if (spinner) spinner.classList.add('hidden');

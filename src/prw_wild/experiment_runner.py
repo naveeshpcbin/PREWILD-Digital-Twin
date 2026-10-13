@@ -367,6 +367,13 @@ def run_experiment(
             if det_ev:
                 event_logger.log(det_ev)
 
+            # Inferred species from operational sensors (optical classification if verified, else candidate prior)
+            inferred_species = (
+                camera_result_str
+                if (camera_result_str and camera_result_str not in ("no_detection", "not_in_fov", "capture_failed"))
+                else "ESTIMATED_MEGAFAUNA"
+            )
+
             # Route approach warning dispatches
             warning_dispatches = alert_router.route_alert(
                 alert_id=alert_ev.event_id,
@@ -374,7 +381,7 @@ def run_experiment(
                 severity=alert_ev.risk_level or "WARNING",
                 estimated_position=alert_ev.estimated_position_xy,
                 eta_s=alert_ev.eta_s,
-                species=animal.species,
+                species=inferred_species,
                 risk_score=alert_ev.score,
             )
             for d in warning_dispatches:
@@ -388,19 +395,36 @@ def run_experiment(
                     metadata=d.to_dict(),
                 ))
 
-        # 10. Boundary breach detection & escalation
+        # 10. Boundary breach detection & escalation (Operational Controller — Ground-Truth Isolated)
+        # The controller detects a breach strictly via its own estimated track or corroborating perimeter sensor observations.
         is_breach = False
-        if track_state.is_valid and track_state.estimated_x >= (boundary.a.x - 2.0) and track_state.track_confidence > 0.3:
+        if track_state.is_valid and track_state.estimated_x >= (boundary.a.x - 2.0) and track_state.track_confidence > 0.25:
             is_breach = True
-        elif animal.crossed_boundary:
+        elif (
+            fused.estimated_position_xy is not None
+            and fused.estimated_position_xy[0] >= (boundary.a.x - 2.0)
+            and fused.fused_confidence >= 0.65
+        ):
             is_breach = True
 
         if is_breach and not breach_confirmed:
             breach_confirmed = True
-            est_pos = [
-                track_state.estimated_x if track_state.is_valid else animal.position.x,
-                track_state.estimated_y if track_state.is_valid else animal.position.y,
-            ]
+            if track_state.is_valid:
+                est_pos = [track_state.estimated_x, track_state.estimated_y]
+                breach_conf = track_state.track_confidence
+            elif fused.estimated_position_xy is not None:
+                est_pos = fused.estimated_position_xy
+                breach_conf = fused.fused_confidence
+            else:
+                est_pos = [boundary.a.x, 100.0]
+                breach_conf = 0.75
+
+            inferred_species = (
+                camera_result_str
+                if (camera_result_str and camera_result_str not in ("no_detection", "not_in_fov", "capture_failed"))
+                else "ESTIMATED_MEGAFAUNA"
+            )
+
             breach_event = Event(
                 timestamp_s=t,
                 event_type=EventType.BOUNDARY_BREACH.value,
@@ -408,12 +432,12 @@ def run_experiment(
                 risk_level=RiskLevel.BREACH.value,
                 score=1.0,
                 estimated_position_xy=est_pos,
-                confidence=track_state.track_confidence if track_state.is_valid else 0.9,
+                confidence=breach_conf,
                 provenance="controller_boundary_monitor",
                 metadata={
                     "status": "BREACH_CONFIRMED",
                     "boundary_x": boundary.a.x,
-                    "species": animal.species,
+                    "species": inferred_species,
                     "action": "activate_laptop_siren_and_escalate_dispatch",
                 },
             )
@@ -426,7 +450,7 @@ def run_experiment(
                 severity="CRITICAL_BREACH",
                 estimated_position=est_pos,
                 eta_s=0.0,
-                species=animal.species,
+                species=inferred_species,
                 risk_score=1.0,
             )
             for d in critical_dispatches:
