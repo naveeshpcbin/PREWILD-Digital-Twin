@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRW-Wild — Immersive 3D Digital Twin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>📡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-radar">
+          <span class="radar-ping"></span>
+          <svg class="radar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10"></path>
+            <path d="M12 6a6 6 0 0 1 6 6"></path>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>PRW-WILD <span>3D DIGITAL TWIN</span></h1>
+          <p class="brand-subtitle">Software-in-the-Loop Predictive RF Wildlife Early-Warning Simulation</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="control-group">
+          <label for="scenarioSelect">SCENARIO</label>
+          <select id="scenarioSelect" class="styled-select">
+            <option value="approach_crossing">Approach & Crossing (Elephant)</option>
+            <option value="turns_away">Turns Away (Nuisance Avoidance)</option>
+            <option value="nuisance_triggers">Nuisance Triggers (Bird Flock)</option>
+            <option value="degraded_network">Degraded Network (Outages/Loss)</option>
+            <option value="camera_gating">Camera Gating (Energy Benchmark)</option>
+          </select>
+        </div>
+
+        <div class="control-group seed-group">
+          <label for="seedInput">SEED</label>
+          <div class="seed-input-wrap">
+            <input type="number" id="seedInput" value="42" min="1" max="99999">
+            <button id="randomSeedBtn" title="Randomize seed" class="btn-icon">🎲</button>
+          </div>
+        </div>
+
+        <button id="runSimBtn" class="btn btn-primary">
+          <span class="btn-spinner hidden" id="runSpinner"></span>
+          <span class="btn-text">RUN SIMULATION</span>
+        </button>
+
+        <button id="benchmarkSuiteBtn" class="btn btn-secondary">
+          <span>BENCHMARK SUITE</span>
+        </button>
+
+        <!-- View Mode Switcher: 3D vs 2D -->
+        <div class="view-mode-toggle">
+          <button id="btnView3D" class="view-toggle-btn active" title="Switch to Immersive 3D Digital Twin">3D TWIN</button>
+          <button id="btnView2D" class="view-toggle-btn" title="Switch to 2D Spatial Radar Fallback">2D RADAR</button>
+        </div>
+      </div>
+
+      <!-- Audible Alarm Controls Header Block -->
+      <div class="header-alarm-panel">
+        <div class="alarm-status-pill idle" id="alarmStatusBadge">
+          <span class="alarm-led"></span>
+          <span id="alarmStatusText">AUDIO: LOCKED</span>
+        </div>
+        <div class="alarm-buttons-group">
+          <button id="btnArmAudio" class="alarm-btn pulse-glow" title="Click to unlock Web Audio API and arm siren">🔊 ARM ALARM</button>
+          <button id="btnTestAlarm" class="alarm-btn" title="Test Web Audio multi-tone siren">⚡ TEST</button>
+          <button id="btnMuteAudio" class="alarm-btn" title="Toggle audio mute">🔇 MUTE</button>
+          <button id="btnAckAlarm" class="alarm-btn danger hidden" title="Acknowledge and silence critical siren">🔕 SILENCE</button>
+        </div>
+        <div class="volume-slider-wrap" title="Alarm Volume">
+          <span class="vol-icon">🔉</span>
+          <input type="range" id="alarmVolume" min="0" max="1" step="0.05" value="0.75" class="mini-range">
+        </div>
+      </div>
+
+      <div class="header-status">
+        <div class="demo-mode-pill">DEMO / SIL SIMULATION MODE</div>
+        <div class="principle-tag">PREDICT BEFORE CONFIRM</div>
+      </div>
+    </header>
+
+    <!-- PRW-Wild Causal Replay Lab Navigation Toolbar -->
+    <nav class="causal-lab-toolbar">
+      <div class="lab-toolbar-left">
+        <span class="lab-toolbar-brand">🔬 CAUSAL REPLAY LAB</span>
+        <button class="lab-mode-tab active" data-mode="live" id="tabModeLive" title="Live 3D Digital Twin with real-time telemetry">
+          <span class="tab-icon">📡</span> MODE A: LIVE TWIN
+        </button>
+        <button class="lab-mode-tab" data-mode="layers" id="tabModeLayers" title="Inspect 13 engineering architecture layers">
+          <span class="tab-icon">🔬</span> MODE B: LAYER EXPLORER (13)
+        </button>
+        <button class="lab-mode-tab" data-mode="flightline" id="tabModeFlightline" title="Interactive event timeline from sensor observation to decision and response">
+          <span class="tab-icon">⚡</span> MODE C: CAUSAL FLIGHTLINE
+        </button>
+        <button class="lab-mode-tab" data-mode="counterfactual" id="tabModeCounterfactual" title="Fair policy comparison: Full PRW-Wild vs PIR-Only vs Always-On vs RF-Only">
+          <span class="tab-icon">⚖️</span> MODE D: COUNTERFACTUAL TWIN
+        </button>
+        <button class="lab-mode-tab" data-mode="hardware" id="tabModeHardware" title="PRW-Wild Hardware Lab: 3D ESP32-S3 PCB, verified pinout, sensors & wiring explorer">
+          <span class="tab-icon">🛠️</span> MODE E: HARDWARE LAB
+        </button>
+      </div>
+      <div class="lab-toolbar-right">
+        <div class="graphics-quality-pill">
+          <span class="pill-title">GRAPHICS:</span>
+          <button class="gfx-btn active" id="btnGfxHigh" title="High Quality PBR materials & soft shadows">QUALITY ✦</button>
+          <button class="gfx-btn" id="btnGfxPerf" title="Optimized performance & framerate">PERF ⚡</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Workspace Grid -->
+    <main class="main-layout">
+      <!-- Left / Center: 3D Viewport & Playback Controls -->
+      <section class="simulation-section">
+        <div class="canvas-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span class="panel-tag" id="viewportTag">IMMERSIVE 3D SCENE</span>
+              <span id="scenarioTitleBadge" class="title-badge">approach_crossing</span>
+            </div>
+            
+            <!-- 3D Camera & Scene Controls Toolbar -->
+            <div class="canvas-toolbar">
+              <!-- Viewpoint Presets -->
+              <div class="viewpoint-pills" id="viewpointPills">
+                <button class="v-pill active" data-view="orbit" title="Free Perspective Orbit">Free Orbit</button>
+                <button class="v-pill" data-view="isometric" title="Isometric Bird's-Eye Overview">Isometric</button>
+                <button class="v-pill" data-view="topdown" title="Top-Down Ground Map">Top-Down</button>
+                <button class="v-pill" data-view="follow" title="Follow Elephant Target">Follow Elephant</button>
+                <button class="v-pill" data-view="human" title="Follow Selected Human Recipient">Follow Human</button>
+                <button class="v-pill" data-view="router" title="Focus Wi-Fi Router (WIFI_AP_01)">Router AP</button>
+                <button class="v-pill" data-view="camera" title="Focus Gated Camera Mast (CAM_01)">Camera Mast</button>
+                <button class="v-pill" data-view="campov" title="Optical Camera Viewfinder Preview">Camera POV</button>
+                <button class="v-pill" data-view="fence" title="Focus Perimeter Fence Breach Zone">Fence Breach</button>
+              </div>
+
+              <div class="tool-divider"></div>
+              <button id="resetCameraBtn" class="tool-btn" title="Reset Camera View">⊙</button>
+              <button id="fullscreenBtn" class="tool-btn" title="Toggle Fullscreen 3D View">⛶</button>
+              
+              <div class="tool-divider"></div>
+              <label class="toggle-chip" title="Toggle Sensor Coverage Disks & RF Link Rays">
+                <input type="checkbox" id="toggleSensors" checked>
+                <span>Coverage</span>
+              </label>
+              <label class="toggle-chip" title="Toggle Tracking Vectors & Floating ETA Badge">
+                <input type="checkbox" id="toggleVectors" checked>
+                <span>Vectors & ETA</span>
+              </label>
+              <label class="toggle-chip" title="Toggle Animal Historical Path Trail">
+                <input type="checkbox" id="toggleTrails" checked>
+                <span>Trails</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Main Viewport Area: Houses 3D WebGL Canvas and Fallback 2D Canvas -->
+          <div class="canvas-viewport" id="mainViewportWrapper">
+            <!-- 3D Three.js Container (Default) -->
+            <div id="threeContainer" class="viewport-layer active"></div>
+
+            <!-- 2D Canvas Container (Fallback / Toggleable) -->
+            <div id="twoContainer" class="viewport-layer hidden">
+              <canvas id="digitalTwinCanvas"></canvas>
+            </div>
+
+            <!-- Floating HUD Overlays -->
+            <div class="canvas-overlay top-left">
+              <div class="hud-box">
+                <div class="hud-row">
+                  <span class="hud-label">SIM TIME</span>
+                  <span class="hud-value" id="hudSimTime">0.00 s</span>
+                </div>
+                <div class="hud-row">
+                  <span class="hud-label">DURATION</span>
+                  <span class="hud-value" id="hudDuration">120.0 s</span>
+                </div>
+                <div class="hud-row">
+                  <span class="hud-label">STEP</span>
+                  <span class="hud-value" id="hudTimeStep">0.50 s</span>
+                </div>
+                <div class="hud-row">
+                  <span class="hud-label">VIEWPORT</span>
+                  <span class="hud-value" id="hudViewMode">3D IMMERSIVE</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="canvas-overlay top-right">
+              <div class="alert-status-card" id="alertStatusCard">
+                <div class="status-badge-row">
+                  <span class="alert-pulse-dot" id="alertPulseDot"></span>
+                  <span class="alert-level-text" id="alertLevelText">NORMAL</span>
+                </div>
+                <div class="alert-meta-text" id="alertMetaText">No perimeter threat detected</div>
+              </div>
+            </div>
+
+            <!-- Target Telemetry HUD -->
+            <div class="canvas-overlay bottom-left">
+              <div class="target-telemetry-hud" id="targetTelemetryHud">
+                <div class="hud-title-row">
+                  <span class="hud-title">OPERATIONAL TELEMETRY</span>
+                  <span class="hud-mode-tag">CONTROLLER ESTIMATES</span>
+                </div>
+                <div class="telemetry-grid">
+                  <div><span>Target ID:</span> <strong id="hudSpecies">ELEPHANT_01</strong></div>
+                  <div><span>Kalman Est:</span> <strong id="hudKalmanPos" class="est-highlight">Acquiring...</strong></div>
+                  <div><span>Dist to Fence:</span> <strong id="hudDistFence">80.0 m</strong></div>
+                  <div><span>Predicted ETA:</span> <strong id="hudETA" class="eta-highlight">--</strong></div>
+                  <div class="debug-eval-row" title="Ground truth is strictly isolated for evaluation verification">
+                    <span>Ground Truth (Eval Only):</span>
+                    <strong id="hudTruePos" class="debug-gt-val">(20.0, 100.0)m</strong>
+                    <span id="hudSpeed" class="debug-gt-speed">1.50 m/s</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3D Object Inspector Card (Click to inspect 3D node) -->
+            <div class="canvas-overlay bottom-right-inspector hidden" id="objectInspectorCard">
+              <div class="inspector-header">
+                <span class="inspector-badge" id="inspType">ROUTER</span>
+                <span class="inspector-id" id="inspId">WIFI_AP_01</span>
+                <button class="btn-close-mini" id="closeInspectorBtn">✕</button>
+              </div>
+              <div class="inspector-body" id="inspBody">
+                <div><span>Status:</span> <strong id="inspStatus">ONLINE</strong></div>
+                <div><span>Role:</span> <strong id="inspRole">Central Wi-Fi Access Point</strong></div>
+                <div><span>Position:</span> <strong id="inspPos">(60.0, 95.0)m</strong></div>
+                <div><span>Last Event:</span> <strong id="inspLastEvent">--</strong></div>
+              </div>
+              <div class="inspector-actions">
+                <button class="btn-insp-action" id="btnOpenInHardwareLab">🔬 EXPLORE IN HARDWARE LAB</button>
+              </div>
+            </div>
+
+            <!-- Live Optical Camera POV Picture-in-Picture Floating Window -->
+            <div class="cam-pov-floating-window hidden" id="camPovFloatingWindow">
+              <div class="pov-header">
+                <span class="pov-badge">CAM_01 • OPTICAL SENSOR POV</span>
+                <span class="pov-live-tag" id="povLiveTag">● LIVE STREAM</span>
+                <button class="btn-close-mini" id="closePovBtn">✕</button>
+              </div>
+              <div class="pov-feed-container" id="povFeedContainer">
+                <canvas id="camPovCanvas" width="280" height="158" class="pov-render-canvas"></canvas>
+                <div class="pov-scanlines"></div>
+                <div class="pov-crosshair"></div>
+                <!-- Dynamic Target Bounding Box -->
+                <div class="pov-target-bbox hidden" id="povTargetBbox">
+                  <span class="bbox-label" id="povBboxLabel">ELEPHANT_01 [0.94]</span>
+                </div>
+                <div class="pov-standby-overlay hidden" id="povStandbyOverlay">
+                  <div class="standby-reticle">⛶</div>
+                  <div class="standby-text">CAM_01 STANDBY</div>
+                  <div class="standby-sub">GATED BY PRW-WILD (6mA SLEEP)</div>
+                </div>
+                <div class="pov-telemetry-strip">
+                  <span>FOV: 66°</span>
+                  <span id="povTargetStatus">SCANNING...</span>
+                  <span id="povCamMode">PTZ SLEW</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Confirmed Boundary Breach Critical Siren Banner -->
+            <div class="breach-critical-banner hidden" id="breachCriticalBanner">
+              <div class="breach-siren-icon">🚨</div>
+              <div class="breach-siren-info">
+                <div class="breach-title">CRITICAL BOUNDARY BREACH CONFIRMED</div>
+                <div class="breach-sub">Perimeter fence breached at x=100m • Laptop audible siren active • Dispatches escalated</div>
+              </div>
+              <button id="btnBannerSilence" class="btn-banner-ack">ACKNOWLEDGE & SILENCE</button>
+            </div>
+
+            <!-- Acoustic Deterrent Banner -->
+            <div class="deterrent-banner hidden" id="deterrentBanner">
+              <span class="banner-icon">⚡</span>
+              <span class="banner-text">DETERRENT COUNTERMEASURE TRIGGERED (AUDIO + STROBE PULSE)</span>
+            </div>
+
+            <!-- Architecture Layer Explorer Bar (Active in Mode B) -->
+            <div class="layer-explorer-bar hidden" id="layerExplorerBar">
+              <div class="leb-header">
+                <span class="leb-tag">🔬 ARCHITECTURE LAYER EXPLORER (13 MODELS)</span>
+                <span class="leb-sub">Select any layer to isolate model, view causal formulation, live inputs & assumptions:</span>
+              </div>
+              <div class="leb-pills" id="lebPills">
+                <button class="leb-pill active" data-layer="1">L1 Physical World</button>
+                <button class="leb-pill" data-layer="2">L2 RF/CSI Precursor</button>
+                <button class="leb-pill" data-layer="3">L3 Corroborative Sensors</button>
+                <button class="leb-pill" data-layer="4">L4 Multi-Modal Fusion</button>
+                <button class="leb-pill" data-layer="5">L5 EKF Tracker</button>
+                <button class="leb-pill" data-layer="6">L6 Ecological Route Prior</button>
+                <button class="leb-pill" data-layer="7">L7 Trajectory & ETA</button>
+                <button class="leb-pill" data-layer="8">L8 Risk Assessment Gate</button>
+                <button class="leb-pill" data-layer="9">L9 Selective Camera Gating</button>
+                <button class="leb-pill" data-layer="10">L10 Species Confirmation</button>
+                <button class="leb-pill" data-layer="11">L11 Alert Routing & Dispatch</button>
+                <button class="leb-pill" data-layer="12">L12 Breach & Laptop Alarm</button>
+                <button class="leb-pill" data-layer="13">L13 Scientific Evaluation</button>
+              </div>
+            </div>
+
+            <!-- Causal Event Flightline Tray (Active in Mode C or Toggleable) -->
+            <div class="flightline-tray hidden" id="flightlineTray">
+              <div class="flightline-header">
+                <div class="fl-title-wrap">
+                  <span class="fl-tag">⚡ CAUSAL EVENT FLIGHTLINE</span>
+                  <span class="fl-sub">Interactive decision timeline: click any node to freeze time and inspect causal rationale</span>
+                </div>
+                <button class="btn-close-mini" id="closeFlightlineBtn">✕</button>
+              </div>
+              <div class="flightline-chain" id="flightlineChain">
+                <div class="flight-node" data-stage="1" title="Synthetic RF CSI disturbance observed on Fresnel link">
+                  <span class="fn-num">1</span><span class="fn-label">RF/CSI Precursor</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="2" title="PIR, vibration, and acoustic confirmation">
+                  <span class="fn-num">2</span><span class="fn-label">Corroboration</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="3" title="Temporal decay weighted confidence fusion">
+                  <span class="fn-num">3</span><span class="fn-label">Fusion</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="4" title="Extended Kalman Filter state and covariance">
+                  <span class="fn-num">4</span><span class="fn-label">EKF Tracker</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="5" title="Predicted trajectory and time-to-fence ETA">
+                  <span class="fn-num">5</span><span class="fn-label">Trajectory & ETA</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="6" title="Multi-factor risk scoring and state machine">
+                  <span class="fn-num">6</span><span class="fn-label">Risk Gate</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="7" title="Selective wake-up command sent to sleep camera">
+                  <span class="fn-num">7</span><span class="fn-label">Camera Wakeup</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="8" title="Optical bounding box and species classification">
+                  <span class="fn-num">8</span><span class="fn-label">Species Confirm</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="9" title="Approach early warning issued">
+                  <span class="fn-num">9</span><span class="fn-label">Warning Alert</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="10" title="Proximity sorting and authority escalation">
+                  <span class="fn-num">10</span><span class="fn-label">Recipient Dispatch</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="11" title="Confirmed fence perimeter breach">
+                  <span class="fn-num">11</span><span class="fn-label">Boundary Breach</span>
+                </div>
+                <div class="fn-arrow">→</div>
+                <div class="flight-node" data-stage="12" title="Distinctive multi-tone rising siren and alert dispatch">
+                  <span class="fn-num">12</span><span class="fn-label">Laptop Alarm</span>
+                </div>
+              </div>
+
+              <!-- Causal Decision Explanation Card -->
+              <div class="flightline-explanation-card hidden" id="flExplanationCard">
+                <div class="flec-header">
+                  <span class="flec-stage-badge" id="flecStageBadge">STAGE 1</span>
+                  <span class="flec-title" id="flecTitle">Precursor RF/CSI Disturbance Event</span>
+                  <button class="btn-close-mini" id="closeFlecBtn">✕</button>
+                </div>
+                <div class="flec-body">
+                  <div class="flec-row"><span>Causal Decision:</span> <strong id="flecDecision">--</strong></div>
+                  <div class="flec-row"><span>Input Data:</span> <span id="flecInputs" class="mono-txt">--</span></div>
+                  <div class="flec-row"><span>Output State:</span> <span id="flecOutputs" class="mono-txt">--</span></div>
+                  <div class="flec-row"><span>Mathematical Rationale:</span> <p id="flecRationale">--</p></div>
+                  <div class="flec-row provenance-row"><span>Scientific Provenance:</span> <strong id="flecProvenance" class="prov-tag">SYNTHETIC SIMULATION</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playback Scrubber & Control Bar -->
+          <div class="playback-bar">
+            <div class="playback-buttons">
+              <button id="btnPrevStep" class="btn-play-ctrl" title="Step Back (-0.5s)">⏮</button>
+              <button id="btnPlayPause" class="btn-play-ctrl btn-play-main" title="Play/Pause (Space)">▶</button>
+              <button id="btnNextStep" class="btn-play-ctrl" title="Step Forward (+0.5s)">⏭</button>
+              <button id="btnReset" class="btn-play-ctrl" title="Restart Simulation">↺</button>
+            </div>
+
+            <div class="timeline-wrap">
+              <input type="range" id="timelineScrubber" min="0" max="120" value="0" step="0.1" class="custom-range">
+              <div class="timeline-markers" id="timelineMarkers"></div>
+            </div>
+
+            <div class="speed-selector">
+              <span class="speed-label">SPEED</span>
+              <div class="speed-pills">
+                <button class="pill-btn" data-speed="0.25">0.25x</button>
+                <button class="pill-btn" data-speed="0.5">0.5x</button>
+                <button class="pill-btn active" data-speed="1">1x</button>
+                <button class="pill-btn" data-speed="2">2x</button>
+                <button class="pill-btn" data-speed="5">5x</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Metrics Cards Row -->
+        <div class="metrics-cards-grid">
+          <div class="metric-card">
+            <div class="metric-icon">⏱</div>
+            <div class="metric-content">
+              <div class="metric-label">WARNING LEAD TIME</div>
+              <div class="metric-value-wrap">
+                <span class="metric-value" id="valLeadTime">--</span>
+                <span class="metric-unit">sec</span>
+              </div>
+              <div class="metric-desc" id="descLeadTime">Advance early warning before boundary arrival</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-content">
+              <div class="metric-label">CROSSING RECALL</div>
+              <div class="metric-value-wrap">
+                <span class="metric-value" id="valRecall">--</span>
+                <span class="metric-unit" id="unitRecall">%</span>
+              </div>
+              <div class="metric-desc" id="descRecall">Ground-truth boundary crossings detected</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon">📷</div>
+            <div class="metric-content">
+              <div class="metric-label">CAMERA GATING DUTY CYCLE</div>
+              <div class="metric-value-wrap">
+                <span class="metric-value" id="valDutyCycle">--</span>
+                <span class="metric-unit">%</span>
+              </div>
+              <div class="metric-desc" id="descDutyCycle">Predict before confirm: sleep mode vs wakeups</div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon">⚡</div>
+            <div class="metric-content">
+              <div class="metric-label">ESTIMATED ENERGY</div>
+              <div class="metric-value-wrap">
+                <span class="metric-value" id="valEnergy">--</span>
+                <span class="metric-unit">Joules</span>
+              </div>
+              <div class="metric-desc" id="descEnergy">Selective wake-up saves up to 88% energy</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Subsystems, Sensors, Camera, Alert Dispatch, and Event Stream -->
+      <aside class="sidebar-section">
+        <!-- Gated Camera Viewport Simulator -->
+        <div class="side-panel camera-panel">
+          <div class="panel-header">
+            <span class="panel-tag">OPTICAL GATE SIMULATOR</span>
+            <span class="cam-status-pill standby" id="camStatusPill">STANDBY</span>
+          </div>
+          <div class="camera-viewport-box">
+            <div class="camera-overlay-grid"></div>
+            <div class="camera-hud-reticle" id="camReticle">
+              <div class="reticle-box" id="camBox">
+                <span class="reticle-label" id="camReticleLabel">NO TARGET</span>
+              </div>
+            </div>
+            <div class="camera-lens-info">
+              <span id="camFps">CAM_01 • 1080p IR PTZ</span>
+              <span id="camGatingText">GATE: RF FUSED TRIGGER</span>
+            </div>
+            <div class="camera-sleep-overlay" id="camSleepOverlay">
+              <div class="sleep-icon">💤</div>
+              <div class="sleep-title">CAMERA IN LOW-POWER SLEEP</div>
+              <div class="sleep-sub">Waiting for multi-sensor RF prediction gate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensor Corroboration Matrix -->
+        <div class="side-panel sensors-matrix-panel">
+          <div class="panel-header">
+            <span class="panel-tag">MULTI-MODAL SENSOR CORROBORATION</span>
+            <span class="matrix-count" id="activeSensorsCount">0 ACTIVE</span>
+          </div>
+
+          <div class="sensors-grid" id="sensorsGrid">
+            <div class="sensor-node-card" id="sensorCard_rf_01">
+              <div class="sensor-top">
+                <span class="sensor-chip rf">RF CSI</span>
+                <span class="sensor-id">rf_01</span>
+                <span class="sensor-status-dot" id="dot_rf_01"></span>
+              </div>
+              <div class="sensor-metric">
+                <span>Variance: <strong id="val_rf_01_var">0.00</strong></span>
+                <span>Score: <strong id="val_rf_01_score">0.00</strong></span>
+              </div>
+              <div class="sensor-meter-bar"><div class="bar-fill" id="fill_rf_01"></div></div>
+            </div>
+
+            <div class="sensor-node-card" id="sensorCard_rf_02">
+              <div class="sensor-top">
+                <span class="sensor-chip rf">RF CSI</span>
+                <span class="sensor-id">rf_02</span>
+                <span class="sensor-status-dot" id="dot_rf_02"></span>
+              </div>
+              <div class="sensor-metric">
+                <span>Variance: <strong id="val_rf_02_var">0.00</strong></span>
+                <span>Score: <strong id="val_rf_02_score">0.00</strong></span>
+              </div>
+              <div class="sensor-meter-bar"><div class="bar-fill" id="fill_rf_02"></div></div>
+            </div>
+
+            <div class="sensor-node-card" id="sensorCard_pir_01">
+              <div class="sensor-top">
+                <span class="sensor-chip pir">PIR</span>
+                <span class="sensor-id">pir_01</span>
+                <span class="sensor-status-dot" id="dot_pir_01"></span>
+              </div>
+              <div class="sensor-metric">
+                <span>Motion: <strong id="val_pir_01_status">IDLE</strong></span>
+                <span>Score: <strong id="val_pir_01_score">0.00</strong></span>
+              </div>
+              <div class="sensor-meter-bar"><div class="bar-fill" id="fill_pir_01"></div></div>
+            </div>
+
+            <div class="sensor-node-card" id="sensorCard_aco_01">
+              <div class="sensor-top">
+                <span class="sensor-chip aco">ACOUSTIC</span>
+                <span class="sensor-id">aco_01</span>
+                <span class="sensor-status-dot" id="dot_aco_01"></span>
+              </div>
+              <div class="sensor-metric">
+                <span>Infrasound: <strong id="val_aco_01_status">0.00</strong></span>
+                <span>Score: <strong id="val_aco_01_score">0.00</strong></span>
+              </div>
+              <div class="sensor-meter-bar"><div class="bar-fill" id="fill_aco_01"></div></div>
+            </div>
+          </div>
+
+          <div class="fusion-summary-bar">
+            <div class="fusion-label-row">
+              <span>FUSED CONFIDENCE</span>
+              <strong id="fusedConfText">0.00</strong>
+            </div>
+            <div class="fusion-bar-track">
+              <div class="fusion-bar-fill" id="fusedConfFill"></div>
+              <div class="gate-threshold-marker" title="Camera Gate Threshold (0.45)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert Routing & Recipient Dispatch Center Panel -->
+        <div class="side-panel dispatch-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span class="panel-tag">ALERT ROUTING & DISPATCH</span>
+              <span class="dispatch-badge" id="dispatchCountBadge">0 Sent</span>
+            </div>
+            <button id="btnTriggerTestDispatch" class="btn-micro" title="Simulate an instant manual dispatch">TEST DISPATCH</button>
+          </div>
+
+          <div class="dispatch-sim-notice">
+            <span>🛡 SIMULATED DELIVERY — NOT SENT TO A REAL PERSON</span>
+          </div>
+
+          <!-- Nearest Recipients & Authority Cards -->
+          <div class="recipients-list" id="recipientsList">
+            <div class="recipient-card" id="recCard_FARM_OPERATOR_01">
+              <div class="rec-top">
+                <span class="rec-name">Arun Kumar</span>
+                <span class="rec-role-chip farmer">Farmer</span>
+                <span class="rec-dist" id="dist_FARM_OPERATOR_01">-- m</span>
+              </div>
+              <div class="rec-sub">Lead Farm Operator • Homestead Alpha</div>
+              <div class="rec-status-row">
+                <span class="rec-status-tag" id="status_FARM_OPERATOR_01">STANDBY</span>
+              </div>
+            </div>
+
+            <div class="recipient-card" id="recCard_FIELD_WORKER_01">
+              <div class="rec-top">
+                <span class="rec-name">Ramu & Field Crew</span>
+                <span class="rec-role-chip worker">Worker</span>
+                <span class="rec-dist" id="dist_FIELD_WORKER_01">-- m</span>
+              </div>
+              <div class="rec-sub">Crop Field Crew • Agro Plot 1</div>
+              <div class="rec-status-row">
+                <span class="rec-status-tag" id="status_FIELD_WORKER_01">STANDBY</span>
+              </div>
+            </div>
+
+            <div class="recipient-card" id="recCard_LOCAL_RESIDENT_01">
+              <div class="rec-top">
+                <span class="rec-name">Priya Sharma</span>
+                <span class="rec-role-chip resident">Resident</span>
+                <span class="rec-dist" id="dist_LOCAL_RESIDENT_01">-- m</span>
+              </div>
+              <div class="rec-sub">North Hamlet Residence</div>
+              <div class="rec-status-row">
+                <span class="rec-status-tag" id="status_LOCAL_RESIDENT_01">STANDBY</span>
+              </div>
+            </div>
+
+            <div class="recipient-card" id="recCard_WILDLIFE_CONTROL_ROOM">
+              <div class="rec-top">
+                <span class="rec-name">Wildlife Control Desk</span>
+                <span class="rec-role-chip authority">Authority</span>
+                <span class="rec-dist">24/7 Desk</span>
+              </div>
+              <div class="rec-sub">State Rapid Response • Sector 4</div>
+              <div class="rec-status-row">
+                <span class="rec-status-tag" id="status_WILDLIFE_CONTROL_ROOM">MONITORING</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dispatch Message Log / Inbox -->
+          <div class="dispatch-inbox-header">
+            <span>LIVE DISPATCH INBOX</span>
+            <span id="inboxCountText">0 messages</span>
+          </div>
+          <div class="dispatch-inbox-feed" id="dispatchInboxFeed">
+            <div class="inbox-empty">No active alert dispatches issued yet.</div>
+          </div>
+        </div>
+
+        <!-- Real-Time Event Audit Log Feed -->
+        <div class="side-panel event-log-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span class="panel-tag">EVENT AUDIT STREAM</span>
+              <span class="event-counter" id="eventCountBadge">0 events</span>
+            </div>
+            <div class="filter-controls">
+              <select id="eventFilterSelect" class="styled-mini-select">
+                <option value="all">All Events</option>
+                <option value="breach">Perimeter Breaches</option>
+                <option value="dispatch">Dispatches</option>
+                <option value="alert">Alerts Only</option>
+                <option value="camera">Camera Gate</option>
+                <option value="prediction">Predictions</option>
+                <option value="fusion">Fusion Results</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="event-stream-container" id="eventStreamContainer">
+            <div class="event-stream-empty">Run simulation to stream events...</div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Benchmark Suite Modal -->
+    <div class="modal-backdrop hidden" id="benchmarkModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2>PRW-Wild Scientific Validation Suite</h2>
+            <p>Automated multi-scenario verification: recall, lead time, nuisance immunity, and energy efficiency.</p>
+          </div>
+          <button id="closeBenchmarkBtn" class="btn-close">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="benchmark-actions">
+            <button id="runBenchmarkExecBtn" class="btn btn-primary">
+              <span class="btn-spinner hidden" id="benchSpinner"></span>
+              <span>RUN ALL 5 SCENARIOS</span>
+            </button>
+            <span class="benchmark-note">Executes approach_crossing, turns_away, nuisance_triggers, degraded_network, camera_gating</span>
+          </div>
+
+          <div class="benchmark-results-table-wrap">
+            <table class="benchmark-table" id="benchmarkTable">
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Crossings</th>
+                  <th>Recall</th>
+                  <th>Lead Time</th>
+                  <th>Alerts</th>
+                  <th>Camera Wakes</th>
+                  <th>Energy (J)</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="benchmarkTableBody">
+                <tr><td colspan="8" class="text-center">Click "RUN ALL 5 SCENARIOS" to execute the full evaluation suite.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="benchmark-insights" id="benchmarkInsights">
+            <div class="insight-card">
+              <h4>🎯 PREDICTION PERFORMANCE</h4>
+              <p>Predictive ray casting achieves >15s mean early warning lead time before boundary breaches occur.</p>
+            </div>
+            <div class="insight-card">
+              <h4>🔋 ENERGY GATING SAVINGS</h4>
+              <p>Selective RF-triggered camera activation saves up to 88% battery power compared to always-on surveillance.</p>
+            </div>
+            <div class="insight-card">
+              <h4>🛡 NUISANCE FILTERING</h4>
+              <p>Multi-sensor corroboration prevents false alerts during non-threatening animal turns and bird noise.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Architecture Layer Explorer Detailed Modal -->
+    <div class="modal-backdrop hidden" id="layerExplorerModal">
+      <div class="modal-card wide-modal">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2>PRW-Wild Architecture Layer Explorer</h2>
+            <p>Deconstruct the 13 engineering and scientific models governing wildlife detection, fusion, and alerting.</p>
+          </div>
+          <button id="closeLayerModalBtn" class="btn-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="layer-modal-grid">
+            <!-- Left: Layer Selection List -->
+            <div class="layer-nav-sidebar" id="layerNavSidebar">
+              <button class="layer-select-btn active" data-l="1"><span class="ls-num">L1</span> Physical World Model</button>
+              <button class="layer-select-btn" data-l="2"><span class="ls-num">L2</span> RF/CSI Precursor Model</button>
+              <button class="layer-select-btn" data-l="3"><span class="ls-num">L3</span> Corroborative Sensor Model</button>
+              <button class="layer-select-btn" data-l="4"><span class="ls-num">L4</span> Multi-Modal Fusion Model</button>
+              <button class="layer-select-btn" data-l="5"><span class="ls-num">L5</span> Tracker / EKF Model</button>
+              <button class="layer-select-btn" data-l="6"><span class="ls-num">L6</span> Ecological Route Prior Model</button>
+              <button class="layer-select-btn" data-l="7"><span class="ls-num">L7</span> Trajectory & ETA Prediction</button>
+              <button class="layer-select-btn" data-l="8"><span class="ls-num">L8</span> Risk Assessment Gate</button>
+              <button class="layer-select-btn" data-l="9"><span class="ls-num">L9</span> Selective Camera Gating</button>
+              <button class="layer-select-btn" data-l="10"><span class="ls-num">L10</span> Species Confirmation Model</button>
+              <button class="layer-select-btn" data-l="11"><span class="ls-num">L11</span> Alert-Routing & Dispatch</button>
+              <button class="layer-select-btn" data-l="12"><span class="ls-num">L12</span> Breach & Laptop Alarm</button>
+              <button class="layer-select-btn" data-l="13"><span class="ls-num">L13</span> Scientific Evaluation Metrics</button>
+            </div>
+
+            <!-- Right: Detailed Layer Explanations -->
+            <div class="layer-detail-view" id="layerDetailView">
+              <div class="ld-header">
+                <span class="ld-badge" id="ldBadge">LAYER 1 • PHYSICAL WORLD</span>
+                <h3 id="ldTitle">Physical Environment & Ground-Truth Kinematics</h3>
+                <button class="btn-focus-3d" id="btnFocusLayer3D">🎯 Focus in 3D Scene</button>
+              </div>
+              <div class="ld-content-grid">
+                <div class="ld-section">
+                  <h4>📐 Model Formulation & Architecture</h4>
+                  <p id="ldFormulation">Models the spatial terrain (220m x 260m) partitioned into wildlife habitat corridor (x < 100m) and agricultural crop plots (x >= 100m), separated by a physical boundary fence.</p>
+                </div>
+                <div class="ld-section">
+                  <h4>📥 Live Inputs & Observations</h4>
+                  <p id="ldInputs" class="mono-txt">World coordinate waypoints, speed (m/s), boundary coordinate x=100.0m.</p>
+                </div>
+                <div class="ld-section">
+                  <h4>📤 Live Outputs & Decisions</h4>
+                  <p id="ldOutputs" class="mono-txt">Ground-truth position (x, y), velocity vector (vx, vy), ground contact status.</p>
+                </div>
+                <div class="ld-section">
+                  <h4>🧪 Mathematical Assumptions</h4>
+                  <p id="ldAssumptions">Constant velocity kinematic step integration with directional heading interpolation; collision-free terrain mesh.</p>
+                </div>
+                <div class="ld-section">
+                  <h4>⚠️ Known Constraints & Provenance</h4>
+                  <p id="ldLimitations" class="warn-txt">Ground truth is strictly isolated from controller logic; evaluation engine uses ground truth only for post-hoc error validation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode D: Counterfactual Twin Policy Comparison Modal -->
+    <div class="modal-backdrop hidden" id="counterfactualModal">
+      <div class="modal-card wide-modal">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h2>PRW-Wild Counterfactual Twin Evaluation</h2>
+            <p>Fair policy comparison under identical scenario and random seed: Predictive Gating vs PIR vs Always-On vs RF-Only.</p>
+          </div>
+          <button id="closeCounterfactualBtn" class="btn-close">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="cf-actions-row">
+            <div class="cf-meta-info">
+              <span>Scenario: <strong id="cfScenarioName">approach_crossing</strong></span>
+              <span>Seed: <strong id="cfSeedVal">42</strong></span>
+            </div>
+            <button id="runCounterfactualExecBtn" class="btn btn-primary">
+              <span class="btn-spinner hidden" id="cfSpinner"></span>
+              <span>COMPUTE COUNTERFACTUAL POLICIES</span>
+            </button>
+          </div>
+
+          <div class="cf-results-table-wrap">
+            <table class="benchmark-table cf-table" id="cfTable">
+              <thead>
+                <tr>
+                  <th>Policy Strategy</th>
+                  <th>Crossings Detected</th>
+                  <th>Recall</th>
+                  <th>Warning Lead Time</th>
+                  <th>Camera Wakes</th>
+                  <th>Duty Cycle (%)</th>
+                  <th>Energy Consumption</th>
+                  <th>False Alarms</th>
+                </tr>
+              </thead>
+              <tbody id="cfTableBody">
+                <tr><td colspan="8" class="text-center">Click "COMPUTE COUNTERFACTUAL POLICIES" to run simulation on current seed under all 4 policies.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Counterfactual Causal Takeaways -->
+          <div class="cf-insights-grid" id="cfInsightsGrid">
+            <div class="insight-card highlight">
+              <h4>🔋 ENERGY GATING COMPARISON</h4>
+              <p id="cfEnergyInsight">Full PRW-Wild predictive gating activates the camera selectively only upon high-confidence corridor approach, saving ~88% energy compared to Always-On surveillance.</p>
+            </div>
+            <div class="insight-card">
+              <h4>⏱ EARLY WARNING LEAD TIME</h4>
+              <p id="cfLeadTimeInsight">Predictive trajectory projection delivers 15-22s advance lead time before boundary breaches, whereas PIR-only triggers only upon immediate proximity (<3s).</p>
+            </div>
+            <div class="insight-card">
+              <h4>🛡 NUISANCE FILTERING</h4>
+              <p id="cfNuisanceInsight">Multi-sensor corroboration eliminates false alarms caused by animal turn-arounds or single-link RF disturbances that would trigger un-corroborated RF-only policies.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode E: PRW-Wild Interactive Hardware Lab Modal -->
+    <div class="modal-backdrop hidden" id="hardwareLabModal">
+      <div class="modal-card wide-modal hw-lab-modal">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <div class="hw-modal-brand">
+              <span class="hw-tag">PRW-WILD INTERACTIVE HARDWARE LAB</span>
+              <span class="hw-ref-badge" id="hwRefBadge">REF: ESP32-S3-DevKitC-1 v1.1</span>
+            </div>
+            <h2>Physical 3D Component Inspection & Verified Pinout Register</h2>
+            <p>Interactive 3D examination of verified embedded hardware, official Espressif schematics, sensor modules, and verified wiring interconnects.</p>
+          </div>
+          <button id="closeHardwareLabBtn" class="btn-close">✕</button>
+        </div>
+
+        <!-- Hardware Lab Sub-Navigation Bar -->
+        <div class="hw-lab-nav-bar">
+          <div class="hw-device-selector-tabs" id="hwDeviceSelectorTabs">
+            <button class="hw-tab active" data-dev="esp32_s3_devkitc1_v1_1">
+              <span class="hw-tab-icon">⚡</span> ESP32-S3 DevKitC-1 v1.1
+            </button>
+            <button class="hw-tab" data-dev="hc_sr501_reference">
+              <span class="hw-tab-icon">👁️</span> HC-SR501 PIR Sensor
+            </button>
+            <button class="hw-tab" data-dev="sw420_reference">
+              <span class="hw-tab-icon">〰️</span> SW-420 Vibration Sensor
+            </button>
+            <button class="hw-tab" data-dev="inmp441_breakout_reference">
+              <span class="hw-tab-icon">🎙️</span> INMP441 I2S Microphone
+            </button>
+            <button class="hw-tab" data-dev="ai_thinker_esp32_cam_ov2640">
+              <span class="hw-tab-icon">📷</span> ESP32-CAM OV2640
+            </button>
+            <button class="hw-tab" data-dev="wifi_access_point_reference">
+              <span class="hw-tab-icon">📡</span> Wi-Fi Router (AP)
+            </button>
+            <button class="hw-tab" data-dev="power_system_reference">
+              <span class="hw-tab-icon">🔋</span> Solar / Battery Power
+            </button>
+          </div>
+
+          <div class="hw-view-mode-toggle">
+            <button class="hw-view-btn active" id="btnHwModeWorkbench" title="3D Multi-Board Physical Assembly with real 3D curved jumper cables">3D WIRING WORKBENCH</button>
+            <button class="hw-view-btn" id="btnHwMode3D" title="Inspect individual 3D hardware components">3D COMPONENT</button>
+            <button class="hw-view-btn" id="btnHwModeWiring" title="2D Schematic diagram fallback">2D SCHEMATIC</button>
+            <button class="hw-view-btn" id="btnHwModePinout" title="Header pinout register & specs">PINOUT REGISTER</button>
+          </div>
+        </div>
+
+        <div class="modal-body hw-lab-body">
+          <div class="hw-lab-grid">
+            <!-- Left: 3D Viewport / Wiring Canvas Container -->
+            <div class="hw-viewport-container">
+              <!-- 3D Hardware Viewport -->
+              <div id="hardwareLab3DContainer" class="hw-3d-viewport">
+                <!-- Overlay 3D Toolbar -->
+                <div class="hw-3d-toolbar">
+                  <div class="hw-cam-presets">
+                    <button class="hw-tool-btn active" id="btnHwCamIso" title="Isometric Perspective">Isometric</button>
+                    <button class="hw-tool-btn" id="btnHwCamTop" title="Top-Down Component Layout">Top View</button>
+                    <button class="hw-tool-btn" id="btnHwCamFront" title="Front USB & Header Rail">Front View</button>
+                    <button class="hw-tool-btn" id="btnHwCamBack" title="Bottom Solder Joints & Silk">Bottom View</button>
+                    <button class="hw-tool-btn" id="btnHwCamReset" title="Reset Camera Orientation">⊙ Reset</button>
+                  </div>
+                  <div class="hw-tool-divider"></div>
+                  <!-- 3D Wire Category Filter Pills -->
+                  <div class="hw-wire-filter-group" id="hwWireFilterGroup">
+                    <button class="hw-tool-btn active" id="btnFilterWiresAll" data-cat="all" title="Show all 11 verified interconnect wires">ALL (11)</button>
+                    <button class="hw-tool-btn" id="btnFilterWiresPwr" data-cat="power" title="Filter Power Rails (5V & 3.3V)">⚡ POWER (3)</button>
+                    <button class="hw-tool-btn" id="btnFilterWiresGnd" data-cat="ground" title="Filter Common Ground (GND)">⏚ GND (3)</button>
+                    <button class="hw-tool-btn" id="btnFilterWiresGpio" data-cat="digital" title="Filter Digital GPIO triggers">📡 GPIO (2)</button>
+                    <button class="hw-tool-btn" id="btnFilterWiresI2s" data-cat="i2s" title="Filter I2S Audio Bus (SD/WS/SCK)">🎙️ I2S (3)</button>
+                  </div>
+                  <div class="hw-tool-divider"></div>
+                  <button class="hw-tool-btn highlight" id="btnToggleWires" title="Show or hide 3D curved jumper wires">
+                    🔌 WIRES: ON
+                  </button>
+                  <button class="hw-tool-btn highlight" id="btnToggleExplodedView" title="Toggle Exploded Mechanical Assembly View">
+                    💥 EXPLODED VIEW
+                  </button>
+                  <button class="hw-tool-btn" id="btnTogglePinLabels" title="Toggle 3D Pin Callout Billboards">
+                    🏷️ LABELS
+                  </button>
+                </div>
+
+                <!-- 3D Click Hint -->
+                <div class="hw-3d-hint">
+                  <span>💡 <strong>3D Physical Assembly:</strong> Click any curved 3D jumper wire or header pin to trace net connection, voltage domain, and verified datasheet references. Drag to orbit, scroll to zoom.</span>
+                </div>
+              </div>
+
+              <!-- Interactive Wiring Schematic View (Toggleable) -->
+              <div id="hardwareWiringContainer" class="hw-wiring-viewport hidden">
+                <canvas id="hardwareWiringCanvas" width="720" height="520"></canvas>
+                <div class="wiring-legend">
+                  <div class="wl-item"><span class="wl-color red"></span> 5V DC Supply (PIR VCC)</div>
+                  <div class="wl-item"><span class="wl-color orange"></span> 3.3V DC Supply (Vibration / Mic)</div>
+                  <div class="wl-item"><span class="wl-color black"></span> Common Ground (GND)</div>
+                  <div class="wl-item"><span class="wl-color cyan"></span> Digital Signal (GPIO4 / GPIO5)</div>
+                  <div class="wl-item"><span class="wl-color purple"></span> I2S Audio Bus (GPIO7 / 8 / 9)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Hardware Details & Pinout Register Panel -->
+            <div class="hw-details-sidebar" id="hwDetailsSidebar">
+              <!-- Selected Component Quick Card -->
+              <div class="hw-card component-card" id="hwSelectedComponentCard">
+                <div class="hw-card-header">
+                  <span class="hw-comp-badge" id="hwCompBadge">ESP32-S3-WROOM-1</span>
+                  <span class="hw-verification-pill verified" id="hwVerificationPill">VERIFIED</span>
+                </div>
+                <h3 id="hwCompName">ESP32-S3-WROOM-1 Module & RF Shield</h3>
+                <p id="hwCompDesc" class="hw-comp-desc">Dual-core Xtensa LX7 @ 240MHz with integrated 2.4GHz Wi-Fi CSI capture and Bluetooth 5 LE.</p>
+                
+                <div class="hw-comp-metadata-grid" id="hwCompMetaGrid">
+                  <div><span>Header Position:</span> <strong id="hwMetaPos">Top Center</strong></div>
+                  <div><span>Signal / GPIO:</span> <strong id="hwMetaSignal">SoC RF Block</strong></div>
+                  <div><span>Operating Voltage:</span> <strong id="hwMetaVolt">3.0V - 3.6V (3.3V Nom)</strong></div>
+                  <div><span>Current / Power:</span> <strong id="hwMetaPower">~120mA Rx (Peak 310mA)</strong></div>
+                  <div><span>PRW-Wild Role:</span> <strong id="hwMetaRole">Edge CSI frame extraction & precursor corroboration</strong></div>
+                  <div><span>Official Ref:</span> <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html" target="_blank" id="hwMetaLink" class="hw-ref-link">Espressif User Guide v1.1 ↗</a></div>
+                </div>
+
+                <!-- Revision Difference Alert Box -->
+                <div class="hw-revision-alert" id="hwRevisionAlert">
+                  <strong>⚠️ Revision Note (v1.1 vs v1.0):</strong>
+                  <span id="hwRevisionText">On v1.1, the addressable RGB LED is routed to GPIO38. On older v1.0, it was routed to GPIO48. Octal Flash/PSRAM module variants internally consume GPIO35-37 (SPIDQS/SPIIO6/SPIIO7).</span>
+                </div>
+              </div>
+
+              <!-- Header Pinout Register Table Card -->
+              <div class="hw-card pinout-card">
+                <div class="pinout-card-header">
+                  <div class="pinout-header-left">
+                    <h4>Header Pinout Register</h4>
+                    <div class="header-pills">
+                      <button class="hdr-btn active" id="btnHeaderJ1" data-hdr="J1">Header J1 (Left, 22p)</button>
+                      <button class="hdr-btn" id="btnHeaderJ3" data-hdr="J3">Header J3 (Right, 22p)</button>
+                      <button class="hdr-btn" id="btnHeaderWiring" data-hdr="WIRING">Sensor Mappings</button>
+                    </div>
+                  </div>
+                  <input type="text" id="pinoutSearchInput" placeholder="Filter pin, GPIO, signal..." class="pin-search-input">
+                </div>
+
+                <div class="pinout-table-wrapper">
+                  <table class="pinout-table" id="pinoutTable">
+                    <thead>
+                      <tr>
+                        <th>Pin #</th>
+                        <th>Signal</th>
+                        <th>Type</th>
+                        <th>Voltage</th>
+                        <th>PRW-Wild Sensor Mapping</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pinoutTableBody">
+                      <!-- Filled dynamically from JSON -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js Local Vendor Scripts -->
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/OrbitControls.js"></script>
+  <!-- Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>

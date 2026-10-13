@@ -1,0 +1,60 @@
+{
+  "device_id": "ai_thinker_esp32_cam_ov2640",
+  "name": "AI-Thinker ESP32-CAM Development Board with OV2640 Sensor",
+  "manufacturer": "AI-Thinker / OmniVision",
+  "board_revision": "ESP32-CAM standard v1.0",
+  "module_variant": "ESP-32S with external IPEX antenna / PCB trace and 4MB PSRAM (IP5306 / AMS1117 power)",
+  "soc": "ESP32-D0WD (Xtensa dual-core 32-bit LX6 @ 240 MHz, 520 KB SRAM + 4 MB external PSRAM)",
+  "official_pinout_url": "https://github.com/espressif/esp32-camera/blob/master/examples/camera_example/main/camera_pinout.h",
+  "datasheet_url": "https://docs.ai-thinker.com/_media/esp32/docs/esp32-cam_product_specification_en.pdf",
+  "verification_status": "VERIFIED_OFFICIAL_ESPRESSIF_HEADER",
+  "electrical_specs": {
+    "operating_voltage_v": "5.0V recommended via 5V pin (drawing up to 310mA with Flash LED active, 160mA active streaming, 6mA deep sleep)",
+    "sensor_resolution": "2 Megapixel UXGA (1600x1200 maximum) with onboard JPEG compression",
+    "field_of_view_deg": "66 degrees horizontal FOV (standard OV2640 lens)",
+    "focal_length_mm": "3.6mm",
+    "shutter_type": "Electronic rolling shutter"
+  },
+  "dedicated_camera_pin_map": {
+    "D0": "GPIO5",
+    "D1": "GPIO18",
+    "D2": "GPIO19",
+    "D3": "GPIO21",
+    "D4": "GPIO36",
+    "D5": "GPIO39",
+    "D6": "GPIO34",
+    "D7": "GPIO35",
+    "XCLK": "GPIO0",
+    "PCLK": "GPIO22",
+    "VSYNC": "GPIO25",
+    "HREF": "GPIO23",
+    "SIOD": "GPIO26",
+    "SIOC": "GPIO27",
+    "PWDN": "GPIO32",
+    "RESET": "-1",
+    "FLASH_LED": "GPIO4",
+    "STATUS_LED": "GPIO33"
+  },
+  "external_header_pins": [
+    {"pin": "5V", "desc": "Power input (5.0V DC)", "type": "Power"},
+    {"pin": "3V3", "desc": "Regulated 3.3V rail or 3.3V power input", "type": "Power"},
+    {"pin": "GND", "desc": "Ground (Common)", "type": "Power"},
+    {"pin": "U0TXD", "desc": "UART0 TX (GPIO1)", "type": "Serial"},
+    {"pin": "U0RXD", "desc": "UART0 RX (GPIO3)", "type": "Serial"},
+    {"pin": "GPIO0", "desc": "Strapping pin / Boot select (tie to GND for flashing)", "type": "Control"},
+    {"pin": "GPIO16", "desc": "PSRAM CS / External I/O", "type": "Internal/Aux"}
+  ],
+  "components": [
+    {"id": "ov2640_sensor", "name": "OmniVision OV2640 2MP Camera Sensor", "desc": "1/4-inch CMOS image sensor module inserted into 24-pin FPC ribbon socket"},
+    {"id": "flash_led", "name": "High-Power White Flash LED", "desc": "GPIO4 controlled SMD light for nighttime animal illumination"},
+    {"id": "sd_slot", "name": "MicroSD / TF Card Slot", "desc": "Local edge buffer for high-resolution uncompressed image retention"},
+    {"id": "psram_chip", "name": "4MB Pseudo-Static RAM (PSRAM)", "desc": "Necessary for frame buffering JPEG UXGA/SVGA images without running out of internal SRAM"},
+    {"id": "antenna_connector", "name": "IPEX / U.FL External Antenna Connector", "desc": "External high-gain rubber ducky antenna for long-range Wi-Fi transmission through forest canopy"}
+  ],
+  "role_in_prw_wild": {
+    "layer": "Layer 8 & Layer 9: Camera Gating & Optical Confirmation",
+    "purpose": "High-resolution photographic ground truth corroboration to eliminate nuisance animal false alarms.",
+    "power_saving_policy": "Kept in 6mA deep sleep / standby until RF-CSI + seismic fusion triggers wake-up gate. Awakens within 280ms, captures 3-frame burst, executes local edge classifier (or streams to gateway), then sleeps if risk clears.",
+    "distinction": "This is an independent node with its own pin allocation, completely distinct from the ESP32-S3-DevKitC-1 v1.1 CSI sensing node."
+  }
+}

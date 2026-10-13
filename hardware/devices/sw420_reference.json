@@ -1,0 +1,54 @@
+{
+  "device_id": "sw420_reference",
+  "name": "SW-420 Seismic Motion / Normally Closed Vibration Sensor Module",
+  "manufacturer": "Waveshare / Generic Reference",
+  "core_ic": "LM393 Wide-Voltage Low-Power Comparator",
+  "sensor_element": "SW-420 normally closed spring-contact vibration switch inside protective brass tube",
+  "official_datasheet_url": "https://www.waveshare.com/wiki/Vibration_Sensor",
+  "verification_status": "VERIFIED_COMPONENT_SPEC",
+  "electrical_specs": {
+    "operating_voltage_range_v": "3.3V - 5.0V DC (3.3V typical for direct MCU interface)",
+    "quiescent_current_ma": 15.0,
+    "output_form": "Digital switching output (0 and 1)",
+    "driving_ability_ma": "> 15 mA (LM393 open-collector output with onboard pull-up resistor)",
+    "sensing_principle": "Spring vibrates and momentarily breaks contact when ground footsteps or seismic shocks exceed threshold"
+  },
+  "physical_pins": [
+    {
+      "pin_number": 1,
+      "label": "VCC",
+      "type": "Power Input",
+      "voltage_domain": "3.3V DC",
+      "target_connection": "ESP32-S3 J1 Pin 1 (3V3 rail)",
+      "notes": "Powered from 3.3V rail to ensure DO logic high does not exceed 3.3V."
+    },
+    {
+      "pin_number": 2,
+      "label": "GND",
+      "type": "Ground Reference",
+      "voltage_domain": "0.0V",
+      "target_connection": "ESP32-S3 J3 Pin 1 (Common GND)",
+      "notes": "Common ground return."
+    },
+    {
+      "pin_number": 3,
+      "label": "DO",
+      "type": "Digital Output",
+      "voltage_domain": "3.3V CMOS",
+      "target_connection": "ESP32-S3 J1 Pin 5 (GPIO5)",
+      "notes": "Normally LOW when quiescent (closed circuit); pulses HIGH when mechanical vibration momentarily interrupts spring contact."
+    }
+  ],
+  "controls_and_features": [
+    {"name": "SW-420 Sensor Tube", "desc": "Encapsulated spring-rod contact switch sensitive to directional shockwaves."},
+    {"name": "Sensitivity Potentiometer", "desc": "10k trimpot adjusting comparator reference voltage; tune to filter small rodent noise while triggering on megafauna footsteps (>3,000 kg)."},
+    {"name": "Power Indicator LED", "desc": "Green LED lit when VCC rail is powered."},
+    {"name": "Output Switch LED", "desc": "Red LED illuminates when vibration triggers high output pulse."}
+  ],
+  "role_in_prw_wild": {
+    "layer": "Layer 2: Corroborative Sensors",
+    "purpose": "Detects ground-coupled seismic shockwaves produced by elephant locomotion (typically 1-3 Hz footfall cadence).",
+    "strengths": "Unaffected by ambient light, thermal fog, darkness, or vegetation density; low computational burden.",
+    "limitations": "Attenuation through loose sand/humus limits radius to ~15-25m; non-directional on single node."
+  }
+}

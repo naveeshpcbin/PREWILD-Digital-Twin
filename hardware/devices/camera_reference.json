@@ -1,0 +1,22 @@
+{
+  "device_id": "camera_reference",
+  "name": "CAM_01 Field Optical Node (PTZ / Fixed Mast Mount)",
+  "sku_status": "REPRESENTATIVE CAMERA NODE — INTEGRATED ESP32-CAM OV2640 OPTICAL SENSOR",
+  "mast_height_m": 4.5,
+  "enclosure_rating": "IP66 Weatherproof Polycarbonate with Sun Shield",
+  "field_of_view_deg": 66.0,
+  "target_coverage_radius_m": 40.0,
+  "gating_logic": "Deep sleep until Risk Score >= 0.45 AND Corroboration Count >= 2. Wakes up within 280ms, verifies megafauna silhouette, dispatches event confirmation to gateway, enters standby after 15s inactivity.",
+  "power_profile": {
+    "standby_current_ma": 6.0,
+    "active_current_ma": 160.0,
+    "burst_duration_s": 10.0,
+    "energy_per_activation_j": 8.0
+  },
+  "physical_components": [
+    {"name": "Mast Mount", "desc": "Galvanized steel telescoping mast elevating sensor above ground vegetation clutter."},
+    {"name": "Weatherproof Housing", "desc": "IP66 enclosure with anti-reflective optical glass port and sun canopy."},
+    {"name": "Internal Electronics", "desc": "Houses AI-Thinker ESP32-CAM board with OV2640 module and power management board."},
+    {"name": "Status Ring LED", "desc": "Infrared / low-intensity status ring showing camera operational gate (Off = Sleep, Amber = Waking, Green = Active POV)."}
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "scenario_id": "nuisance_triggers",
+  "random_seed": 42,
+  "simulation": {
+    "duration_s": 120.0,
+    "time_step_s": 0.5
+  },
+  "animals": [
+    {
+      "id": "bird_flock",
+      "species": "bird",
+      "waypoints": [
+        [50.0, 50.0],
+        [55.0, 52.0],
+        [60.0, 48.0],
+        [55.0, 50.0]
+      ],
+      "speed_m_s": 0.3,
+      "pause_s": 5.0
+    }
+  ],
+  "sensors": {
+    "nodes": [
+      {"id": "rf_01", "type": "rf_csi", "position": [70.0, 90.0]},
+      {"id": "rf_02", "type": "rf_csi", "position": [70.0, 110.0]},
+      {"id": "pir_01", "type": "pir", "position": [85.0, 100.0]},
+      {"id": "vib_01", "type": "vibration", "position": [95.0, 100.0]},
+      {"id": "aco_01", "type": "acoustic", "position": [80.0, 100.0]}
+    ],
+    "rf_csi": {
+      "detection_range_m": 30.0,
+      "detection_probability": 0.85,
+      "false_trigger_rate_per_s": 0.03,
+      "noise_std": 0.25,
+      "delay_s": 0.1,
+      "outage_intervals": []
+    },
+    "pir": {
+      "detection_range_m": 15.0,
+      "detection_probability": 0.90,
+      "false_trigger_rate_per_s": 0.04,
+      "noise_std": 0.15,
+      "delay_s": 0.05,
+      "outage_intervals": []
+    },
+    "vibration": {
+      "detection_range_m": 20.0,
+      "detection_probability": 0.70,
+      "false_trigger_rate_per_s": 0.05,
+      "noise_std": 0.30,
+      "delay_s": 0.05,
+      "outage_intervals": []
+    },
+    "acoustic": {
+      "detection_range_m": 40.0,
+      "detection_probability": 0.75,
+      "false_trigger_rate_per_s": 0.02,
+      "noise_std": 0.20,
+      "delay_s": 0.2,
+      "outage_intervals": []
+    }
+  }
+}

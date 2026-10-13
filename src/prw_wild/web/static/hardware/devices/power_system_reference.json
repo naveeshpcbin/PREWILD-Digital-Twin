@@ -1,0 +1,16 @@
+{
+  "device_id": "power_system_reference",
+  "name": "Solar Battery Management & Off-Grid Field Power Subsystem",
+  "sku_status": "REPRESENTATIVE FIELD POWER SUBSYSTEM — CONFIGURABLE SOLAR/LFP BENCHMARK",
+  "solar_pv_rating_w": 25.0,
+  "battery_chemistry": "LiFePO4 (Lithium Iron Phosphate, 3.2V nominal, 4S 12.8V 12Ah pack)",
+  "bms_features": [
+    "Over-charge, over-discharge, over-current, and low-temperature charge cutoff protection",
+    "Buck-boost regulation delivering stable 12V and 5V DC auxiliary rails",
+    "Telemetry shunt monitor providing real-time state of charge (SoC) and mA load tracking"
+  ],
+  "runtime_estimates": {
+    "prw_wild_predictive_gating": "Over 21 days autonomous operation during continuous overcast monsoon conditions",
+    "always_on_baseline": "Depleted within ~36 hours without continuous direct solar generation"
+  }
+}

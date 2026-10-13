@@ -1,0 +1,283 @@
+{
+  "device_id": "esp32_s3_devkitc1_v1_1",
+  "name": "ESP32-S3-DevKitC-1 v1.1",
+  "manufacturer": "Espressif Systems",
+  "board_revision": "v1.1",
+  "module_variant": "ESP32-S3-WROOM-1",
+  "soc": "ESP32-S3 (Xtensa dual-core 32-bit LX7 @ up to 240 MHz, vector instructions, 512 KB SRAM)",
+  "wireless": "2.4 GHz Wi-Fi (802.11 b/g/n) with HT40 & CSI capture, Bluetooth 5 (LE)",
+  "official_guide_url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html",
+  "datasheet_url": "https://documentation.espressif.com/esp32_s3_datasheet_en.pdf",
+  "esp_csi_url": "https://github.com/espressif/esp-csi",
+  "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+  "dimensions_mm": {
+    "length": 62.0,
+    "width": 25.4,
+    "height": 13.0,
+    "header_pitch": 2.54,
+    "header_row_spacing": 22.86
+  },
+  "operating_voltage": {
+    "recommended_input_v": 5.0,
+    "logic_level_v": 3.3,
+    "max_gpio_voltage_v": 3.6,
+    "max_current_per_pin_ma": 40.0
+  },
+  "revision_differences": {
+    "v1_1_vs_v1_0": "On v1.1, the addressable RGB LED is routed to GPIO38. On older v1.0, it was routed to GPIO48. GPIO48 is an ordinary external header pin on v1.1.",
+    "memory_restrictions": "For Octal flash and Octal PSRAM module variants (e.g. WROOM-1-N8R8), GPIO35, GPIO36, and GPIO37 are consumed internally by SPIDQS, SPIIO7, SPIIO6 and must NOT be used externally."
+  },
+  "components": [
+    {
+      "id": "module_wroom1",
+      "name": "ESP32-S3-WROOM-1 Module",
+      "type": "SoC Module & RF Shield",
+      "function": "Dual-core 240MHz MCU, 8MB Flash, 512KB SRAM, 2.4GHz Wi-Fi receiver for CSI packets",
+      "physical_location": "Top center of PCB under nickel-plated RF shield",
+      "role_in_prw_wild": "Runs high-speed CSI frame extraction, baseline noise filtering, and edge corroboration engine"
+    },
+    {
+      "id": "pcb_antenna",
+      "name": "2.4 GHz Inverted-F PCB Antenna",
+      "type": "Antenna",
+      "function": "RF transceiving for 802.11 b/g/n signals",
+      "physical_location": "Top edge of module, unshielded PCB keepout zone",
+      "role_in_prw_wild": "Receives 802.11 OFDM packets from WIFI_AP_01 for multi-subcarrier CSI amplitude and phase matrix analysis"
+    },
+    {
+      "id": "usb_uart_port",
+      "name": "USB-to-UART Port (Micro-USB / USB-C)",
+      "type": "Connector / Communication",
+      "function": "Serial flashing, logging, and 5V power supply via CP2102N / CH343 bridge",
+      "physical_location": "Bottom edge, right port (labelled USB-to-UART)",
+      "role_in_prw_wild": "Diagnostics, serial telemetry streaming, and base-station firmware maintenance"
+    },
+    {
+      "id": "usb_native_port",
+      "name": "ESP32-S3 USB OTG Port",
+      "type": "Connector / Full-Speed USB",
+      "function": "Direct native USB OTG full-speed connection (GPIO19 D-, GPIO20 D+)",
+      "physical_location": "Bottom edge, left port (labelled USB)",
+      "role_in_prw_wild": "High-throughput CSI raw packet streaming to central gateway"
+    },
+    {
+      "id": "boot_button",
+      "name": "BOOT Button (Download Mode)",
+      "type": "Pushbutton Switch",
+      "gpio": "GPIO0",
+      "function": "Pull down GPIO0 to enter UART download bootloader mode",
+      "physical_location": "Bottom right, near USB-UART port",
+      "role_in_prw_wild": "Hardware boot configuration / firmware recovery"
+    },
+    {
+      "id": "rst_button",
+      "name": "RST / EN Button (Reset)",
+      "type": "Pushbutton Switch",
+      "pin": "CHIP_PU",
+      "function": "Hardware reset active-low input",
+      "physical_location": "Bottom left, near USB OTG port",
+      "role_in_prw_wild": "Hardware reboot / system restart"
+    },
+    {
+      "id": "rgb_led",
+      "name": "Addressable RGB LED (WS2812 / SK6812)",
+      "type": "Indicator LED",
+      "gpio": "GPIO38",
+      "function": "Addressable 24-bit RGB status indicator (explicitly GPIO38 on v1.1)",
+      "physical_location": "Center board between regulator and module",
+      "role_in_prw_wild": "Visual operational state: Green = Standby, Amber = Corroborating, Red = Risk Gated / Alarm"
+    },
+    {
+      "id": "power_led",
+      "name": "3.3V Power Indicator LED",
+      "type": "LED Indicator",
+      "function": "Illuminates red/green when 3.3V regulator rail is energized",
+      "physical_location": "Near 3.3V LDO regulator",
+      "role_in_prw_wild": "Continuous board power verification"
+    },
+    {
+      "id": "ldo_regulator",
+      "name": "3.3V LDO Voltage Regulator",
+      "type": "Power Regulation",
+      "function": "Steps down 5V USB/VBUS power to stable 3.3V @ 500mA-1000mA rail",
+      "physical_location": "Lower-center section of PCB",
+      "role_in_prw_wild": "Regulated clean power supply for ESP32-S3, vibration module, and INMP441 microphone"
+    },
+    {
+      "id": "header_j1",
+      "name": "Pin Header J1 (Left, 22 pins)",
+      "type": "Pin Header",
+      "function": "3.3V power, Reset, Touch, ADC, I2S, and general GPIO breakout",
+      "physical_location": "Left rail of PCB (22 pins, 2.54mm pitch)",
+      "role_in_prw_wild": "Interconnect for PIR (GPIO4), Vibration (GPIO5), and I2S Mic (GPIO7, 8, 9)"
+    },
+    {
+      "id": "header_j3",
+      "name": "Pin Header J3 (Right, 22 pins)",
+      "type": "Pin Header",
+      "function": "GND, 5V, UART, JTAG, and high-numbered GPIO breakout",
+      "physical_location": "Right rail of PCB (22 pins, 2.54mm pitch)",
+      "role_in_prw_wild": "Provides common system GND, 5V for PIR VCC, and UART links"
+    }
+  ],
+  "headers": {
+    "J1": [
+      {"pos": 1, "signal": "3V3", "type": "Power", "desc": "3.3V Power Output", "volt_v": 3.3, "notes": "Supplies SW-420 and INMP441", "verified": true},
+      {"pos": 2, "signal": "3V3", "type": "Power", "desc": "3.3V Power Output", "volt_v": 3.3, "notes": "Auxiliary 3.3V rail", "verified": true},
+      {"pos": 3, "signal": "RST", "type": "Input", "desc": "CHIP_PU (Reset)", "volt_v": 3.3, "notes": "Active low reset with internal pull-up", "verified": true},
+      {"pos": 4, "signal": "GPIO4", "type": "I/O", "desc": "ADC1_CH3, TOUCH4", "volt_v": 3.3, "assigned_to": "HC-SR501 PIR Output", "notes": "Configured as digital input for PIR motion pulse", "verified": true},
+      {"pos": 5, "signal": "GPIO5", "type": "I/O", "desc": "ADC1_CH4, TOUCH5", "volt_v": 3.3, "assigned_to": "SW-420 Vibration DO", "notes": "Configured as digital input for seismic shock trigger", "verified": true},
+      {"pos": 6, "signal": "GPIO6", "type": "I/O", "desc": "ADC1_CH5, TOUCH6", "volt_v": 3.3, "notes": "Available GPIO", "verified": true},
+      {"pos": 7, "signal": "GPIO7", "type": "I/O", "desc": "ADC1_CH6, TOUCH7", "volt_v": 3.3, "assigned_to": "INMP441 SD (Data)", "notes": "Configured as I2S0_DATA_IN for acoustic rumbles", "verified": true},
+      {"pos": 8, "signal": "GPIO15", "type": "I/O", "desc": "ADC2_CH4, TOUCH14", "volt_v": 3.3, "notes": "Available GPIO", "verified": true},
+      {"pos": 9, "signal": "GPIO16", "type": "I/O", "desc": "ADC2_CH5", "volt_v": 3.3, "notes": "Available GPIO", "verified": true},
+      {"pos": 10, "signal": "GPIO17", "type": "I/O", "desc": "ADC2_CH6", "volt_v": 3.3, "notes": "Available GPIO", "verified": true},
+      {"pos": 11, "signal": "GPIO18", "type": "I/O", "desc": "ADC2_CH7, USB JTAG D-", "volt_v": 3.3, "notes": "USB JTAG or GPIO", "verified": true},
+      {"pos": 12, "signal": "GPIO8", "type": "I/O", "desc": "ADC1_CH7", "volt_v": 3.3, "assigned_to": "INMP441 WS (Word Select)", "notes": "Configured as I2S0_WS / LRCLK master clock", "verified": true},
+      {"pos": 13, "signal": "GPIO19", "type": "I/O", "desc": "USB D- (Native USB)", "volt_v": 3.3, "notes": "Wired to native USB port D-", "verified": true},
+      {"pos": 14, "signal": "GPIO20", "type": "I/O", "desc": "USB D+ (Native USB)", "volt_v": 3.3, "notes": "Wired to native USB port D+", "verified": true},
+      {"pos": 15, "signal": "GPIO3", "type": "I/O", "desc": "ADC1_CH2, TOUCH3", "volt_v": 3.3, "notes": "Available GPIO", "verified": true},
+      {"pos": 16, "signal": "GPIO46", "type": "Input", "desc": "BOOT Strapping Pin", "volt_v": 3.3, "notes": "Input-only pin, pull-down at boot determines ROM logging", "verified": true},
+      {"pos": 17, "signal": "GPIO9", "type": "I/O", "desc": "ADC1_CH8, FSPIHD", "volt_v": 3.3, "assigned_to": "INMP441 SCK (Bit Clock)", "notes": "Configured as I2S0_BCLK master clock", "verified": true},
+      {"pos": 18, "signal": "GPIO10", "type": "I/O", "desc": "ADC1_CH9, FSPICS0", "volt_v": 3.3, "notes": "FSPI CS / General GPIO", "verified": true},
+      {"pos": 19, "signal": "GPIO11", "type": "I/O", "desc": "ADC2_CH0, FSPID", "volt_v": 3.3, "notes": "FSPI MOSI / General GPIO", "verified": true},
+      {"pos": 20, "signal": "GPIO12", "type": "I/O", "desc": "ADC2_CH1, FSPICLK", "volt_v": 3.3, "notes": "FSPI CLK / General GPIO", "verified": true},
+      {"pos": 21, "signal": "GPIO13", "type": "I/O", "desc": "ADC2_CH2, FSPIQ", "volt_v": 3.3, "notes": "FSPI MISO / General GPIO", "verified": true},
+      {"pos": 22, "signal": "GPIO14", "type": "I/O", "desc": "ADC2_CH3, FSPIWP", "volt_v": 3.3, "notes": "FSPI WP / General GPIO", "verified": true}
+    ],
+    "J3": [
+      {"pos": 1, "signal": "GND", "type": "Power", "desc": "Ground (Common)", "volt_v": 0.0, "notes": "Common system ground rail", "verified": true},
+      {"pos": 2, "signal": "GPIO43", "type": "I/O", "desc": "U0TXD (Default UART TX)", "volt_v": 3.3, "notes": "Wired to CP2102N UART RX", "verified": true},
+      {"pos": 3, "signal": "GPIO44", "type": "I/O", "desc": "U0RXD (Default UART RX)", "volt_v": 3.3, "notes": "Wired to CP2102N UART TX", "verified": true},
+      {"pos": 4, "signal": "GPIO1", "type": "I/O", "desc": "ADC1_CH0, TOUCH1", "volt_v": 3.3, "notes": "General purpose ADC/GPIO", "verified": true},
+      {"pos": 5, "signal": "GPIO2", "type": "I/O", "desc": "ADC1_CH1, TOUCH2", "volt_v": 3.3, "notes": "General purpose ADC/GPIO", "verified": true},
+      {"pos": 6, "signal": "GPIO42", "type": "I/O", "desc": "MTMS (JTAG)", "volt_v": 3.3, "notes": "JTAG test mode select", "verified": true},
+      {"pos": 7, "signal": "GPIO41", "type": "I/O", "desc": "MTDI (JTAG)", "volt_v": 3.3, "notes": "JTAG data in", "verified": true},
+      {"pos": 8, "signal": "GPIO40", "type": "I/O", "desc": "MTDO (JTAG)", "volt_v": 3.3, "notes": "JTAG data out", "verified": true},
+      {"pos": 9, "signal": "GPIO39", "type": "I/O", "desc": "MTCK (JTAG)", "volt_v": 3.3, "notes": "JTAG clock", "verified": true},
+      {"pos": 10, "signal": "GPIO38", "type": "I/O", "desc": "Onboard RGB LED Data", "volt_v": 3.3, "assigned_to": "Onboard WS2812 RGB LED", "notes": "Hardwired to WS2812 RGB LED on v1.1. (On v1.0 this was GPIO48)", "verified": true},
+      {"pos": 11, "signal": "GPIO37", "type": "Reserved", "desc": "SPIDQS (Octal SPI Internal)", "volt_v": 3.3, "notes": "RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.", "verified": true},
+      {"pos": 12, "signal": "GPIO36", "type": "Reserved", "desc": "SPIIO7 (Octal SPI Internal)", "volt_v": 3.3, "notes": "RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.", "verified": true},
+      {"pos": 13, "signal": "GPIO35", "type": "Reserved", "desc": "SPIIO6 (Octal SPI Internal)", "volt_v": 3.3, "notes": "RESERVED: Connected internally to Octal PSRAM/Flash. DO NOT USE EXTERNALLY on WROOM-1 Octal variants.", "verified": true},
+      {"pos": 14, "signal": "GPIO0", "type": "I/O", "desc": "BOOT Button / Strapping Pin", "volt_v": 3.3, "notes": "Connected to BOOT tactile switch. Low = download bootloader", "verified": true},
+      {"pos": 15, "signal": "GPIO45", "type": "I/O", "desc": "Strapping Pin (VDD_SPI)", "volt_v": 3.3, "notes": "Strapping pin for VDD_SPI flash voltage selector", "verified": true},
+      {"pos": 16, "signal": "GPIO47", "type": "I/O", "desc": "SPICLK_P / General GPIO", "volt_v": 3.3, "notes": "Available general purpose GPIO", "verified": true},
+      {"pos": 17, "signal": "GPIO48", "type": "I/O", "desc": "SPICLK_N / General GPIO", "volt_v": 3.3, "notes": "Available external GPIO on v1.1 (used for RGB LED on v1.0)", "verified": true},
+      {"pos": 18, "signal": "GPIO21", "type": "I/O", "desc": "RTC_GPIO21", "volt_v": 3.3, "notes": "Available general purpose / RTC GPIO", "verified": true},
+      {"pos": 19, "signal": "NC / GND", "type": "Power", "desc": "Not Connected / Ground", "volt_v": 0.0, "notes": "Reserved or secondary ground depending on module variant", "verified": true},
+      {"pos": 20, "signal": "GND", "type": "Power", "desc": "Ground (Common)", "volt_v": 0.0, "notes": "Common ground rail for sensors", "verified": true},
+      {"pos": 21, "signal": "5V", "type": "Power", "desc": "5V Input / USB VBUS Power", "volt_v": 5.0, "assigned_to": "HC-SR501 PIR VCC", "notes": "Directly connected to USB 5V rail. Supplies HC-SR501 PIR sensor module", "verified": true},
+      {"pos": 22, "signal": "GND", "type": "Power", "desc": "Ground (Common)", "volt_v": 0.0, "notes": "Common ground rail", "verified": true}
+    ]
+  },
+  "proposed_sensor_wiring": [
+    {
+      "sensor": "HC-SR501 Passive Infrared (PIR) Sensor",
+      "module_pin": "VCC",
+      "esp32_pin": "J3-21 (5V)",
+      "signal_type": "Power Supply",
+      "voltage_level": "5.0V DC",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "HC-SR501 has an onboard 7133-1 LDO regulator requiring minimum 4.5V input. Using 3.3V on VCC causes brownout or spurious triggers unless diode is bypassed. 5V rail provides stable operation."
+    },
+    {
+      "sensor": "HC-SR501 Passive Infrared (PIR) Sensor",
+      "module_pin": "GND",
+      "esp32_pin": "J3-22 (GND)",
+      "signal_type": "Ground Reference",
+      "voltage_level": "0.0V",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "Common ground reference."
+    },
+    {
+      "sensor": "HC-SR501 Passive Infrared (PIR) Sensor",
+      "module_pin": "OUT",
+      "esp32_pin": "J1-4 (GPIO4)",
+      "signal_type": "Digital Input (Active High)",
+      "voltage_level": "3.3V TTL",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "HC-SR501 output is 3.3V TTL logic level (via internal 7133 regulator), perfectly safe for ESP32-S3 3.3V GPIO. Configured with GPIO pull-down."
+    },
+    {
+      "sensor": "SW-420 Normally Closed Vibration Sensor",
+      "module_pin": "VCC",
+      "esp32_pin": "J1-1 (3V3)",
+      "signal_type": "Power Supply",
+      "voltage_level": "3.3V DC",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "SW-420 LM393 comparator operates from 3.3V to 5V. Powered from ESP32 3.3V rail for matched logic levels."
+    },
+    {
+      "sensor": "SW-420 Normally Closed Vibration Sensor",
+      "module_pin": "GND",
+      "esp32_pin": "J3-1 (GND)",
+      "signal_type": "Ground Reference",
+      "voltage_level": "0.0V",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "Common ground reference."
+    },
+    {
+      "sensor": "SW-420 Normally Closed Vibration Sensor",
+      "module_pin": "DO",
+      "esp32_pin": "J1-5 (GPIO5)",
+      "signal_type": "Digital Input (Shock Trigger)",
+      "voltage_level": "3.3V CMOS",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "LM393 open-collector comparator with 10k pull-up to VCC (3.3V). Pulses high on physical ground seismic vibration."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "VDD",
+      "esp32_pin": "J1-2 (3V3)",
+      "signal_type": "Power Supply",
+      "voltage_level": "3.3V DC",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "INMP441 operating voltage: 1.62V to 3.63V. Max current consumption: 1.4 mA. Connected to ESP32-S3 3.3V rail."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "GND",
+      "esp32_pin": "J3-20 (GND)",
+      "signal_type": "Ground Reference",
+      "voltage_level": "0.0V",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "Common ground reference."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "SD",
+      "esp32_pin": "J1-7 (GPIO7)",
+      "signal_type": "I2S Serial Data Output",
+      "voltage_level": "3.3V CMOS",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "Connects to ESP32-S3 I2S0_DATA_IN. 24-bit PCM acoustic stream at 16kHz sampling rate."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "WS",
+      "esp32_pin": "J1-12 (GPIO8)",
+      "signal_type": "I2S Word Select / LRCLK",
+      "voltage_level": "3.3V CMOS",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "ESP32-S3 I2S0_WS master output clock frame sync (16 kHz)."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "SCK",
+      "esp32_pin": "J1-17 (GPIO9)",
+      "signal_type": "I2S Continuous Bit Clock",
+      "voltage_level": "3.3V CMOS",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "ESP32-S3 I2S0_BCLK master output clock (1.024 MHz for 32 bits x 2 ch x 16 kHz)."
+    },
+    {
+      "sensor": "INMP441 Omnidirectional Digital I2S Microphone Breakout",
+      "module_pin": "L/R",
+      "esp32_pin": "J3-20 (GND)",
+      "signal_type": "Channel Select",
+      "voltage_level": "0.0V",
+      "status": "VERIFIED_MODULE_SPEC",
+      "engineering_notes": "Tied to GND selects Left audio channel for mono microphone operation."
+    }
+  ]
+}

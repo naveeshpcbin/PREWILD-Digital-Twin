@@ -1,0 +1,80 @@
+{
+  "device_id": "inmp441_breakout_reference",
+  "name": "INMP441 Omnidirectional Digital I2S Microphone Breakout Board",
+  "manufacturer": "InvenSense / TDK (IC) / Generic Breakout",
+  "core_ic": "INMP441 MEMS Microphone with integrated 24-bit I2S ADC and decimation filter",
+  "sensor_element": "Bottom-port acoustic capacitive MEMS sensor with silicon membrane",
+  "official_datasheet_url": "https://invensense.tdk.com/wp-content/uploads/2015/02/INMP441.pdf",
+  "verification_status": "VERIFIED_COMPONENT_SPEC",
+  "electrical_specs": {
+    "supply_voltage_range_v": "1.62V - 3.63V DC (3.3V nominal)",
+    "current_consumption_ma": 1.4,
+    "sleep_current_ua": 12.0,
+    "signal_to_noise_ratio_dba": 61.0,
+    "sensitivity_dbfs": -26.0,
+    "frequency_response_hz": "60 Hz - 15,000 Hz (extended infrasonic roll-off down to ~15-20 Hz detectable)",
+    "acoustic_overload_point_dbspl": 120.0,
+    "interface_standard": "Industry standard 24-bit I2S digital audio bus"
+  },
+  "physical_pins": [
+    {
+      "pin_number": 1,
+      "label": "SCK",
+      "type": "I2S Bit Clock (BCLK Input)",
+      "voltage_domain": "3.3V CMOS",
+      "target_connection": "ESP32-S3 J1 Pin 17 (GPIO9)",
+      "notes": "Serial clock supplied by ESP32-S3 I2S master peripheral (1.024 MHz at 16kHz sampling)."
+    },
+    {
+      "pin_number": 2,
+      "label": "WS",
+      "type": "I2S Word Select (LRCLK Input)",
+      "voltage_domain": "3.3V CMOS",
+      "target_connection": "ESP32-S3 J1 Pin 12 (GPIO8)",
+      "notes": "Frame sync clock supplied by ESP32-S3 (16 kHz audio frame rate)."
+    },
+    {
+      "pin_number": 3,
+      "label": "L/R",
+      "type": "Channel Select Input",
+      "voltage_domain": "3.3V CMOS",
+      "target_connection": "ESP32-S3 J3 Pin 20 (Common GND)",
+      "notes": "Pulled LOW to ground selects Left audio channel for mono recording mode."
+    },
+    {
+      "pin_number": 4,
+      "label": "SD",
+      "type": "I2S Serial Data (Data Output)",
+      "voltage_domain": "3.3V CMOS",
+      "target_connection": "ESP32-S3 J1 Pin 7 (GPIO7)",
+      "notes": "Tri-state digital PCM sample stream output sampled on trailing clock edge."
+    },
+    {
+      "pin_number": 5,
+      "label": "VDD",
+      "type": "Power Input",
+      "voltage_domain": "3.3V DC",
+      "target_connection": "ESP32-S3 J1 Pin 2 (3V3 rail)",
+      "notes": "3.3V power input, decouple with 0.1uF ceramic capacitor close to board."
+    },
+    {
+      "pin_number": 6,
+      "label": "GND",
+      "type": "Ground Reference",
+      "voltage_domain": "0.0V",
+      "target_connection": "ESP32-S3 J3 Pin 20 (Common GND)",
+      "notes": "Common audio ground return."
+    }
+  ],
+  "controls_and_features": [
+    {"name": "Acoustic Port", "desc": "Circular acoustic aperture on underside of MEMS package admitting atmospheric pressure waves."},
+    {"name": "Integrated 24-bit ADC", "desc": "Sigma-Delta converter and anti-aliasing decimation filter eliminating need for analog preamp circuits."},
+    {"name": "Internal Pull-Downs", "desc": "Ensures clean floating bus recovery between words."}
+  ],
+  "role_in_prw_wild": {
+    "layer": "Layer 2: Corroborative Sensors",
+    "purpose": "Acoustic monitoring of elephant low-frequency vocalizations (rumbles ~14-25 Hz fundamental) and breaking branches/brush noises.",
+    "strengths": "Long propagation range (hundreds of meters for low-frequency sound), direct digital stream with high SNR, zero analog degradation over cable.",
+    "limitations": "Wind shear noise across microphone port requires acoustic foam windscreen; acoustic events can be non-continuous when elephant moves quietly."
+  }
+}

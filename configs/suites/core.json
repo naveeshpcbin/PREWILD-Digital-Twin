@@ -1,0 +1,13 @@
+{
+  "suite_id": "core",
+  "description": "Core scenario suite for PRW-Wild validation",
+  "base_seed": 42,
+  "runs_per_scenario": 5,
+  "scenarios": [
+    "configs/scenarios/approach_crossing.json",
+    "configs/scenarios/turns_away.json",
+    "configs/scenarios/nuisance_triggers.json",
+    "configs/scenarios/degraded_network.json",
+    "configs/scenarios/camera_gating.json"
+  ]
+}

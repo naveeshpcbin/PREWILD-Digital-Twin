@@ -1,0 +1,18 @@
+# PRW-Wild Digital Twin
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+.venv/
+env/
+.env
+*.log
+outputs/runs/
+*.blend1
+.DS_Store
+Thumbs.db

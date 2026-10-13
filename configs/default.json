@@ -1,0 +1,8 @@
+{
+  "scenario_id": "default",
+  "random_seed": 42,
+  "simulation": {
+    "duration_s": 120.0,
+    "time_step_s": 0.5
+  }
+}

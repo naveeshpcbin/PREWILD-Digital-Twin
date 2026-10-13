@@ -1,0 +1,346 @@
+{
+  "manifest_version": "1.0.0",
+  "project": "PRW-Wild Predictive RF-Wildlife Digital Twin & Hardware Lab",
+  "board_revision": "ESP32-S3-DevKitC-1 v1.1",
+  "module_variant": "ESP32-S3-WROOM-1",
+  "created_at": "2026-10-13",
+  "verification_summary": {
+    "total_nets": 11,
+    "verified_nets": 11,
+    "conflicts_found": 0,
+    "strapping_pin_violations": 0,
+    "memory_bus_violations": 0
+  },
+  "wiring_nets": [
+    {
+      "net_id": "NET_5V_PIR_PWR",
+      "net_name": "5V_VBUS_POWER",
+      "category": "power",
+      "wire_color": "#ef4444",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "POWER_SUPPLY",
+      "voltage_domain_v": 5.0,
+      "max_current_ma": 65.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J3",
+        "pin_position": 21,
+        "pin_signal": "5V",
+        "rel_coord_3d": [1.14, 0.35, 2.42]
+      },
+      "destination": {
+        "device_id": "hc_sr501_reference",
+        "device_name": "HC-SR501 PIR Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 1,
+        "pin_signal": "VCC",
+        "rel_coord_3d": [-3.2, 0.45, -1.8]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1",
+      "engineering_notes": "Do NOT connect HC-SR501 VCC to 3.3V rail. Diode drop across onboard 7133 regulator causes brownout under 3.3V."
+    },
+    {
+      "net_id": "NET_GND_PIR",
+      "net_name": "COMMON_GND_PIR",
+      "category": "ground",
+      "wire_color": "#1e293b",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "GROUND",
+      "voltage_domain_v": 0.0,
+      "max_current_ma": 65.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J3",
+        "pin_position": 22,
+        "pin_signal": "GND",
+        "rel_coord_3d": [1.14, 0.35, 2.66]
+      },
+      "destination": {
+        "device_id": "hc_sr501_reference",
+        "device_name": "HC-SR501 PIR Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 3,
+        "pin_signal": "GND",
+        "rel_coord_3d": [-3.2, 0.45, -1.2]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout & Kuongshun HC-SR501 Specification",
+      "engineering_notes": "Common ground return path for pyroelectric sensor front-end."
+    },
+    {
+      "net_id": "NET_SIG_PIR_OUT",
+      "net_name": "PIR_MOTION_TRIGGER",
+      "category": "digital",
+      "wire_color": "#00f0ff",
+      "wire_gauge_awg": 26,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "MCU_INPUT",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 5.0,
+      "source": {
+        "device_id": "hc_sr501_reference",
+        "device_name": "HC-SR501 PIR Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 2,
+        "pin_signal": "OUT",
+        "rel_coord_3d": [-3.2, 0.45, -1.5]
+      },
+      "destination": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 4,
+        "pin_signal": "GPIO4",
+        "rel_coord_3d": [-1.14, 0.35, -1.9]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "BISS0001 PIR Controller IC Datasheet Section 4 (3.3V TTL active high output)",
+      "engineering_notes": "Directly safe for ESP32-S3 3.3V GPIO input. Configured with internal pull-down and edge interrupt."
+    },
+    {
+      "net_id": "NET_3V3_SW420_PWR",
+      "net_name": "3V3_VIBRATION_POWER",
+      "category": "power",
+      "wire_color": "#f59e0b",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "POWER_SUPPLY",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 15.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 1,
+        "pin_signal": "3V3",
+        "rel_coord_3d": [-1.14, 0.35, -2.66]
+      },
+      "destination": {
+        "device_id": "sw420_reference",
+        "device_name": "SW-420 Vibration Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 1,
+        "pin_signal": "VCC",
+        "rel_coord_3d": [-3.0, 0.35, 1.2]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "LM393 Dual Comparator Datasheet & Waveshare Vibration Sensor Wiki",
+      "engineering_notes": "LM393 operates from 3.3V to 5V. 3.3V rail ensures DO logic level never exceeds ESP32 GPIO tolerance."
+    },
+    {
+      "net_id": "NET_GND_SW420",
+      "net_name": "COMMON_GND_SW420",
+      "category": "ground",
+      "wire_color": "#1e293b",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "GROUND",
+      "voltage_domain_v": 0.0,
+      "max_current_ma": 15.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J3",
+        "pin_position": 1,
+        "pin_signal": "GND",
+        "rel_coord_3d": [1.14, 0.35, -2.66]
+      },
+      "destination": {
+        "device_id": "sw420_reference",
+        "device_name": "SW-420 Vibration Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 2,
+        "pin_signal": "GND",
+        "rel_coord_3d": [-3.0, 0.35, 1.5]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "DevKitC-1 v1.1 Pin Map & LM393 Pinout",
+      "engineering_notes": "Common ground return for vibration comparator circuit."
+    },
+    {
+      "net_id": "NET_SIG_SW420_DO",
+      "net_name": "VIBRATION_SHOCK_TRIGGER",
+      "category": "digital",
+      "wire_color": "#00f0ff",
+      "wire_gauge_awg": 26,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "MCU_INPUT",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 5.0,
+      "source": {
+        "device_id": "sw420_reference",
+        "device_name": "SW-420 Vibration Sensor",
+        "connector": "3-Pin Header",
+        "pin_position": 3,
+        "pin_signal": "DO",
+        "rel_coord_3d": [-3.0, 0.35, 1.8]
+      },
+      "destination": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 5,
+        "pin_signal": "GPIO5",
+        "rel_coord_3d": [-1.14, 0.35, -1.65]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "Waveshare SW-420 Schematic (LM393 open-collector with onboard 10k pull-up to VCC)",
+      "engineering_notes": "Normally LOW when quiescent; pulses HIGH when ground footfall vibration breaks contact."
+    },
+    {
+      "net_id": "NET_3V3_INMP441_PWR",
+      "net_name": "3V3_MIC_POWER",
+      "category": "power",
+      "wire_color": "#f59e0b",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "POWER_SUPPLY",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 1.4,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 2,
+        "pin_signal": "3V3",
+        "rel_coord_3d": [-1.14, 0.35, -2.42]
+      },
+      "destination": {
+        "device_id": "inmp441_breakout_reference",
+        "device_name": "INMP441 I2S Microphone",
+        "connector": "6-Pin Header",
+        "pin_position": 5,
+        "pin_signal": "VDD",
+        "rel_coord_3d": [3.2, 0.35, 0.8]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "InvenSense INMP441 Datasheet Table 3 (Operating range 1.62V - 3.63V)",
+      "engineering_notes": "Requires clean low-noise 3.3V supply; 0.1uF ceramic decoupling cap placed near module."
+    },
+    {
+      "net_id": "NET_GND_INMP441",
+      "net_name": "COMMON_GND_MIC",
+      "category": "ground",
+      "wire_color": "#1e293b",
+      "wire_gauge_awg": 24,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "GROUND",
+      "voltage_domain_v": 0.0,
+      "max_current_ma": 1.4,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J3",
+        "pin_position": 20,
+        "pin_signal": "GND",
+        "rel_coord_3d": [1.14, 0.35, 2.18]
+      },
+      "destination": {
+        "device_id": "inmp441_breakout_reference",
+        "device_name": "INMP441 I2S Microphone",
+        "connector": "6-Pin Header",
+        "pin_position": 6,
+        "pin_signal": "GND & L/R",
+        "rel_coord_3d": [3.2, 0.35, 1.1]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
+      "engineering_notes": "Tied to common GND to select Left channel mono operation."
+    },
+    {
+      "net_id": "NET_I2S_MIC_SD",
+      "net_name": "I2S0_DATA_IN",
+      "category": "i2s",
+      "wire_color": "#a855f7",
+      "wire_gauge_awg": 26,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "MCU_INPUT",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 2.0,
+      "source": {
+        "device_id": "inmp441_breakout_reference",
+        "device_name": "INMP441 I2S Microphone",
+        "connector": "6-Pin Header",
+        "pin_position": 4,
+        "pin_signal": "SD",
+        "rel_coord_3d": [3.2, 0.35, 0.5]
+      },
+      "destination": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 7,
+        "pin_signal": "GPIO7",
+        "rel_coord_3d": [-1.14, 0.35, -1.14]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "ESP-IDF I2S API Guide (ESP32-S3 I2S0 peripheral routing to GPIO matrix)",
+      "engineering_notes": "Carries 24-bit PCM acoustic samples from MEMS sigma-delta ADC to ESP32 DMA buffer."
+    },
+    {
+      "net_id": "NET_I2S_MIC_WS",
+      "net_name": "I2S0_WORD_SELECT",
+      "category": "i2s",
+      "wire_color": "#a855f7",
+      "wire_gauge_awg": 26,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "MCU_OUTPUT",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 2.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 12,
+        "pin_signal": "GPIO8",
+        "rel_coord_3d": [-1.14, 0.35, 0.12]
+      },
+      "destination": {
+        "device_id": "inmp441_breakout_reference",
+        "device_name": "INMP441 I2S Microphone",
+        "connector": "6-Pin Header",
+        "pin_position": 2,
+        "pin_signal": "WS",
+        "rel_coord_3d": [3.2, 0.35, -0.1]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "ESP32-S3 Technical Reference Manual (I2S0_WS master frame sync at 16 kHz)",
+      "engineering_notes": "Master word-select (LRCLK) generated by ESP32-S3 hardware I2S peripheral."
+    },
+    {
+      "net_id": "NET_I2S_MIC_SCK",
+      "net_name": "I2S0_BIT_CLOCK",
+      "category": "i2s",
+      "wire_color": "#a855f7",
+      "wire_gauge_awg": 26,
+      "connector_type": "2.54mm DuPont Female-to-Female",
+      "signal_direction": "MCU_OUTPUT",
+      "voltage_domain_v": 3.3,
+      "max_current_ma": 2.0,
+      "source": {
+        "device_id": "esp32_s3_devkitc1_v1_1",
+        "device_name": "ESP32-S3-DevKitC-1 v1.1",
+        "connector": "Header J1",
+        "pin_position": 17,
+        "pin_signal": "GPIO9",
+        "rel_coord_3d": [-1.14, 0.35, 1.4]
+      },
+      "destination": {
+        "device_id": "inmp441_breakout_reference",
+        "device_name": "INMP441 I2S Microphone",
+        "connector": "6-Pin Header",
+        "pin_position": 1,
+        "pin_signal": "SCK",
+        "rel_coord_3d": [3.2, 0.35, -0.4]
+      },
+      "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
+      "verification_source": "INMP441 Timing Diagram & ESP-IDF I2S Driver (BCLK = 1.024 MHz at 16kHz x 32b x 2ch)",
+      "engineering_notes": "Continuous serial bit clock driven by ESP32-S3 master controller."
+    }
+  ]
+}

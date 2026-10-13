@@ -1,0 +1,57 @@
+{
+  "device_id": "hc_sr501_reference",
+  "name": "HC-SR501 Pyroelectric Infrared (PIR) Motion Sensor Module",
+  "manufacturer": "Generic / Kuongshun / Adafruit Reference",
+  "core_ic": "BISS0001 Micro Power PIR Motion Detector IC",
+  "sensor_element": "Dual-element pyroelectric infrared sensor with Fresnel lens (120-degree cone)",
+  "official_datasheet_url": "https://www.epitran.it/ebayDrive/datasheet/HC-SR501.pdf",
+  "verification_status": "VERIFIED_COMPONENT_SPEC",
+  "electrical_specs": {
+    "operating_voltage_range_v": "4.5V - 12V DC (5.0V typical via 7133 LDO)",
+    "quiescent_current_ua": 50.0,
+    "output_level_high_v": 3.3,
+    "output_level_low_v": 0.0,
+    "trigger_modes": "L (single trigger / non-repeatable), H (repeatable trigger - recommended for wildlife corridors)",
+    "detection_range_m": "3 to 7 meters (adjustable via sensitivity pot)",
+    "delay_time_s": "0.3 to 300 seconds (adjustable via timing pot)",
+    "blockade_time_s": "2.5 seconds (inhibit window after trigger)"
+  },
+  "physical_pins": [
+    {
+      "pin_number": 1,
+      "label": "VCC",
+      "type": "Power Input",
+      "voltage_domain": "5V DC",
+      "target_connection": "ESP32-S3 J3 Pin 21 (5V VBUS rail)",
+      "notes": "Must be powered by 5V rail due to input drop on onboard 7133 LDO."
+    },
+    {
+      "pin_number": 2,
+      "label": "OUT",
+      "type": "Digital Output (Active High)",
+      "voltage_domain": "3.3V TTL",
+      "target_connection": "ESP32-S3 J1 Pin 4 (GPIO4)",
+      "notes": "3.3V logic high pulse upon thermal radiation delta detection. Safe for direct connection to ESP32-S3 GPIO."
+    },
+    {
+      "pin_number": 3,
+      "label": "GND",
+      "type": "Ground Reference",
+      "voltage_domain": "0.0V",
+      "target_connection": "ESP32-S3 J3 Pin 22 (Common GND)",
+      "notes": "System common ground return."
+    }
+  ],
+  "controls_and_features": [
+    {"name": "Fresnel Lens", "desc": "White hemispherical lens with multi-zone facets creating interlaced optical detection zones."},
+    {"name": "Sensitivity Trimpot", "desc": "Adjusts comparator threshold; clockwise increases range up to ~7m."},
+    {"name": "Time Delay Trimpot", "desc": "Adjusts output pulse duration from 0.3s up to 5 minutes."},
+    {"name": "Trigger Mode Jumper", "desc": "Jumper between L (non-repeatable) and H (repeatable). Set to H for continuous wildlife tracking."}
+  ],
+  "role_in_prw_wild": {
+    "layer": "Layer 2: Corroborative Sensors",
+    "purpose": "Detects thermal differential emitted by large warm-blooded mammals in line-of-sight.",
+    "strengths": "Ultra-low power standby (50 uA), zero false triggers from inert objects.",
+    "limitations": "Cannot penetrate dense foliage, blind beyond 7m, prone to false triggers from direct solar heating or high ambient thermal drift above 37 deg C."
+  }
+}

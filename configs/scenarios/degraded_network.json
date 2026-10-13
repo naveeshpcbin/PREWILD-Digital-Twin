@@ -1,0 +1,64 @@
+{
+  "scenario_id": "degraded_network",
+  "random_seed": 42,
+  "simulation": {
+    "duration_s": 120.0,
+    "time_step_s": 0.5
+  },
+  "animals": [
+    {
+      "id": "elephant_01",
+      "species": "elephant",
+      "waypoints": [
+        [20.0, 100.0],
+        [50.0, 100.0],
+        [80.0, 100.0],
+        [110.0, 100.0],
+        [140.0, 100.0]
+      ],
+      "speed_m_s": 1.5,
+      "pause_s": 0.0
+    }
+  ],
+  "sensors": {
+    "nodes": [
+      {"id": "rf_01", "type": "rf_csi", "position": [70.0, 90.0]},
+      {"id": "rf_02", "type": "rf_csi", "position": [70.0, 110.0]},
+      {"id": "pir_01", "type": "pir", "position": [85.0, 100.0]},
+      {"id": "vib_01", "type": "vibration", "position": [95.0, 100.0]},
+      {"id": "aco_01", "type": "acoustic", "position": [80.0, 100.0]}
+    ],
+    "rf_csi": {
+      "detection_range_m": 30.0,
+      "detection_probability": 0.50,
+      "false_trigger_rate_per_s": 0.005,
+      "noise_std": 0.30,
+      "delay_s": 0.5,
+      "outage_intervals": [[20.0, 50.0], [80.0, 100.0]]
+    },
+    "pir": {
+      "detection_range_m": 15.0,
+      "detection_probability": 0.60,
+      "false_trigger_rate_per_s": 0.008,
+      "noise_std": 0.20,
+      "delay_s": 0.3,
+      "outage_intervals": [[30.0, 45.0]]
+    },
+    "vibration": {
+      "detection_range_m": 20.0,
+      "detection_probability": 0.40,
+      "false_trigger_rate_per_s": 0.01,
+      "noise_std": 0.35,
+      "delay_s": 0.2,
+      "outage_intervals": [[60.0, 90.0]]
+    },
+    "acoustic": {
+      "detection_range_m": 40.0,
+      "detection_probability": 0.50,
+      "false_trigger_rate_per_s": 0.003,
+      "noise_std": 0.25,
+      "delay_s": 0.8,
+      "outage_intervals": [[10.0, 25.0]]
+    }
+  }
+}

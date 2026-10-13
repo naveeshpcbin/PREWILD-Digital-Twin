@@ -1,0 +1,31 @@
+{
+  "device_id": "wifi_access_point_reference",
+  "name": "Representative Wi-Fi Access Point (CSI RF Transmitter Node)",
+  "sku_status": "REPRESENTATIVE WI-FI ACCESS POINT — NOT A SELECTED PURCHASED SKU",
+  "role_in_prw_wild": "Active RF Transmitter (Tx) emitting continuous IEEE 802.11n OFDM beacon and probe packets across the animal movement corridor",
+  "radio_specs": {
+    "standard": "IEEE 802.11b/g/n (2.4 GHz ISM band)",
+    "channel": "Channel 6 (Center freq 2.437 GHz, 20MHz bandwidth, 52 subcarriers)",
+    "tx_power_dbm": 20.0,
+    "packet_transmission_rate_hz": 100.0,
+    "antenna_configuration": "2x2 MIMO Dual Omnidirectional 5dBi Dipole Antennas",
+    "modulation": "OFDM (BPSK, QPSK, 16-QAM, 64-QAM)"
+  },
+  "physical_interfaces": [
+    {"name": "Power Input", "type": "12V DC Barrel Jack (2.1mm center positive)", "desc": "Solar battery management system power input"},
+    {"name": "WAN Port", "type": "10/100/1000 Mbps RJ45", "desc": "Optional backhaul uplink to field gateway / satellite terminal"},
+    {"name": "LAN Ports 1-4", "type": "4x RJ45 100 Mbps", "desc": "Local edge diagnostics and direct Ethernet tethering"},
+    {"name": "Reset Switch", "type": "Recessed pinhole button", "desc": "Factory reset / failsafe bootloader"},
+    {"name": "Dual Dipole Antennas", "type": "RP-SMA 5dBi antennas", "desc": "Adjustable tilt antennas generating the Fresnel zone envelope across the forest path"}
+  ],
+  "indicator_leds": [
+    {"label": "PWR", "color": "Solid Green", "state": "Operational 12V supply stable"},
+    {"label": "WIFI 2.4G", "color": "Rapid Amber Flashing", "state": "Transmitting CSI probe frames at 100 Hz"},
+    {"label": "LINK / ACT", "color": "Flashing Green", "state": "Telemetry link with ESP32 receiver established"},
+    {"label": "SYS", "color": "Solid Green", "state": "Embedded Linux OS running normally"}
+  ],
+  "csi_precursor_theory": {
+    "principle": "When an elephant (dielectric body > 3,500 kg, high water content) enters the first Fresnel zone between the AP and ESP32 receiver, multipath propagation induces severe phase distortion and subcarrier amplitude attenuation. This provides precursor warning before physical line-of-sight sensors trigger.",
+    "verification_status": "REPRESENTATIVE_ARCHITECTURE_REFERENCE"
+  }
+}
