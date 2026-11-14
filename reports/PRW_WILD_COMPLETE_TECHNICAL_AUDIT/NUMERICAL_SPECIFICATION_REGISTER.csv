@@ -1,0 +1,88 @@
+Parameter Name,Numerical Value,Unit,Subsystem / Domain,Nature (Configured / Measured / Calculated / Claimed),Validation Status,Authoritative Source File & Reference,Inconsistencies / Notes / Historical Context
+Perimeter Fence Line Coordinate,100.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/config.py (Line 38); app.js (Line 432),Fixed East-West boundary dividing forest (X<100) and farmland (X>100)
+Layer 1 (Outer RF Sensing) Spatial Start,45.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1845),"Historical claim 45m confirmed in transition logic [45.0, 100.0]"
+Layer 1 (Outer RF Sensing) Spatial End,70.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1022),"Visual mesh center=57.5m, width=25m -> spans 45m to 70m"
+Layer 1 Spatial Width,25.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1022),25m wide cyan detection corridor
+Layer 2 (Middle Physical Sensors) Spatial Start,70.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1846),"Transition logic active [70.0, 100.0]"
+Layer 2 (Middle Physical Sensors) Spatial End,85.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1032),"Visual mesh center=77.5m, width=15m -> spans 70m to 85m"
+Layer 2 Spatial Width,15.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1032),15m wide amber physical sensor corridor
+Layer 3 (Inner Camera Surveillance) Spatial Start,85.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1847),"Transition logic active [85.0, 100.0]"
+Layer 3 (Inner Camera Surveillance) Spatial End,100.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1042),"Visual mesh center=92.5m, width=15m -> spans 85m to 100m"
+Layer 3 Spatial Width,15.0,m,Spatial Geometry,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 1042),15m wide violet camera coverage zone
+Corridor Depressed Valley Center Y,100.0,m,Ecosystem Geography,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 48),"Corridor depression with width 22m, max depth 2.2m"
+"North Pond Center (X, Z)","(75.0, 140.0)",m,Ecosystem Geography,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 54),"Depression radius 22m, max depth 2.4m"
+"South Pond Center (X, Z)","(45.0, 60.0)",m,Ecosystem Geography,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 60),"Depression radius 18m, max depth 2.1m"
+Terrain Grid Width,280.0,m,3D Simulation,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 423),East-West terrain plane extent
+Terrain Grid Depth,260.0,m,3D Simulation,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 424),North-South terrain plane extent
+Terrain Grid Subdivisions,120 x 120,segments,3D Simulation,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 425),"Exactly 14,400 elevation quads (29,042 vertices); matches historical 120x120 claim"
+Horizon Skirt Dimensions,1200 x 1200,m,3D Simulation,Configured,VERIFIED,src/prw_wild/web/static/app.js (Line 442),Large perimeter ground mesh preventing black background voids
+Simulation World Width,200.0,m,Simulation Backend,Configured,VERIFIED,src/prw_wild/config.py (Line 34),Backend simulation coordinate boundary
+Simulation World Height,200.0,m,Simulation Backend,Configured,VERIFIED,src/prw_wild/config.py (Line 35),Backend simulation coordinate boundary
+Simulation Default Duration,120.0,s,Simulation Backend,Configured,VERIFIED,src/prw_wild/config.py (Line 30),Standard scenario duration
+Simulation Time Step dt,0.5,s,Simulation Backend,Configured,VERIFIED,src/prw_wild/config.py (Line 31),Discrete simulation integration step
+Modeled Wildlife Species Count,16,species,Wildlife Taxonomy,Configured,VERIFIED,src/prw_wild/ecosystem.py (Lines 80-220),All 16 distinct species defined with unique profiles; matches historical claim
+Active Autonomous Agents Count,60 to 75,agents,Wildlife Ecosystem,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 380); web/server.py (Line 46),"Default population 75 in server.py, 60 individual demographic specs in ecosystem.py"
+Asian Elephant Mass,3500.0,kg,Wildlife Taxonomy,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 115),Elephas maximus profile
+Asian Elephant Typical Speed,1.2,m/s,Wildlife Taxonomy,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 116),Cruising locomotion rate
+Asian Elephant Sprint Speed,3.5,m/s,Wildlife Taxonomy,Configured,VERIFIED,src/prw_wild/ecosystem.py (Line 117),Maximum charge rate
+Production Elephant GLB Size,"5,657,296",bytes,3D Assets,Measured,VERIFIED,src/prw_wild/web/static/assets/animals/asian_elephant_production.glb,Exact 5.65MB production binary glTF asset
+Target FPS,60.0,frames/s,Frontend Engine,Claimed / Target,VERIFIED ON TEST BENCH,tools/stress_test_frontend.py; app.js,"Chrome target 60 FPS; measured 58–60 FPS on dedicated GPU, 42–55 FPS on Intel UHD"
+WebGL VRAM Footprint,< 250,MB,Frontend Engine,Claimed / Measured,VERIFIED,AUDIT_FINDINGS.md,Estimated WebGL texture & buffer allocations measure ~185–220 MB VRAM
+PIR Sensor Operating Voltage,5.0,V,Hardware Electrical,Configured,VERIFIED,hardware/wiring_manifest_actual.json (Node A),Supplied from 5V rail; onboard 7133-1 LDO regulates to 3.3V internal logic
+PIR Output Signal Voltage,3.3,V,Hardware Electrical,Measured,VERIFIED,firmware/HARDWARE_WIRING_AND_SAFETY.md,Direct 3.3V CMOS active-HIGH output
+PIR GPIO Assignment,32,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 38),Connected to ESP32-A GPIO32
+PIR Warmup Stabilization Filter,"45,000",ms (45 s),Firmware Timing,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 79),Firmware suppresses false triggers during pyroelectric settling
+PIR Detection Distance (Bench/Field),3.0 to 7.0,m,Sensor Range,Configured / Nominal,PARTIALLY TESTED,hardware/devices/hc_sr501_reference.json,Nominal 7m at sensitivity pot max; measured 4.5m indoors reliably
+PIR Detection Angle,120.0,deg,Sensor Optics,Claimed / Nominal,UNTESTED IN FIELD,hardware/devices/hc_sr501_reference.json,Fresnel dome coverage spec
+Piezo Input Pin,35,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 39),"ADC1_CH7, input-only pin"
+Piezo ADC Resolution,12,bits (0–4095),Microcontroller ADC,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 342),analogReadResolution(12)
+Piezo ADC Attenuation,11,dB (~0–3.3V),Microcontroller ADC,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 343),ADC_11db full-scale attenuation
+Piezo Measurement Window,"20,000",µs (20 ms),Firmware Acquisition,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 83),Covers exactly 1 full 50Hz AC mains cycle for 50Hz hum rejection
+Piezo Sample Interval,250,µs,Firmware Acquisition,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 84),Interval between successive ADC conversions
+Piezo Samples per Window,80,samples,Firmware Acquisition,Calculated,VERIFIED,20000 µs / 250 µs = 80 samples,Matches historical report claim exactly
+Piezo Baseline Raw Quiet Reading,20 to 70,ADC counts,Sensor Range,Measured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 68),Quiet bench surface noise floor
+Piezo Configured Threshold,150,ADC counts,Firmware Threshold,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 71),Default peak-to-peak trigger threshold
+Piezo Trigger Hysteresis,35,ADC counts,Firmware Threshold,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 72),Release at threshold - 35 = 115 counts
+Piezo Debounce Hold Duration,600,ms,Firmware Timing,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 73),Minimum latch duration after vibration event
+Piezo Compile-Time Safety Gate,0,binary flag,Electrical Safety,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 63),"PIEZO_CIRCUIT_VERIFIED=0 (fail-closed, blocks sampling without verified clamp)"
+INMP441 Supply Voltage,3.3,V,Hardware Electrical,Configured,VERIFIED,hardware/wiring_manifest_actual.json (Node A),Powered from 3.3V rail (VDD max 3.6V)
+INMP441 I2S Bit Clock (BCLK),25,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 40),ESP32-A GPIO25 output
+INMP441 I2S Word Select (WS),33,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 41),ESP32-A GPIO33 output
+INMP441 I2S Serial Data (SD),34,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 42),ESP32-A GPIO34 (Input-only pin)
+INMP441 Sample Rate,"16,000",Hz (16 kHz),Acoustic Acquisition,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 85),Matches historical 16 kHz claim
+INMP441 Frame Sample Count,256,samples,Acoustic Acquisition,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 86),256 samples = 16.0 ms acoustic window
+INMP441 Data Slot & Bit Depth,24-bit in 32-bit slot,PCM,Acoustic Acquisition,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 132),"Philips I2S format, Left channel (L/R pin tied to GND)"
+INMP441 Quiet Room Baseline,"2,000 to 18,000",RMS counts,Sensor Range,Measured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 76),Digital RMS count range in quiet room
+INMP441 Configured Threshold,"32,000",RMS counts,Firmware Threshold,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 78),"Triggers on loud vocalization, trumpet, or handclap"
+INMP441 Trigger Hysteresis,"6,000",RMS counts,Firmware Threshold,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 79),"Release at threshold - 6000 = 26,000 RMS"
+INMP441 Debounce Hold Duration,600,ms,Firmware Timing,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 80),Minimum alert latch time
+LoRa Carrier Frequency,433.920,MHz,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 47),433920000L ISM band channel
+LoRa Bandwidth,125.0,kHz,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 48),125000L standard bandwidth
+LoRa Spreading Factor,7,SF,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 49),SF7 balance between range and time-on-air
+LoRa Coding Rate,4/5 (5),CR,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 50),Forward error correction 4/5
+LoRa Sync Word,0x12 (18),hex,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 51),Private network sync word preventing cross-talk
+LoRa Transmit Power,2,dBm,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 52),Bench testing low power setting to prevent RX saturation
+LoRa Cyclic Redundancy Check (CRC),Enabled,bool,RF Transceiver,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 115),LoRa.enableCrc() rejects corrupted frames in hardware
+LoRa SPI Clock (SCK),18,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,Standard VSPI SCK pin on ESP32-A and ESP32-B
+LoRa SPI MISO,19,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,Standard VSPI MISO pin on ESP32-A and ESP32-B
+LoRa SPI MOSI,23,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,Standard VSPI MOSI pin on ESP32-A and ESP32-B
+LoRa Chip Select (NSS/CS),27,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,GPIO27 on both nodes
+LoRa Hardware Reset (RST),14,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,GPIO14 on both nodes
+LoRa Interrupt Line (DIO0),26,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/common/hardware_pin_mapping.json,GPIO26 on both nodes
+LoRa Telemetry Interval,700,ms,Firmware Timing,Configured,VERIFIED,firmware/ESP32_A_Sensor_Node/ESP32_A_Sensor_Node.ino (Line 82),Periodic sensor telemetry frame rate
+LoRa Node-A Stale Timeout,"2,200",ms,Firmware Timing,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 48),ESP32-B clears LEDs if no packet received within 2.2s
+LoRa RX Indicator Pulse Duration,120,ms,Firmware Timing,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 49),Duration LED5 flashes upon valid packet arrival
+Bench Measured LoRa RSSI,-64 to -63,dBm,RF Link Budget,Measured,VERIFIED,firmware/VALIDATION_REPORT.md (Section 2),Indoor bench distance ~1.5m
+Bench Measured LoRa SNR,9.7 to 10.1,dB,RF Link Budget,Measured,VERIFIED,firmware/VALIDATION_REPORT.md (Section 2),"Clean demodulation, zero packet loss"
+LED 1 (PIR Indicator) GPIO,32,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 31),Illuminates when PIR detects motion
+LED 2 (Piezo Indicator) GPIO,33,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 32),Illuminates when Piezo is verified and triggered
+LED 3 (Microphone Indicator) GPIO,25,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 33),Illuminates when INMP441 RMS exceeds threshold
+LED 4 (Node-A Heartbeat) GPIO,13,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 34),Steady ON when Node A is alive (<2200ms); OFF if stale
+LED 5 (LoRa RX Pulse) GPIO,21,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 35),Flashes 120ms upon packet arrival
+LED 6 (Combined Physical Alert) GPIO,22,GPIO,Hardware Pinout,Configured,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 36),Logical OR (PIR || Piezo || Mic)
+LED Ballast Resistance,"2,000",Ω (2 kΩ),Hardware Electrical,Configured,VERIFIED,hardware/wiring_manifest_actual.json (Node B),Individual 2kΩ resistors; ~0.60 mA per LED from 3.3V GPIO
+Input-Only GPIO Warning,GPIO 34 & 35,GPIO,Hardware Electrical,Constraint,VERIFIED,firmware/ESP32_B_LED_Gateway/ESP32_B_LED_Gateway.ino (Line 18),Input-only on ESP32-WROOM-32; prohibited from LED output
+Web Server Default Port,8000,port,Networking,Configured,VERIFIED,src/prw_wild/web/server.py (Line 520),HTTP REST & WebGL UI service port
+USB Serial Baud Rate,"115,200",bps,Serial Comms,Configured,VERIFIED,src/prw_wild/hardware/lora_bridge.py (Line 95),8-N-1 UART communication speed
+Automated Test Suite Count,139,tests,Quality Assurance,Measured,VERIFIED,tests/ (collected and passed),139 passed in 21.90s on 2026-11-10
+Historical Test Count References,"92, 107, 130, 136",tests,Quality Assurance,Historical Documentation,SUPERSEDED,docs/audit/,Recorded in previous checkpoints; currently 139

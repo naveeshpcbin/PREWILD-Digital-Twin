@@ -1,0 +1,4495 @@
+{
+  "scenario_id": "approach_crossing",
+  "seed": 42,
+  "policies": {
+    "predictive": {
+      "label": "Policy A: Full PRW-Wild (Predictive RF + Gated Camera)",
+      "policy": "predictive",
+      "metrics": {
+        "scenario_id": "approach_crossing",
+        "run_id": "20261017T024814_9ff529",
+        "seed": 42,
+        "duration_s": 120.0,
+        "actual_crossings": 1,
+        "predicted_crossings": 66,
+        "true_positive_detections": 1,
+        "false_alerts": 2,
+        "missed_crossings": 0,
+        "crossing_recall": 1.0,
+        "crossing_precision": 0.3333333333333333,
+        "f1_score": 0.5,
+        "warning_lead_times_s": [
+          15.5
+        ],
+        "mean_warning_lead_time_s": 15.5,
+        "crossing_time_errors_s": [
+          24.200000000000003,
+          19.549999999999997,
+          31.340000000000003,
+          31.25999999999999,
+          35.06,
+          38.16,
+          34.03,
+          44.519999999999996,
+          39.989999999999995,
+          34.71000000000001,
+          32.129999999999995,
+          26.370000000000005,
+          23.319999999999993,
+          23.430000000000007,
+          20.86,
+          18.950000000000003,
+          18.61,
+          18.180000000000007,
+          22.620000000000005,
+          24.319999999999993,
+          22.439999999999998,
+          23.92,
+          26.909999999999997,
+          29.409999999999997,
+          34.47999999999999,
+          36.69,
+          38.28999999999999,
+          44.72,
+          36.900000000000006,
+          28.439999999999998,
+          25.86,
+          23.129999999999995,
+          18.75999999999999,
+          14.780000000000001,
+          13.239999999999995,
+          13.219999999999999,
+          12.25,
+          11.539999999999992,
+          10.25,
+          12.379999999999995,
+          16.200000000000003,
+          23.560000000000002,
+          28.5,
+          28.86,
+          21.180000000000007,
+          16.36,
+          10.659999999999997,
+          8.019999999999996,
+          7.259999999999998,
+          6.740000000000002,
+          8.850000000000001,
+          16.099999999999994,
+          13.150000000000006,
+          9.149999999999999,
+          6.079999999999998,
+          4.649999999999999,
+          2.8500000000000014,
+          1.9799999999999969,
+          1.3200000000000003,
+          2.0700000000000003,
+          2.1700000000000017,
+          2.4399999999999977,
+          1.8100000000000023,
+          1.5799999999999983,
+          460.95000000000005,
+          750.58
+        ],
+        "mean_crossing_time_error_s": 37.761969696969686,
+        "camera_activations": 3,
+        "camera_duty_cycle": 0.1,
+        "total_alerts": 3,
+        "alert_latency_s": null,
+        "estimated_energy_j": 49.2,
+        "energy_note": "Estimated from configurable power profiles; not measured."
+      },
+      "actual_crossings": 1,
+      "crossing_recall": 1.0,
+      "mean_lead_time_s": 15.5,
+      "camera_activations": 3,
+      "camera_duty_cycle_pct": 0.0,
+      "energy_j": 49.2,
+      "total_alerts": 3,
+      "events_count": 447,
+      "events": [
+        {
+          "timestamp_s": 0.0,
+          "event_type": "system",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "aa1dfcbd4615",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "provenance": "system",
+          "metadata": {
+            "action": "simulation_start",
+            "seed": 42,
+            "policy": "predictive"
+          }
+        },
+        {
+          "timestamp_s": 12.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "2828f38fd3ba",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.234,
+          "confidence": 0.234,
+          "observation_quality": 0.3,
+          "provenance": "synthetic_false_trigger"
+        },
+        {
+          "timestamp_s": 15.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "65dc19b489f4",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.1063,
+          "confidence": 0.1063,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            41.05,
+            97.62
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 28.56
+          }
+        },
+        {
+          "timestamp_s": 16.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "8b0349a84e6d",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.0557,
+          "confidence": 0.0557,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            48.52,
+            103.51
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 35.25
+          }
+        },
+        {
+          "timestamp_s": 18.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "25d91dc12de2",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.1935,
+          "confidence": 0.1935,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            42.27,
+            118.14
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 32.25
+          }
+        },
+        {
+          "timestamp_s": 19.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "99ab329aea7b",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.1629,
+          "confidence": 0.1629,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            45.46,
+            100.21
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 23.03
+          }
+        },
+        {
+          "timestamp_s": 19.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "2f6de262cb3a",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4625,
+          "confidence": 0.4625,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            41.48,
+            106.54
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 30.0
+          }
+        },
+        {
+          "timestamp_s": 20.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "c9a8be6cde01",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3044,
+          "confidence": 0.3044,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            57.62,
+            104.47
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 21.69
+          }
+        },
+        {
+          "timestamp_s": 20.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "338110d3fdc8",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4832,
+          "confidence": 0.4832,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            64.32,
+            93.95
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 29.25
+          }
+        },
+        {
+          "timestamp_s": 20.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "e96cf8a11771",
+          "score": 0.0,
+          "confidence": 0.2388,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.84,
+            103.58
+          ],
+          "measurement_uncertainty": 9.97,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.3044,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 20.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "68585cad41a5",
+          "score": 0.0,
+          "confidence": 0.25,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.84,
+            103.58
+          ],
+          "measurement_uncertainty": 22.3607,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.0,
+            "vy": 0.0,
+            "obs_count": 1,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 20.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "c50db1dcfc54",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.5498,
+          "confidence": 0.5498,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            45.43,
+            89.85
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 21.03
+          }
+        },
+        {
+          "timestamp_s": 20.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "03a3adbf6b01",
+          "score": 0.0,
+          "confidence": 0.3401,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            49.47,
+            100.09
+          ],
+          "measurement_uncertainty": 10.74,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 20.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "aa4826a0cb15",
+          "score": 0.0,
+          "confidence": 0.5,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            49.7268,
+            100.7442
+          ],
+          "measurement_uncertainty": 13.6914,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": -0.5567,
+            "vy": -1.4182,
+            "obs_count": 2,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 21.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "32847e01d47c",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.172,
+          "confidence": 0.172,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.85,
+            101.42
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 20.37
+          }
+        },
+        {
+          "timestamp_s": 21.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "a80f044427d4",
+          "score": 0.0,
+          "confidence": 0.3449,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.36,
+            100.36
+          ],
+          "measurement_uncertainty": 9.77,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 21.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "495ba92bd620",
+          "score": 0.0,
+          "confidence": 0.75,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.0968,
+            100.1313
+          ],
+          "measurement_uncertainty": 12.1931,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": -0.0177,
+            "vy": -0.9498,
+            "obs_count": 3,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 21.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "4c11a92927ec",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4045,
+          "confidence": 0.4045,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            50.37,
+            90.25
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.72
+          }
+        },
+        {
+          "timestamp_s": 21.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "abb5d48b6ef3",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4909,
+          "confidence": 0.4909,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            54.36,
+            89.84
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 27.0
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "d1e2b5f396de",
+          "score": 0.0,
+          "confidence": 0.3471,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.99,
+            97.17
+          ],
+          "measurement_uncertainty": 8.52,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "8611aed65588",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.7647,
+            97.6674
+          ],
+          "measurement_uncertainty": 10.4537,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.3032,
+            "vy": -1.6584,
+            "obs_count": 4,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "b22f560f8976",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4957,
+          "confidence": 0.4957,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            48.06,
+            99.44
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.08
+          }
+        },
+        {
+          "timestamp_s": 22.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "f6fa77963fb4",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.5153,
+          "confidence": 0.5153,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            60.98,
+            93.47
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.08
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "7f78a7c14b9b",
+          "score": 0.0,
+          "confidence": 0.3434,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            51.88,
+            96.99
+          ],
+          "measurement_uncertainty": 8.34,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "c91f775846df",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            51.5964,
+            96.6474
+          ],
+          "measurement_uncertainty": 9.5148,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.5047,
+            "vy": -1.4149,
+            "obs_count": 5,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "bf542b1441fd",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4137,
+          "confidence": 0.4137,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            63.5,
+            102.55
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 18.45
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "bc97d2aaa616",
+          "score": 0.0,
+          "confidence": 0.3417,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.16,
+            97.28
+          ],
+          "measurement_uncertainty": 8.87,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "75c1c1723b30",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.2081,
+            96.3334
+          ],
+          "measurement_uncertainty": 9.1979,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.8554,
+            "vy": -1.0661,
+            "obs_count": 6,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "9bb7267c6039",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            38.02
+          ],
+          "eta_s": 54.7,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 74.77,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "90664c9913f1",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "LOW",
+            "components": {
+              "fused_confidence": 0.3417,
+              "boundary": 1.0,
+              "eta_urgency": 0.2,
+              "track_quality": 1.0
+            },
+            "reason": "sensor_conf=0.34; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "82886ba83ae4",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "camera_id": "cam_01",
+          "provenance": "predictive_gate",
+          "metadata": {
+            "reason": "sensor_conf=0.34; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "alert",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "fab48216b709",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.2081,
+            96.3334
+          ],
+          "risk_level": "WATCH",
+          "predicted_crossing_xy": [
+            100.0,
+            38.02
+          ],
+          "eta_s": 54.7,
+          "provenance": "simulated_alert",
+          "metadata": {
+            "channels": [
+              "dashboard",
+              "sms_event"
+            ],
+            "camera_result": "",
+            "deterrent_command": "",
+            "note": "Simulated alert; no real notification sent."
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "8ca8b55049",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "8ca8b55049",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "FIELD_WORKER_01",
+            "recipient_name": "Ramu & Crop Field Crew",
+            "role": "worker",
+            "distance_m": 55.0,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: fab48216b709. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "a4f08c9033",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "a4f08c9033",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "PATROL_UNIT_01",
+            "recipient_name": "Ranger Patrol Unit Alpha",
+            "role": "patrol",
+            "distance_m": 60.4,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: fab48216b709. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "d90d8eac2e",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "d90d8eac2e",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "FARM_OPERATOR_01",
+            "recipient_name": "Arun Kumar (Lead Farm Operator)",
+            "role": "farmer",
+            "distance_m": 62.4,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: fab48216b709. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "81a8742b57",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "81a8742b57",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "WILDLIFE_CONTROL_ROOM",
+            "recipient_name": "State Wildlife 24/7 Rapid Response Desk",
+            "role": "wildlife_authority",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "2c948f3163",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "2c948f3163",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "FOREST_RANGE_OFFICE",
+            "recipient_name": "Forest Range Office \u2014 Sector 4 Buffer Zone",
+            "role": "forest_dept",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "f63a49c550",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "f63a49c550",
+            "alert_id": "fab48216b709",
+            "timestamp_s": 22.5,
+            "recipient_id": "LOCAL_EMERGENCY_COORDINATION",
+            "recipient_name": "District Agro-Wildlife Emergency Cell",
+            "role": "emergency_coord",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 23.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "df565301a574",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.2647,
+          "confidence": 0.2647,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.36,
+            98.21
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 17.82
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "856bc8c0dbf4",
+          "score": 0.0,
+          "confidence": 0.3411,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.52,
+            97.05
+          ],
+          "measurement_uncertainty": 7.96,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "e6b6f146a795",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.3125,
+            96.2394
+          ],
+          "measurement_uncertainty": 8.3128,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.922,
+            "vy": -0.8063,
+            "obs_count": 7,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "b9980ec35cc5",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            56.29
+          ],
+          "eta_s": 49.55,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 60.69,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "7dd54c876c33",
+          "score": 0.6353,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "WATCH",
+            "components": {
+              "fused_confidence": 0.3411,
+              "boundary": 1.0,
+              "eta_urgency": 0.2,
+              "track_quality": 1.0
+            },
+            "reason": "sensor_conf=0.34; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 23.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "99a047d11492",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.564,
+          "confidence": 0.564,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            52.65,
+            109.89
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 24.0
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "7a1f625e30c6",
+          "score": 0.0,
+          "confidence": 0.3519,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.64,
+            96.74
+          ],
+          "measurement_uncertainty": 8.06,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.564
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "d60eb30c4c02",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.4888,
+            96.0443
+          ],
+          "measurement_uncertainty": 7.795,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.7481,
+            "vy": -0.6638,
+            "obs_count": 8,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "950d60a0eb7f",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            55.66
+          ],
+          "eta_s": 60.84,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 60.84,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 24.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "ccb0615d24c2",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3763,
+          "confidence": 0.3763,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            58.78,
+            95.43
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 16.6
+          }
+        },
+        {
+          "timestamp_s": 24.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "e6f92626a021",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.62,
+          "confidence": 0.62,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.65,
+            102.92
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 16.6
+          }
+        },
+        {
+          "timestamp_s": 24.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_9ff529",
+          "event_id": "9fde6e03c6b5",
+          "score": 0.0,
+          "confidence": 0.3727,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            55.19,
+            98.1
+          ],
+          "measurement_uncertainty": 6.9,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.62,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.564
+            }
+          }
+        }
+      ]
+    },
+    "pir_only": {
+      "label": "Policy B: PIR-Only Trigger (Reactive Camera)",
+      "policy": "pir_only",
+      "metrics": {
+        "scenario_id": "approach_crossing",
+        "run_id": "20261017T024814_4c89d8",
+        "seed": 42,
+        "duration_s": 120.0,
+        "actual_crossings": 1,
+        "predicted_crossings": 0,
+        "true_positive_detections": 0,
+        "false_alerts": 0,
+        "missed_crossings": 1,
+        "crossing_recall": 0.0,
+        "crossing_precision": null,
+        "f1_score": null,
+        "warning_lead_times_s": [],
+        "mean_warning_lead_time_s": null,
+        "crossing_time_errors_s": [],
+        "mean_crossing_time_error_s": null,
+        "camera_activations": 2,
+        "camera_duty_cycle": 0.0667,
+        "total_alerts": 0,
+        "alert_latency_s": null,
+        "estimated_energy_j": 36.2,
+        "energy_note": "Estimated from configurable power profiles; not measured."
+      },
+      "actual_crossings": 1,
+      "crossing_recall": 0.0,
+      "mean_lead_time_s": null,
+      "camera_activations": 2,
+      "camera_duty_cycle_pct": 0.0,
+      "energy_j": 36.2,
+      "total_alerts": 0,
+      "events_count": 60,
+      "events": [
+        {
+          "timestamp_s": 0.0,
+          "event_type": "system",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "59506ea3a4c2",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "provenance": "system",
+          "metadata": {
+            "action": "simulation_start",
+            "seed": 42,
+            "policy": "pir_only"
+          }
+        },
+        {
+          "timestamp_s": 36.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "367151b94a81",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.4558,
+          "confidence": 0.4558,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 10.25
+          }
+        },
+        {
+          "timestamp_s": 36.0,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "bce05c1b4b82",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "pir_only_policy"
+        },
+        {
+          "timestamp_s": 36.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "ee165441d916",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.6374,
+          "confidence": 0.6374,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 9.5
+          }
+        },
+        {
+          "timestamp_s": 36.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "b94604e60748",
+          "score": 0.0,
+          "confidence": 0.2344,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.6374,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 37.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "7688d2bd6330",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.6416,
+          "confidence": 0.6416,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 8.75
+          }
+        },
+        {
+          "timestamp_s": 37.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "05df4f4941b4",
+          "score": 0.0,
+          "confidence": 0.2354,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.6416,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 37.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "e6f1c40fe778",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.5478,
+          "confidence": 0.5478,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 8.0
+          }
+        },
+        {
+          "timestamp_s": 37.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "c656feb06504",
+          "score": 0.0,
+          "confidence": 0.2354,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.6416,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 38.0,
+          "event_type": "camera_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "a6d8ccdd0d16",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "classification": "not_in_fov",
+          "provenance": "simulated_camera"
+        },
+        {
+          "timestamp_s": 38.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "4b78e5ec041c",
+          "score": 0.0,
+          "confidence": 0.2354,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.6416,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 38.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "1f64c2bbaf16",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.7365,
+          "confidence": 0.7365,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 6.5
+          }
+        },
+        {
+          "timestamp_s": 38.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "8950144a1ec2",
+          "score": 0.0,
+          "confidence": 0.2591,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7365,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 39.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "07d9572552d6",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.7392,
+          "confidence": 0.7392,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 5.75
+          }
+        },
+        {
+          "timestamp_s": 39.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "0706153e69a6",
+          "score": 0.0,
+          "confidence": 0.2598,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7392,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 39.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "5d6202700ecc",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.7236,
+          "confidence": 0.7236,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 5.0
+          }
+        },
+        {
+          "timestamp_s": 39.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "9b0828078344",
+          "score": 0.0,
+          "confidence": 0.2598,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7392,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 40.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "ae531a0ee078",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.7988,
+          "confidence": 0.7988,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 4.25
+          }
+        },
+        {
+          "timestamp_s": 40.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "15f1f39a72d6",
+          "score": 0.0,
+          "confidence": 0.2747,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7988,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 40.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "1eaa78c509e5",
+          "score": 0.0,
+          "confidence": 0.2747,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7988,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 41.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "5f35b67f5286",
+          "score": 0.0,
+          "confidence": 0.2747,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.7988,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 41.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "efb21ff401b5",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.8072,
+          "confidence": 0.8072,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 2.0
+          }
+        },
+        {
+          "timestamp_s": 41.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "c1e3f0be4a01",
+          "score": 0.0,
+          "confidence": 0.2768,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.8072,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 42.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "530c9303ba04",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.6953,
+          "confidence": 0.6953,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 1.25
+          }
+        },
+        {
+          "timestamp_s": 42.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "70f38b58ab7e",
+          "score": 0.0,
+          "confidence": 0.2768,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.8072,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 42.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "2377dfc5db65",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.8183,
+          "confidence": 0.8183,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 0.5
+          }
+        },
+        {
+          "timestamp_s": 42.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "ec4a879cef4b",
+          "score": 0.0,
+          "confidence": 0.2796,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.8183,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 43.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "e07c1e18476c",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.8121,
+          "confidence": 0.8121,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 0.25
+          }
+        },
+        {
+          "timestamp_s": 43.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "834a74a72152",
+          "score": 0.0,
+          "confidence": 0.2796,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.8183,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 43.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "0c47cae65425",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 1.0,
+          "confidence": 1.0,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 1.0
+          }
+        },
+        {
+          "timestamp_s": 43.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "afd880af5b66",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 44.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "5edb59f110f0",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.78,
+          "confidence": 0.78,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 1.75
+          }
+        },
+        {
+          "timestamp_s": 44.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "f12fe1e3f9b6",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 44.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "5c566e4325ce",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.9221,
+          "confidence": 0.9221,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 2.5
+          }
+        },
+        {
+          "timestamp_s": 44.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "fd7a9f84239a",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 45.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "3b10f0b1efde",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 45.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "da0a72f0fd3d",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.9885,
+          "confidence": 0.9885,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 4.0
+          }
+        },
+        {
+          "timestamp_s": 45.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "56085eaaea21",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 46.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "f51716058fb7",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.862,
+          "confidence": 0.862,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 4.75
+          }
+        },
+        {
+          "timestamp_s": 46.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "4c4aff82da6f",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 46.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "28df6853f2e6",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.8747,
+          "confidence": 0.8747,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 5.5
+          }
+        },
+        {
+          "timestamp_s": 46.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "9d00ced16524",
+          "score": 0.0,
+          "confidence": 0.325,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 1.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 47.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "98f13cf69bd9",
+          "score": 0.0,
+          "confidence": 0.3221,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.9885,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 47.55,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "edf3ca27ef98",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.656,
+          "confidence": 0.656,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 7.0
+          }
+        },
+        {
+          "timestamp_s": 47.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "d363f5712249",
+          "score": 0.0,
+          "confidence": 0.3221,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.9885,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 47.5,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "569ff8d982eb",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "pir_only_policy"
+        },
+        {
+          "timestamp_s": 48.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "ae7a5b98d4c3",
+          "score": 0.0,
+          "confidence": 0.3221,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.9885,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 48.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "d18c0fce4239",
+          "score": 0.0,
+          "confidence": 0.3221,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.9885,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 49.05,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "743f582946be",
+          "sensor_id": "pir_01",
+          "sensor_type": "pir",
+          "score": 0.5445,
+          "confidence": 0.5445,
+          "observation_quality": 0.8,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 9.25
+          }
+        },
+        {
+          "timestamp_s": 49.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_4c89d8",
+          "event_id": "11e9477d545d",
+          "score": 0.0,
+          "confidence": 0.2937,
+          "observation_quality": 1.0,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.0,
+              "pir": 0.8747,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        }
+      ]
+    },
+    "always_on": {
+      "label": "Policy C: Always-On Camera (100% Duty Cycle)",
+      "policy": "always_on",
+      "metrics": {
+        "scenario_id": "approach_crossing",
+        "run_id": "20261017T024814_6ec6ea",
+        "seed": 42,
+        "duration_s": 120.0,
+        "actual_crossings": 1,
+        "predicted_crossings": 66,
+        "true_positive_detections": 1,
+        "false_alerts": 2,
+        "missed_crossings": 0,
+        "crossing_recall": 1.0,
+        "crossing_precision": 0.3333333333333333,
+        "f1_score": 0.5,
+        "warning_lead_times_s": [
+          15.5
+        ],
+        "mean_warning_lead_time_s": 15.5,
+        "crossing_time_errors_s": [
+          24.200000000000003,
+          19.549999999999997,
+          31.340000000000003,
+          31.25999999999999,
+          35.06,
+          38.16,
+          34.03,
+          44.519999999999996,
+          39.989999999999995,
+          34.71000000000001,
+          32.129999999999995,
+          26.370000000000005,
+          23.319999999999993,
+          23.430000000000007,
+          20.86,
+          18.950000000000003,
+          18.61,
+          18.180000000000007,
+          22.620000000000005,
+          24.319999999999993,
+          22.439999999999998,
+          23.92,
+          26.909999999999997,
+          29.409999999999997,
+          34.47999999999999,
+          36.69,
+          38.28999999999999,
+          44.72,
+          36.900000000000006,
+          28.439999999999998,
+          25.86,
+          23.129999999999995,
+          18.75999999999999,
+          14.780000000000001,
+          13.239999999999995,
+          13.219999999999999,
+          12.25,
+          11.539999999999992,
+          10.25,
+          12.379999999999995,
+          16.200000000000003,
+          23.560000000000002,
+          28.5,
+          28.86,
+          21.180000000000007,
+          16.36,
+          10.659999999999997,
+          8.019999999999996,
+          7.259999999999998,
+          6.740000000000002,
+          8.850000000000001,
+          16.099999999999994,
+          13.150000000000006,
+          9.149999999999999,
+          6.079999999999998,
+          4.649999999999999,
+          2.8500000000000014,
+          1.9799999999999969,
+          1.3200000000000003,
+          2.0700000000000003,
+          2.1700000000000017,
+          2.4399999999999977,
+          1.8100000000000023,
+          1.5799999999999983,
+          460.95000000000005,
+          750.58
+        ],
+        "mean_crossing_time_error_s": 37.761969696969686,
+        "camera_activations": 11,
+        "camera_duty_cycle": 0.3667,
+        "total_alerts": 3,
+        "alert_latency_s": null,
+        "estimated_energy_j": 129.2,
+        "energy_note": "Estimated from configurable power profiles; not measured."
+      },
+      "actual_crossings": 1,
+      "crossing_recall": 1.0,
+      "mean_lead_time_s": 15.5,
+      "camera_activations": 11,
+      "camera_duty_cycle_pct": 0.0,
+      "energy_j": 129.2,
+      "total_alerts": 3,
+      "events_count": 463,
+      "events": [
+        {
+          "timestamp_s": 0.0,
+          "event_type": "system",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "991dfd0a35db",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "provenance": "system",
+          "metadata": {
+            "action": "simulation_start",
+            "seed": 42,
+            "policy": "always_on"
+          }
+        },
+        {
+          "timestamp_s": 0.0,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "fc0f239a6242",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "always_on_policy"
+        },
+        {
+          "timestamp_s": 2.0,
+          "event_type": "camera_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "58ecfa0c0b1f",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "classification": "not_in_fov",
+          "provenance": "simulated_camera"
+        },
+        {
+          "timestamp_s": 11.5,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "5799536aca0c",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "always_on_policy"
+        },
+        {
+          "timestamp_s": 12.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "253e4901eab5",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.234,
+          "confidence": 0.234,
+          "observation_quality": 0.3,
+          "provenance": "synthetic_false_trigger"
+        },
+        {
+          "timestamp_s": 13.5,
+          "event_type": "camera_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "dea41d00dca7",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "classification": "not_in_fov",
+          "provenance": "simulated_camera"
+        },
+        {
+          "timestamp_s": 15.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "4aa3cb3b8372",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.1063,
+          "confidence": 0.1063,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            41.05,
+            97.62
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 28.56
+          }
+        },
+        {
+          "timestamp_s": 16.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "778bf9f1600f",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.0557,
+          "confidence": 0.0557,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            48.52,
+            103.51
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 35.25
+          }
+        },
+        {
+          "timestamp_s": 18.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "6d9cbc512ac5",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.1935,
+          "confidence": 0.1935,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            42.27,
+            118.14
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 32.25
+          }
+        },
+        {
+          "timestamp_s": 19.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "d01188d5575a",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.1629,
+          "confidence": 0.1629,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            45.46,
+            100.21
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 23.03
+          }
+        },
+        {
+          "timestamp_s": 19.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "827d3ba40e2c",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4625,
+          "confidence": 0.4625,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            41.48,
+            106.54
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 30.0
+          }
+        },
+        {
+          "timestamp_s": 20.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "734564a338d3",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3044,
+          "confidence": 0.3044,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            57.62,
+            104.47
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 21.69
+          }
+        },
+        {
+          "timestamp_s": 20.2,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "01e08e7b4cb2",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4832,
+          "confidence": 0.4832,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            64.32,
+            93.95
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 29.25
+          }
+        },
+        {
+          "timestamp_s": 20.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "39eb96c93816",
+          "score": 0.0,
+          "confidence": 0.2388,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.84,
+            103.58
+          ],
+          "measurement_uncertainty": 9.97,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.3044,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 20.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "b3aca043076e",
+          "score": 0.0,
+          "confidence": 0.25,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.84,
+            103.58
+          ],
+          "measurement_uncertainty": 22.3607,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.0,
+            "vy": 0.0,
+            "obs_count": 1,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 20.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "0cf5eb1f2238",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.5498,
+          "confidence": 0.5498,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            45.43,
+            89.85
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 21.03
+          }
+        },
+        {
+          "timestamp_s": 20.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "4c452f482355",
+          "score": 0.0,
+          "confidence": 0.3401,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            49.47,
+            100.09
+          ],
+          "measurement_uncertainty": 10.74,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 20.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "f709532b0189",
+          "score": 0.0,
+          "confidence": 0.5,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            49.7268,
+            100.7442
+          ],
+          "measurement_uncertainty": 13.6914,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": -0.5567,
+            "vy": -1.4182,
+            "obs_count": 2,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 21.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "7d1b566679f7",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.172,
+          "confidence": 0.172,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.85,
+            101.42
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 20.37
+          }
+        },
+        {
+          "timestamp_s": 21.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "1de7e82f7d34",
+          "score": 0.0,
+          "confidence": 0.3449,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.36,
+            100.36
+          ],
+          "measurement_uncertainty": 9.77,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4832
+            }
+          }
+        },
+        {
+          "timestamp_s": 21.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "bd21306b0829",
+          "score": 0.0,
+          "confidence": 0.75,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.0968,
+            100.1313
+          ],
+          "measurement_uncertainty": 12.1931,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": -0.0177,
+            "vy": -0.9498,
+            "obs_count": 3,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 21.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "bc131d9558f4",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4045,
+          "confidence": 0.4045,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            50.37,
+            90.25
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.72
+          }
+        },
+        {
+          "timestamp_s": 21.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "a789660817cd",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.4909,
+          "confidence": 0.4909,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            54.36,
+            89.84
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 27.0
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "e9f9d84044d7",
+          "score": 0.0,
+          "confidence": 0.3471,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.99,
+            97.17
+          ],
+          "measurement_uncertainty": 8.52,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "897c972663cc",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.7647,
+            97.6674
+          ],
+          "measurement_uncertainty": 10.4537,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.3032,
+            "vy": -1.6584,
+            "obs_count": 4,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "c210bdfc2e29",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4957,
+          "confidence": 0.4957,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            48.06,
+            99.44
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.08
+          }
+        },
+        {
+          "timestamp_s": 22.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "96a22c84d931",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.5153,
+          "confidence": 0.5153,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            60.98,
+            93.47
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.08
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "d0949c82bc5c",
+          "score": 0.0,
+          "confidence": 0.3434,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            51.88,
+            96.99
+          ],
+          "measurement_uncertainty": 8.34,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "83ed3469a8fe",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            51.5964,
+            96.6474
+          ],
+          "measurement_uncertainty": 9.5148,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.5047,
+            "vy": -1.4149,
+            "obs_count": 5,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "ed1862833a57",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4137,
+          "confidence": 0.4137,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            63.5,
+            102.55
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 18.45
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "859b09a4efef",
+          "score": 0.0,
+          "confidence": 0.3417,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.16,
+            97.28
+          ],
+          "measurement_uncertainty": 8.87,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "ff6f5fba9c0f",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.2081,
+            96.3334
+          ],
+          "measurement_uncertainty": 9.1979,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.8554,
+            "vy": -1.0661,
+            "obs_count": 6,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "727cbdc455c1",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            38.02
+          ],
+          "eta_s": 54.7,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 74.77,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "e797d9496466",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "LOW",
+            "components": {
+              "fused_confidence": 0.3417,
+              "boundary": 1.0,
+              "eta_urgency": 0.2,
+              "track_quality": 1.0
+            },
+            "reason": "sensor_conf=0.34; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "alert",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "3e4b4755b71f",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.2081,
+            96.3334
+          ],
+          "risk_level": "WATCH",
+          "predicted_crossing_xy": [
+            100.0,
+            38.02
+          ],
+          "eta_s": 54.7,
+          "provenance": "simulated_alert",
+          "metadata": {
+            "channels": [
+              "dashboard",
+              "sms_event"
+            ],
+            "camera_result": "not_in_fov",
+            "deterrent_command": "",
+            "note": "Simulated alert; no real notification sent."
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "01608e0b0e",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "01608e0b0e",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "FIELD_WORKER_01",
+            "recipient_name": "Ramu & Crop Field Crew",
+            "role": "worker",
+            "distance_m": 55.0,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: 3e4b4755b71f. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "db02d31118",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "db02d31118",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "PATROL_UNIT_01",
+            "recipient_name": "Ranger Patrol Unit Alpha",
+            "role": "patrol",
+            "distance_m": 60.4,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: 3e4b4755b71f. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "9e7aa25d58",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "9e7aa25d58",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "FARM_OPERATOR_01",
+            "recipient_name": "Arun Kumar (Lead Farm Operator)",
+            "role": "farmer",
+            "distance_m": 62.4,
+            "severity": "WATCH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: WATCH (0.64). ETA to fence: 54.7s. Estimated Location: (53.2m, 96.3m). Event: 3e4b4755b71f. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "be44c8e707",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "be44c8e707",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "WILDLIFE_CONTROL_ROOM",
+            "recipient_name": "State Wildlife 24/7 Rapid Response Desk",
+            "role": "wildlife_authority",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "0140c491d1",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "0140c491d1",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "FOREST_RANGE_OFFICE",
+            "recipient_name": "Forest Range Office \u2014 Sector 4 Buffer Zone",
+            "role": "forest_dept",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "9ae3117c03",
+          "score": 0.6354,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "9ae3117c03",
+            "alert_id": "3e4b4755b71f",
+            "timestamp_s": 22.5,
+            "recipient_id": "LOCAL_EMERGENCY_COORDINATION",
+            "recipient_name": "District Agro-Wildlife Emergency Cell",
+            "role": "emergency_coord",
+            "distance_m": null,
+            "severity": "WATCH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (53.2, 96.3). ETA: 54.7. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 23.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "1ccfc5cfbe46",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.2647,
+          "confidence": 0.2647,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.36,
+            98.21
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 17.82
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "431857c13d85",
+          "score": 0.0,
+          "confidence": 0.3411,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.52,
+            97.05
+          ],
+          "measurement_uncertainty": 7.96,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.4909
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "d3c568c07cc3",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.3125,
+            96.2394
+          ],
+          "measurement_uncertainty": 8.3128,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.922,
+            "vy": -0.8063,
+            "obs_count": 7,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "24459b997b45",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            56.29
+          ],
+          "eta_s": 49.55,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 60.69,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "505df9a6f363",
+          "score": 0.6353,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "WATCH",
+            "components": {
+              "fused_confidence": 0.3411,
+              "boundary": 1.0,
+              "eta_urgency": 0.2,
+              "track_quality": 1.0
+            },
+            "reason": "sensor_conf=0.34; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "e3cc8d431230",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "always_on_policy"
+        },
+        {
+          "timestamp_s": 23.7,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "d9a16f648031",
+          "sensor_id": "aco_01",
+          "sensor_type": "acoustic",
+          "score": 0.564,
+          "confidence": 0.564,
+          "observation_quality": 0.64,
+          "estimated_position_xy": [
+            52.65,
+            109.89
+          ],
+          "measurement_uncertainty": 14.4,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 24.0
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "56f96b373bd8",
+          "score": 0.0,
+          "confidence": 0.3519,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.64,
+            96.74
+          ],
+          "measurement_uncertainty": 8.06,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.5498,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.564
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_6ec6ea",
+          "event_id": "d275fe40284b",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.4888,
+            96.0443
+          ],
+          "measurement_uncertainty": 7.795,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.7481,
+            "vy": -0.6638,
+            "obs_count": 8,
+            "stale": false
+          }
+        }
+      ]
+    },
+    "rf_only": {
+      "label": "Policy D: RF/CSI-Only Trigger (No Corroboration)",
+      "policy": "rf_only",
+      "metrics": {
+        "scenario_id": "approach_crossing",
+        "run_id": "20261017T024814_89131a",
+        "seed": 42,
+        "duration_s": 120.0,
+        "actual_crossings": 1,
+        "predicted_crossings": 59,
+        "true_positive_detections": 1,
+        "false_alerts": 1,
+        "missed_crossings": 0,
+        "crossing_recall": 1.0,
+        "crossing_precision": 0.5,
+        "f1_score": 0.6666666666666666,
+        "warning_lead_times_s": [
+          28.5
+        ],
+        "mean_warning_lead_time_s": 28.5,
+        "crossing_time_errors_s": [
+          2.1499999999999986,
+          19.659999999999997,
+          68.56,
+          139.25,
+          63.22,
+          28.42,
+          22.370000000000005,
+          25.36,
+          28.22,
+          23.659999999999997,
+          21.150000000000006,
+          19.049999999999997,
+          19.97999999999999,
+          22.379999999999995,
+          26.939999999999998,
+          30.659999999999997,
+          39.72999999999999,
+          50.69,
+          53.010000000000005,
+          50.66,
+          53.150000000000006,
+          43.870000000000005,
+          42.78999999999999,
+          36.870000000000005,
+          29.950000000000003,
+          25.42,
+          22.289999999999992,
+          21.659999999999997,
+          20.710000000000008,
+          16.36,
+          15.329999999999998,
+          14.799999999999997,
+          12.370000000000005,
+          10.43,
+          10.25,
+          9.810000000000002,
+          12.069999999999993,
+          14.930000000000007,
+          19.159999999999997,
+          24.180000000000007,
+          28.08,
+          27.189999999999998,
+          23.0,
+          14.230000000000004,
+          11.039999999999992,
+          9.159999999999997,
+          6.780000000000001,
+          4.609999999999999,
+          4.049999999999997,
+          2.5700000000000003,
+          1.5799999999999983,
+          1.240000000000002,
+          1.1199999999999974,
+          1.0799999999999983,
+          1.519999999999996,
+          0.3200000000000003,
+          0.3200000000000003,
+          0.8200000000000003,
+          1.8200000000000003
+        ],
+        "mean_crossing_time_error_s": 22.916101694915238,
+        "camera_activations": 3,
+        "camera_duty_cycle": 0.1,
+        "total_alerts": 2,
+        "alert_latency_s": null,
+        "estimated_energy_j": 48.2,
+        "energy_note": "Estimated from configurable power profiles; not measured."
+      },
+      "actual_crossings": 1,
+      "crossing_recall": 1.0,
+      "mean_lead_time_s": 28.5,
+      "camera_activations": 3,
+      "camera_duty_cycle_pct": 0.0,
+      "energy_j": 48.2,
+      "total_alerts": 2,
+      "events_count": 270,
+      "events": [
+        {
+          "timestamp_s": 0.0,
+          "event_type": "system",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "5ef1d4f692c9",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "provenance": "system",
+          "metadata": {
+            "action": "simulation_start",
+            "seed": 42,
+            "policy": "rf_only"
+          }
+        },
+        {
+          "timestamp_s": 18.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "d7177253f0da",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3571,
+          "confidence": 0.3571,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            48.38,
+            94.45
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 24.39
+          }
+        },
+        {
+          "timestamp_s": 18.0,
+          "event_type": "camera_activation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "048817dcfc13",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "provenance": "rf_only_policy"
+        },
+        {
+          "timestamp_s": 20.0,
+          "event_type": "camera_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "bf5deeccaf9d",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "camera_id": "cam_01",
+          "classification": "not_in_fov",
+          "provenance": "simulated_camera"
+        },
+        {
+          "timestamp_s": 20.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "0355670ee1da",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.2415,
+          "confidence": 0.2415,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            48.68,
+            99.99
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 21.03
+          }
+        },
+        {
+          "timestamp_s": 21.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "192195e1c2ac",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3259,
+          "confidence": 0.3259,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            47.52,
+            104.37
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 20.37
+          }
+        },
+        {
+          "timestamp_s": 21.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "3ec1f2c522d3",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4584,
+          "confidence": 0.4584,
+          "observation_quality": 0.3,
+          "provenance": "synthetic_false_trigger"
+        },
+        {
+          "timestamp_s": 21.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "f8d5b2b0d683",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.8251,
+          "confidence": 0.8251,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            54.26,
+            106.15
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.72
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "6995ba9b4568",
+          "score": 0.0,
+          "confidence": 0.3225,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.15,
+            103.5
+          ],
+          "measurement_uncertainty": 3.92,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 21.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "0b13f9fd9ca0",
+          "score": 0.0,
+          "confidence": 0.25,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            50.15,
+            103.5
+          ],
+          "measurement_uncertainty": 22.3607,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.0,
+            "vy": 0.0,
+            "obs_count": 1,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "c04f9479dc14",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.3107,
+          "confidence": 0.3107,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            62.38,
+            103.29
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 19.08
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "98ac59219eb1",
+          "score": 0.0,
+          "confidence": 0.3504,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.21,
+            103.45
+          ],
+          "measurement_uncertainty": 6.29,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "b81040007907",
+          "score": 0.0,
+          "confidence": 0.5,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            52.9856,
+            103.4537
+          ],
+          "measurement_uncertainty": 8.5631,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 1.4181,
+            "vy": -0.0232,
+            "obs_count": 2,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "23cb7388bce1",
+          "score": 0.0,
+          "confidence": 0.5,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            102.68
+          ],
+          "eta_s": 33.15,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 47.02,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 22.0,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "5b0eeab1349b",
+          "score": 0.4401,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "WATCH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "LOW",
+            "components": {
+              "fused_confidence": 0.3504,
+              "boundary": 0.65,
+              "eta_urgency": 0.2,
+              "track_quality": 0.5
+            },
+            "reason": "sensor_conf=0.35; boundary_pred=0.65; eta_urgency=0.20; track_qual=0.50"
+          }
+        },
+        {
+          "timestamp_s": 22.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "9fcf7a23691e",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.7587,
+          "confidence": 0.7587,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            57.71,
+            100.23
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 18.45
+          }
+        },
+        {
+          "timestamp_s": 22.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "a8816cc05d23",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.4504,
+          "confidence": 0.4504,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            51.14,
+            98.91
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 18.45
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "3942e1f7742c",
+          "score": 0.0,
+          "confidence": 0.3505,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.62,
+            102.16
+          ],
+          "measurement_uncertainty": 5.81,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "22e99980365a",
+          "score": 0.0,
+          "confidence": 0.75,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.7296,
+            102.3377
+          ],
+          "measurement_uncertainty": 7.6204,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.9225,
+            "vy": -0.8266,
+            "obs_count": 3,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 22.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "2969f7d345d2",
+          "score": 0.0,
+          "confidence": 0.75,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            60.88
+          ],
+          "eta_s": 50.16,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 62.13,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 23.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "4e470d7cef5f",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.3147,
+          "confidence": 0.3147,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.47,
+            101.18
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 17.82
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "c530e7d26cc8",
+          "score": 0.0,
+          "confidence": 0.3523,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.59,
+            102.02
+          ],
+          "measurement_uncertainty": 5.39,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "66268a2d3ac0",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.8125,
+            101.9134
+          ],
+          "measurement_uncertainty": 6.7772,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.4686,
+            "vy": -0.6091,
+            "obs_count": 4,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 23.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "ae1dabebd161",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            41.88
+          ],
+          "eta_s": 98.56,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 75.75,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 23.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "f250f35cb459",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.694,
+          "confidence": 0.694,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            53.73,
+            99.75
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 17.2
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "b6e6506dbca8",
+          "score": 0.0,
+          "confidence": 0.3531,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.61,
+            101.73
+          ],
+          "measurement_uncertainty": 5.1,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "eb32bb860ed9",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            53.8118,
+            101.602
+          ],
+          "measurement_uncertainty": 6.0313,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.2737,
+            "vy": -0.4855,
+            "obs_count": 5,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 23.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "ba0ba8bf70a7",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            19.67
+          ],
+          "eta_s": 168.75,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 94.05,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 24.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "709b99183f34",
+          "sensor_id": "rf_01",
+          "sensor_type": "rf_csi",
+          "score": 0.4847,
+          "confidence": 0.4847,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            61.85,
+            100.4
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 16.6
+          }
+        },
+        {
+          "timestamp_s": 24.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "90996573a4ea",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.6947,
+          "confidence": 0.6947,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            54.55,
+            97.62
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 16.6
+          }
+        },
+        {
+          "timestamp_s": 24.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "7392dc9e31c1",
+          "score": 0.0,
+          "confidence": 0.3536,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            55.18,
+            101.32
+          ],
+          "measurement_uncertainty": 5.21,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 24.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "2849dd1669b0",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            54.7296,
+            101.2362
+          ],
+          "measurement_uncertainty": 5.6521,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.4909,
+            "vy": -0.4451,
+            "obs_count": 6,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 24.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "306239c1d7f5",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            60.19
+          ],
+          "eta_s": 92.22,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 61.11,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 24.6,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "f17f9fa7886b",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.6248,
+          "confidence": 0.6248,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            64.17,
+            100.53
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 16.01
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "6e78b4488758",
+          "score": 0.0,
+          "confidence": 0.3542,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            57.03,
+            100.9
+          ],
+          "measurement_uncertainty": 5.01,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.8251,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "143aefc837ba",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            56.2025,
+            100.8502
+          ],
+          "measurement_uncertainty": 5.2196,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.7695,
+            "vy": -0.4283,
+            "obs_count": 7,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "afbba51aec24",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            76.47
+          ],
+          "eta_s": 56.92,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 50.12,
+            "intersects": true
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "risk_change",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "a1d490b3e8d2",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "risk_engine",
+          "metadata": {
+            "previous": "WATCH",
+            "components": {
+              "fused_confidence": 0.3542,
+              "boundary": 1.0,
+              "eta_urgency": 0.2,
+              "track_quality": 1.0
+            },
+            "reason": "sensor_conf=0.35; boundary_pred=1.00; eta_urgency=0.20; track_qual=1.00"
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "alert",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "d161c3efb7ba",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            56.2025,
+            100.8502
+          ],
+          "risk_level": "HIGH",
+          "predicted_crossing_xy": [
+            100.0,
+            76.47
+          ],
+          "eta_s": 56.92,
+          "provenance": "simulated_alert",
+          "metadata": {
+            "channels": [
+              "dashboard",
+              "sms_event",
+              "deterrent"
+            ],
+            "camera_result": "not_in_fov",
+            "deterrent_command": "simulated_acoustic_deterrent",
+            "note": "Simulated alert; no real notification sent."
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "deterrent",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "b90a7b6a5c91",
+          "score": 0.0,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "simulated_deterrent",
+          "metadata": {
+            "command": "simulated_acoustic_deterrent",
+            "note": "Simulated deterrent command; effectiveness not validated."
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "2ab49de3a3",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "2ab49de3a3",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "FIELD_WORKER_01",
+            "recipient_name": "Ramu & Crop Field Crew",
+            "role": "worker",
+            "distance_m": 52.5,
+            "severity": "HIGH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: HIGH (0.64). ETA to fence: 56.9s. Estimated Location: (56.2m, 100.9m). Event: d161c3efb7ba. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "b6d3230524",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "b6d3230524",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "FARM_OPERATOR_01",
+            "recipient_name": "Arun Kumar (Lead Farm Operator)",
+            "role": "farmer",
+            "distance_m": 58.9,
+            "severity": "HIGH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: HIGH (0.64). ETA to fence: 56.9s. Estimated Location: (56.2m, 100.9m). Event: d161c3efb7ba. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "09566eac51",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "09566eac51",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "PATROL_UNIT_01",
+            "recipient_name": "Ranger Patrol Unit Alpha",
+            "role": "patrol",
+            "distance_m": 62.8,
+            "severity": "HIGH",
+            "channel": "simulated_sms",
+            "status": "SIMULATED",
+            "message_text": "PRW-Wild WARNING: Possible estimated_megafauna approach detected near boundary. Risk: HIGH (0.64). ETA to fence: 56.9s. Estimated Location: (56.2m, 100.9m). Event: d161c3efb7ba. Follow configured local safety procedure. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "93c873267e",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "93c873267e",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "WILDLIFE_CONTROL_ROOM",
+            "recipient_name": "State Wildlife 24/7 Rapid Response Desk",
+            "role": "wildlife_authority",
+            "distance_m": null,
+            "severity": "HIGH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (56.2, 100.9). ETA: 56.92. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "49befcfffb",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "49befcfffb",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "FOREST_RANGE_OFFICE",
+            "recipient_name": "Forest Range Office \u2014 Sector 4 Buffer Zone",
+            "role": "forest_dept",
+            "distance_m": null,
+            "severity": "HIGH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (56.2, 100.9). ETA: 56.92. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 24.5,
+          "event_type": "dispatch",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "d3e5182a78",
+          "score": 0.6385,
+          "confidence": 0.0,
+          "observation_quality": 1.0,
+          "risk_level": "HIGH",
+          "provenance": "alert_dispatch_service",
+          "metadata": {
+            "dispatch_id": "d3e5182a78",
+            "alert_id": "d161c3efb7ba",
+            "timestamp_s": 24.5,
+            "recipient_id": "LOCAL_EMERGENCY_COORDINATION",
+            "recipient_name": "District Agro-Wildlife Emergency Cell",
+            "role": "emergency_coord",
+            "distance_m": null,
+            "severity": "HIGH",
+            "channel": "simulated_control_radio",
+            "status": "SIMULATED",
+            "message_text": "[AUTHORITY DISPATCH] PRW-Wild: Perimeter approach tracking active. Species: ESTIMATED_MEGAFAUNA. Location: (56.2, 100.9). ETA: 56.92. Risk Score: 0.64. Nearest residents alerted. [SIMULATED DELIVERY \u2014 NOT SENT TO A REAL PERSON]",
+            "is_simulated": true,
+            "provider_response": null
+          }
+        },
+        {
+          "timestamp_s": 25.1,
+          "event_type": "sensor_observation",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "66f9218c6fcd",
+          "sensor_id": "rf_02",
+          "sensor_type": "rf_csi",
+          "score": 0.7031,
+          "confidence": 0.7031,
+          "observation_quality": 0.7,
+          "estimated_position_xy": [
+            60.01,
+            92.02
+          ],
+          "measurement_uncertainty": 9.0,
+          "provenance": "synthetic_detection",
+          "metadata": {
+            "distance_m": 15.43
+          }
+        },
+        {
+          "timestamp_s": 25.0,
+          "event_type": "fusion_result",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "a0fe703282a7",
+          "score": 0.0,
+          "confidence": 0.3349,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            57.67,
+            99.33
+          ],
+          "measurement_uncertainty": 5.29,
+          "provenance": "synthetic_fusion",
+          "metadata": {
+            "contributing": {
+              "rf_csi": 0.7587,
+              "pir": 0.0,
+              "vibration": 0.0,
+              "acoustic": 0.0
+            }
+          }
+        },
+        {
+          "timestamp_s": 25.0,
+          "event_type": "track_update",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "ad71a769fae6",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "estimated_position_xy": [
+            57.2885,
+            99.9268
+          ],
+          "measurement_uncertainty": 5.0376,
+          "provenance": "kalman_tracker",
+          "metadata": {
+            "vx": 0.8479,
+            "vy": -0.551,
+            "obs_count": 8,
+            "stale": false
+          }
+        },
+        {
+          "timestamp_s": 25.0,
+          "event_type": "boundary_prediction",
+          "scenario_id": "approach_crossing",
+          "run_id": "20261017T024814_89131a",
+          "event_id": "6cfea02a4239",
+          "score": 0.0,
+          "confidence": 1.0,
+          "observation_quality": 1.0,
+          "predicted_crossing_xy": [
+            100.0,
+            72.17
+          ],
+          "eta_s": 50.37,
+          "provenance": "geometric_prediction",
+          "metadata": {
+            "distance_m": 50.94,
+            "intersects": true
+          }
+        }
+      ]
+    }
+  }
+}

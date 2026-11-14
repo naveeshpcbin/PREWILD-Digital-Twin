@@ -6,10 +6,12 @@ scenario runner, real-time telemetry streaming, and REST API.
 
 from __future__ import annotations
 
+import base64
 import http.server
 import json
 import mimetypes
 import os
+import re
 import shutil
 import socketserver
 import sys
@@ -22,6 +24,28 @@ from typing import Any
 from prw_wild.config import load_config, _deep_merge, DEFAULT_CONFIG
 from prw_wild.experiment_runner import run_experiment
 from prw_wild.dispatch import DEFAULT_RECIPIENTS, DEFAULT_AUTHORITIES, AlertRouter
+from prw_wild.ecosystem import PopulationEcosystem, SPECIES_REGISTRY
+from prw_wild.hardware.control_service import (
+    GLOBAL_HARDWARE_MANAGER,
+    HardwareOperatingMode,
+    LayerAction,
+)
+from prw_wild.vision import (
+    WildlifeVisionDetector,
+    MultiObjectTracker,
+    VisualRiskEstimator,
+    TARGET_CLASSES,
+)
+
+mimetypes.add_type("model/gltf-binary", ".glb")
+mimetypes.add_type("model/gltf+json", ".gltf")
+
+# Global Ecosystem and Vision Singletons
+ECOSYSTEM_LOCK = threading.RLock()
+GLOBAL_ECOSYSTEM = PopulationEcosystem(population_size=75, seed=42)
+GLOBAL_VISION_DETECTOR = WildlifeVisionDetector()
+GLOBAL_VISION_TRACKER = MultiObjectTracker()
+GLOBAL_VISION_RISK = VisualRiskEstimator()
 
 # Root paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
@@ -162,6 +186,28 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(STATIC_DIR), **kwargs)
 
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "SAMEORIGIN")
+        self.send_header("X-XSS-Protection", "1; mode=block")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        self.send_header(
+            "Content-Security-Policy",
+            "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; "
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' data: https://fonts.gstatic.com; "
+            "img-src 'self' data: blob:; "
+            "connect-src 'self' data: blob:; "
+            "worker-src 'self' blob:; "
+            "media-src 'self' data: blob:;"
+        )
+        super().end_headers()
+
     def do_OPTIONS(self):
         """Handle CORS pre-flight."""
         self.send_response(200)
@@ -204,12 +250,19 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
 
         if path.startswith("/api/scenarios/"):
             sc_id = path.split("/api/scenarios/")[1]
+            if not re.match(r"^[a-zA-Z0-9_\-]+$", sc_id):
+                self._send_error_json("Invalid scenario ID format", 400)
+                return
             candidates = list(SCENARIOS_DIR.glob(f"{sc_id}.json"))
             if not candidates:
                 candidates = [c for c in SCENARIOS_DIR.glob("*.json") if c.stem == sc_id]
             if candidates:
                 try:
-                    with open(candidates[0], "r", encoding="utf-8") as f:
+                    target_file = candidates[0].resolve()
+                    if not str(target_file).startswith(str(SCENARIOS_DIR.resolve())):
+                        self._send_error_json("Access denied", 403)
+                        return
+                    with open(target_file, "r", encoding="utf-8") as f:
                         data = json.load(f)
                     self._send_json(data)
                     return
@@ -244,6 +297,56 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
             })
             return
 
+        if path == "/api/ecosystem/population":
+            self._send_json({
+                "population": [a.to_dict() for a in GLOBAL_ECOSYSTEM.agents],
+                "count": len(GLOBAL_ECOSYSTEM.agents),
+                "time_s": GLOBAL_ECOSYSTEM.time_s,
+                "world_bounds": GLOBAL_ECOSYSTEM.world_bounds,
+                "boundary_x": GLOBAL_ECOSYSTEM.boundary_x,
+                "resources": [
+                    {
+                        "patch_id": r.patch_id,
+                        "resource_type": r.resource_type,
+                        "position": {"x": r.position.x, "y": r.position.y},
+                        "radius_m": r.radius_m,
+                        "current_amount": round(r.current_amount, 1),
+                        "max_capacity": r.max_capacity,
+                    }
+                    for r in GLOBAL_ECOSYSTEM.resources
+                ],
+                "species_profiles": {
+                    k: {
+                        "species_id": v.species_id,
+                        "common_name": v.common_name,
+                        "scientific_name": v.scientific_name,
+                        "mass_kg": v.mass_kg,
+                        "visual_model": v.visual_model,
+                        "radar_color": v.radar_color,
+                        "diet": v.diet,
+                    }
+                    for k, v in SPECIES_REGISTRY.items()
+                }
+            })
+            return
+
+        if path == "/api/vision/status":
+            self._send_json({
+                "backend": GLOBAL_VISION_DETECTOR.backend,
+                "active_tracks_count": len(GLOBAL_VISION_TRACKER.trackers),
+                "confidence_calibration": "RAW (NOT CALIBRATED)",
+                "classes": [
+                    {
+                        "class_id": c.class_id,
+                        "name": c.name,
+                        "scientific_name": c.scientific_name,
+                        "is_supported": c.is_supported_by_model,
+                    }
+                    for c in TARGET_CLASSES.values()
+                ]
+            })
+            return
+
         if path == "/api/hardware":
             hw_dir = PROJECT_ROOT / "hardware" / "devices"
             devices = []
@@ -264,8 +367,58 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
             self._send_json({"devices": devices, "count": len(devices)})
             return
 
+        if path == "/api/hardware/status":
+            self._send_json(GLOBAL_HARDWARE_MANAGER.get_status())
+            return
+
+        if path == "/api/hardware/telemetry":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            self._send_json({
+                "latest": bridge.get_latest_telemetry(),
+                "history": bridge.get_telemetry_history(50),
+                "status": bridge.get_status()
+            })
+            return
+
+        if path == "/api/hardware/events":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            self._send_json({
+                "physical_alerts": bridge.get_alerts(50),
+                "hardware_commands": GLOBAL_HARDWARE_MANAGER.command_history[:50]
+            })
+            return
+
+        if path == "/api/hardware/alerts":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            self._send_json({
+                "alerts": bridge.get_alerts(50),
+                "unacknowledged_count": bridge.get_status().get("unacknowledged_alerts_count", 0)
+            })
+            return
+
+        if path == "/api/hardware/calibration":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            self._send_json({
+                "mic_threshold": bridge.mic_threshold,
+                "piezo_threshold": bridge.piezo_threshold,
+                "piezo_enabled": bridge.piezo_enabled
+            })
+            return
+
+        if path == "/api/hardware/nodes":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            self._send_json(bridge.get_node_modes())
+            return
+
         if path == "/api/hardware/wiring":
-            manifest_file = PROJECT_ROOT / "hardware" / "wiring_manifest.json"
+            manifest_file = PROJECT_ROOT / "hardware" / "wiring_manifest_actual.json"
+            if not manifest_file.exists():
+                manifest_file = PROJECT_ROOT / "hardware" / "wiring_manifest.json"
             if manifest_file.exists():
                 try:
                     with open(manifest_file, "r", encoding="utf-8") as mf:
@@ -280,13 +433,20 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
 
         if path.startswith("/api/hardware/"):
             dev_id = path.split("/api/hardware/")[1]
+            if not re.match(r"^[a-zA-Z0-9_\-]+$", dev_id):
+                self._send_error_json("Invalid device identifier format", 400)
+                return
             hw_dir = PROJECT_ROOT / "hardware" / "devices"
             dev_file = hw_dir / f"{dev_id}.json"
             if not dev_file.exists():
                 dev_file = hw_dir / f"{dev_id}"
             if dev_file.exists() and dev_file.is_file():
+                resolved_file = dev_file.resolve()
+                if not str(resolved_file).startswith(str(hw_dir.resolve())):
+                    self._send_error_json("Access denied", 403)
+                    return
                 try:
-                    with open(dev_file, "r", encoding="utf-8") as jf:
+                    with open(resolved_file, "r", encoding="utf-8") as jf:
                         d = json.load(jf)
                     self._send_json(d)
                     return
@@ -300,6 +460,7 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self):
+        global GLOBAL_ECOSYSTEM
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -310,6 +471,179 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
             payload = json.loads(body.decode("utf-8")) if body else {}
         except Exception:
             payload = {}
+
+        if path == "/api/hardware/mode":
+            mode_str = str(payload.get("mode", "SIMULATION_ONLY")).upper()
+            valid_modes = (
+                "SIMULATION_ONLY", "HARDWARE_TEST", "AUTO_HARDWARE_CONTROL",
+                "AUTO_SENSOR", "AUTO", "MANUAL", "SIMULATION"
+            )
+            if mode_str not in valid_modes:
+                self._send_error_json("Invalid hardware operating mode; must be AUTO_SENSOR, MANUAL, SIMULATION (or legacy SIMULATION_ONLY, HARDWARE_TEST, AUTO_HARDWARE_CONTROL)", 400)
+                return
+            res = GLOBAL_HARDWARE_MANAGER.set_mode(mode_str)
+            self._send_json(res)
+            return
+
+        if path == "/api/hardware/nodes":
+            node = payload.get("node")
+            mode = payload.get("mode")
+            if not node or mode is None:
+                self._send_error_json("Missing 'node' ('A' or 'B') or 'mode' ('ON' or 'OFF')", 400)
+                return
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            res = bridge.set_node_mode(str(node), mode)
+            if not res.get("success"):
+                self._send_error_json(res.get("error", "Failed to set node mode"), 400)
+                return
+            self._send_json(res)
+            return
+
+        if path == "/api/hardware/command":
+            raw_layer = payload.get("layer", 1)
+            try:
+                layer = int(raw_layer)
+            except (ValueError, TypeError):
+                self._send_error_json("Invalid layer parameter; must be 1, 2, or 3", 400)
+                return
+            if layer not in (1, 2, 3):
+                self._send_error_json("Layer out of range; must be 1, 2, or 3", 400)
+                return
+            action = str(payload.get("action", "OFF")).upper()
+            if action not in ("ON", "OFF"):
+                self._send_error_json("Invalid action parameter; must be 'ON' or 'OFF'", 400)
+                return
+            res = GLOBAL_HARDWARE_MANAGER.send_manual_command(layer, action)
+            self._send_json(res.to_dict())
+            return
+
+        if path == "/api/hardware/led":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            if "all" in payload:
+                all_state = bool(payload.get("all"))
+                res = bridge.set_all_manual_leds(all_state)
+                self._send_json(res)
+                return
+            try:
+                led_num = int(payload.get("led", 1))
+            except (ValueError, TypeError):
+                self._send_error_json("Invalid led parameter; must be 1..6", 400)
+                return
+            if led_num < 1 or led_num > 6:
+                self._send_error_json("LED number out of range; must be 1..6", 400)
+                return
+            state = bool(payload.get("state", False))
+            res = bridge.set_manual_led(led_num, state)
+            self._send_json(res)
+            return
+
+        if path == "/api/hardware/event":
+            animal_id = payload.get("animal_id", "ELEPHANT_01")
+            layer = payload.get("layer", "L1")
+            transition = payload.get("transition", "ENTER")
+            timestamp_s = float(payload.get("timestamp_s", 0.0))
+            res = GLOBAL_HARDWARE_MANAGER.process_event(animal_id, layer, transition, timestamp_s)
+            self._send_json(res)
+            return
+
+        if path == "/api/hardware/connect":
+            target_port = payload.get("port")
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            ok = bridge.connect(target_port)
+            self._send_json({
+                "success": ok,
+                "connected": bridge.is_connected,
+                "port": bridge.connected_port,
+                "error": bridge.last_error
+            })
+            return
+
+        if path == "/api/hardware/emergency_stop":
+            results = GLOBAL_HARDWARE_MANAGER.emergency_all_off()
+            self._send_json({
+                "success": True,
+                "action": "EMERGENCY_ALL_OFF",
+                "results": [r.to_dict() for r in results]
+            })
+            return
+
+        if path.startswith("/api/hardware/alerts/") and path.endswith("/acknowledge") or path in ["/api/hardware/alerts/acknowledge", "/api/hardware/alert/acknowledge"]:
+            alert_id = None
+            if "/api/hardware/alerts/" in path:
+                parts = path.split("/")
+                if len(parts) >= 5:
+                    alert_id = parts[4]
+            if not alert_id:
+                alert_id = payload.get("alert_id") or payload.get("id")
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            ok = bridge.acknowledge_alert(str(alert_id)) if alert_id else False
+            self._send_json({"success": ok, "alert_id": alert_id})
+            return
+
+        if path == "/api/hardware/connection/configure":
+            port = payload.get("port")
+            baud = int(payload.get("baud_rate", 115200))
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            ok = bridge.configure_port(port, baud) if port else False
+            self._send_json({
+                "success": ok,
+                "port": bridge.connected_port,
+                "baud_rate": bridge.baud_rate,
+                "is_connected": bridge.is_connected,
+                "error": bridge.last_error
+            })
+            return
+
+        if path == "/api/hardware/connection/reconnect":
+            port = payload.get("port")
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            ok = bridge.reconnect(port)
+            self._send_json({
+                "success": ok,
+                "port": bridge.connected_port,
+                "is_connected": bridge.is_connected,
+                "error": bridge.last_error
+            })
+            return
+
+        if path == "/api/hardware/calibration":
+            from prw_wild.hardware.lora_bridge import LoraSerialBridge
+            bridge = LoraSerialBridge.get_instance()
+            raw_mic = payload.get("mic_threshold")
+            raw_piezo = payload.get("piezo_threshold")
+            raw_p_enabled = payload.get("piezo_enabled")
+
+            mic_thresh = None
+            if raw_mic is not None:
+                try:
+                    mic_thresh = max(0, min(1000000, int(raw_mic)))
+                except (ValueError, TypeError):
+                    self._send_error_json("Invalid mic_threshold format", 400)
+                    return
+
+            piezo_thresh = None
+            if raw_piezo is not None:
+                try:
+                    piezo_thresh = max(0, min(4095, int(raw_piezo)))
+                except (ValueError, TypeError):
+                    self._send_error_json("Invalid piezo_threshold format", 400)
+                    return
+
+            piezo_en = bool(raw_p_enabled) if raw_p_enabled is not None else None
+
+            res = bridge.set_calibration(
+                mic_threshold=mic_thresh,
+                piezo_threshold=piezo_thresh,
+                piezo_enabled=piezo_en
+            )
+            self._send_json({"success": True, "calibration": res})
+            return
 
         if path == "/api/test-dispatch":
             router = AlertRouter()
@@ -324,6 +658,126 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
             )
             self._send_json({"dispatches": [r.to_dict() for r in recs], "count": len(recs)})
             return
+
+        if path == "/api/ecosystem/step":
+            try:
+                try:
+                    dt = max(0.01, min(5.0, float(payload.get("dt", 0.5))))
+                except (ValueError, TypeError):
+                    dt = 0.5
+                with ECOSYSTEM_LOCK:
+                    snapshots = GLOBAL_ECOSYSTEM.step(dt)
+                    layer_counts = {1: 0, 2: 0, 3: 0}
+                    for a in GLOBAL_ECOSYSTEM.agents:
+                        px = a.position.x
+                        if 45.0 <= px < 70.0:
+                            layer_counts[1] += 1
+                        elif 70.0 <= px < 85.0:
+                            layer_counts[2] += 1
+                        elif px >= 85.0:
+                            layer_counts[3] += 1
+
+                    hw_events = GLOBAL_HARDWARE_MANAGER.process_simulation_occupancy(layer_counts)
+                    cur_time = GLOBAL_ECOSYSTEM.time_s
+                    resources = [
+                        {
+                            "patch_id": r.patch_id,
+                            "resource_type": r.resource_type,
+                            "current_amount": round(r.current_amount, 1),
+                            "max_capacity": r.max_capacity,
+                        }
+                        for r in GLOBAL_ECOSYSTEM.resources
+                    ]
+
+                self._send_json({
+                    "time_s": cur_time,
+                    "agents": snapshots,
+                    "layer_counts": layer_counts,
+                    "hardware_events": [e.to_dict() for e in hw_events],
+                    "hardware_status": GLOBAL_HARDWARE_MANAGER.get_status(),
+                    "resources": resources
+                })
+            except Exception as e:
+                import traceback
+                print(f"[PRW-Wild Server] Ecosystem step error: {e}")
+                self._send_json({
+                    "time_s": 0.0,
+                    "agents": [],
+                    "layer_counts": {1: 0, 2: 0, 3: 0},
+                    "hardware_events": [],
+                    "hardware_status": GLOBAL_HARDWARE_MANAGER.get_status(),
+                    "resources": [],
+                    "warning": str(e)
+                })
+            return
+
+        if path == "/api/ecosystem/inject":
+            aid = str(payload.get("animal_id", ""))
+            intent = str(payload.get("intent", "approach"))
+            with ECOSYSTEM_LOCK:
+                ok = GLOBAL_ECOSYSTEM.inject_event(aid, intent)
+            self._send_json({"success": ok, "animal_id": aid, "intent": intent})
+            return
+
+        if path == "/api/ecosystem/reset":
+            try:
+                pop_sz = max(1, min(150, int(payload.get("population_size", 60))))
+                seed = max(0, min(2147483647, int(payload.get("seed", 42))))
+            except (ValueError, TypeError):
+                self._send_error_json("Invalid reset parameters", 400)
+                return
+            with ECOSYSTEM_LOCK:
+                GLOBAL_ECOSYSTEM = PopulationEcosystem(population_size=pop_sz, seed=seed)
+            self._send_json({
+                "success": True,
+                "count": len(GLOBAL_ECOSYSTEM.agents),
+                "seed": seed
+            })
+            return
+
+        if path == "/api/vision/detect":
+            # Genuine computer vision endpoint processing camera pixels
+            img_data = payload.get("image", "")
+            if not img_data:
+                self._send_error_json("No image data provided", 400)
+                return
+
+            try:
+                # Strip data URL header if present (e.g. data:image/jpeg;base64,...)
+                if "," in img_data:
+                    img_data = img_data.split(",", 1)[1]
+                raw_bytes = base64.b64decode(img_data)
+
+                # Run detector on actual rendered image
+                t0 = time.time()
+                detections = GLOBAL_VISION_DETECTOR.detect(raw_bytes)
+                det_time_ms = round((time.time() - t0) * 1000.0, 2)
+
+                # Feed detections to multi-object tracker
+                det_dicts = [d.to_dict() for d in detections]
+                active_tracks = GLOBAL_VISION_TRACKER.update(det_dicts)
+
+                # Compute boundary crossing risks independently
+                risks = []
+                for trk in active_tracks:
+                    risk_assessment = GLOBAL_VISION_RISK.evaluate_track(trk)
+                    risks.append(risk_assessment.to_dict())
+
+                self._send_json({
+                    "success": True,
+                    "detections": det_dicts,
+                    "tracks": active_tracks,
+                    "risk_assessments": risks,
+                    "backend": GLOBAL_VISION_DETECTOR.backend,
+                    "inference_time_ms": det_time_ms,
+                    "timestamp": time.time(),
+                })
+                return
+            except Exception as e:
+                import traceback
+                print(f"[PRW-Wild Server] Vision inference error: {e}\n{traceback.format_exc()}")
+                self._send_error_json(f"Vision inference error: {e}", 500)
+                return
 
         if path == "/api/sound-alert":
             def _beep():
@@ -341,15 +795,17 @@ class DigitalTwinHTTPHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         if path == "/api/run":
-            scenario_id = payload.get("scenario_id", "approach_crossing")
-            seed = payload.get("seed")
+            scenario_id = str(payload.get("scenario_id", "approach_crossing"))
+            raw_seed = payload.get("seed")
+            seed = int(raw_seed) if raw_seed is not None and str(raw_seed).lstrip("-").isdigit() else None
             overrides = payload.get("overrides")
             try:
                 res = execute_simulation(scenario_id, seed=seed, overrides=overrides)
                 self._send_json(res)
             except Exception as e:
                 import traceback
-                self._send_error_json(f"Simulation failed: {e}\n{traceback.format_exc()}", 500)
+                print(f"[PRW-Wild Server] Simulation execution error: {e}\n{traceback.format_exc()}")
+                self._send_error_json(f"Simulation failed: {e}", 500)
             return
 
         if path == "/api/batch":

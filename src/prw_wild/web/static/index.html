@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261108_mvp_release">
 </head>
 <body>
   <div class="app-container">
@@ -59,10 +59,11 @@
           <span>BENCHMARK SUITE</span>
         </button>
 
-        <!-- View Mode Switcher: 3D vs 2D -->
+        <!-- View Mode Switcher: 3D vs 2D vs Short/Compact -->
         <div class="view-mode-toggle">
           <button id="btnView3D" class="view-toggle-btn active" title="Switch to Immersive 3D Digital Twin">3D TWIN</button>
           <button id="btnView2D" class="view-toggle-btn" title="Switch to 2D Spatial Radar Fallback">2D RADAR</button>
+          <button id="btnViewShort" class="view-toggle-btn" title="Toggle Shortest / Compact Digital Twin View">⚡ SHORT</button>
         </div>
       </div>
 
@@ -109,6 +110,9 @@
         <button class="lab-mode-tab" data-mode="hardware" id="tabModeHardware" title="PRW-Wild Hardware Lab: 3D ESP32-S3 PCB, verified pinout, sensors & wiring explorer">
           <span class="tab-icon">🛠️</span> MODE E: HARDWARE LAB
         </button>
+        <button class="lab-mode-tab" data-mode="ecosystem" id="tabModeEcosystem" title="Multi-Animal Autonomous Ecosystem AI Command Centre (50+ Agents, Real Vision & Tracking)">
+          <span class="tab-icon">🐅</span> MODE F: MULTI-ANIMAL AI
+        </button>
       </div>
       <div class="lab-toolbar-right">
         <div class="graphics-quality-pill">
@@ -134,7 +138,8 @@
             <div class="canvas-toolbar">
               <!-- Viewpoint Presets -->
               <div class="viewpoint-pills" id="viewpointPills">
-                <button class="v-pill active" data-view="orbit" title="Free Perspective Orbit">Free Orbit</button>
+                <button class="v-pill active" data-view="observer" title="Ground-Level Wildlife Observer View">Observer Eye-Level</button>
+                <button class="v-pill" data-view="orbit" title="Free Perspective Orbit">Free Orbit</button>
                 <button class="v-pill" data-view="isometric" title="Isometric Bird's-Eye Overview">Isometric</button>
                 <button class="v-pill" data-view="topdown" title="Top-Down Ground Map">Top-Down</button>
                 <button class="v-pill" data-view="follow" title="Follow Elephant Target">Follow Elephant</button>
@@ -173,6 +178,37 @@
             <!-- 2D Canvas Container (Fallback / Toggleable) -->
             <div id="twoContainer" class="viewport-layer hidden">
               <canvas id="digitalTwinCanvas"></canvas>
+            </div>
+
+            <!-- Floating Three-Layer Detection HUD Overlay -->
+            <div class="detection-layers-overlay" id="detectionLayersOverlay">
+              <div class="detection-layer-badge l1" id="hudLayer1Badge">
+                <span class="dl-num">L1</span>
+                <span class="dl-name">Wi-Fi CSI / ESP32 (Outer)</span>
+                <span class="dl-status" id="hudLayer1Status">IDLE (0)</span>
+              </div>
+              <div class="detection-layer-badge l2" id="hudLayer2Badge">
+                <span class="dl-num">L2</span>
+                <span class="dl-name">Sensor Network (Middle)</span>
+                <span class="dl-status" id="hudLayer2Status">IDLE (0)</span>
+              </div>
+              <div class="detection-layer-badge l3" id="hudLayer3Badge">
+                <span class="dl-num">L3</span>
+                <span class="dl-name">Camera Surveillance (Inner)</span>
+                <span class="dl-status" id="hudLayer3Status">STANDBY (0)</span>
+              </div>
+            </div>
+
+            <!-- Tactical Hardware Quick-Control HUD Overlay -->
+            <div class="tactical-hw-quickbar" id="tacticalHwQuickbar">
+              <div class="thw-mode-pill" id="thwModePill">MODE: SIM ONLY</div>
+              <div class="thw-controls">
+                <button class="thw-btn" id="quickL1Toggle" title="Toggle Layer 1 (CSI / ESP32 GPIO38)">L1: <span id="quickL1State">OFF</span></button>
+                <button class="thw-btn" id="quickL2Toggle" title="Toggle Layer 2 (Sensor Network Relay)">L2: <span id="quickL2State">OFF</span></button>
+                <button class="thw-btn" id="quickL3Toggle" title="Toggle Layer 3 (Camera CAM_01)">L3: <span id="quickL3State">OFF</span></button>
+                <button class="thw-btn danger" id="quickAllOff" title="Trigger Emergency All-Off">🚨 ALL-OFF</button>
+                <button class="thw-btn bench-link" id="quickOpenBench" title="Open Full Hardware Control Workbench">🛠️ BENCH</button>
+              </div>
             </div>
 
             <!-- Floating HUD Overlays -->
@@ -255,6 +291,7 @@
               </div>
               <div class="pov-feed-container" id="povFeedContainer">
                 <canvas id="camPovCanvas" width="280" height="158" class="pov-render-canvas"></canvas>
+                <canvas id="camPovBboxCanvas" width="280" height="158" class="pov-bbox-overlay-canvas"></canvas>
                 <div class="pov-scanlines"></div>
                 <div class="pov-crosshair"></div>
                 <!-- Dynamic Target Bounding Box -->
@@ -471,6 +508,335 @@
 
       <!-- Right Column: Subsystems, Sensors, Camera, Alert Dispatch, and Event Stream -->
       <aside class="sidebar-section">
+        <!-- Live Physical Hardware Digital-Twin Panel (Dual ESP32 + LoRa + Sensors + LEDs) -->
+        <div class="side-panel physical-hardware-panel" id="sidePhysicalHardwarePanel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span class="panel-tag physical-brand-tag">⚡ PHYSICAL HARDWARE</span>
+              <span class="conn-pill simulated" id="sideEsp32bConnPill">DISCONNECTED</span>
+            </div>
+            <div class="side-hw-header-right">
+              <span class="freshness-pill stale" id="sideEsp32bFreshnessPill">STALE</span>
+              <button id="btnToggleSideHw" class="btn-panel-toggle" title="Collapse / Expand Physical Hardware Panel" aria-label="Toggle Panel">▾</button>
+            </div>
+          </div>
+
+          <div class="side-hw-body" id="sideHwBody">
+            <!-- RF Link & Node B Status Strip -->
+            <div class="side-rf-strip">
+              <div class="side-rf-item"><span class="lbl">PORT:</span> <strong id="sideLoraPort">COM7</strong></div>
+              <div class="side-rf-item"><span class="lbl">RSSI:</span> <strong id="sideLoraRssi">-- dBm</strong></div>
+              <div class="side-rf-item"><span class="lbl">SNR:</span> <strong id="sideLoraSnr">-- dB</strong></div>
+              <div class="side-rf-item"><span class="lbl">SEQ:</span> <strong id="sideLoraSeq">0</strong></div>
+              <div class="side-rf-item"><span class="lbl">UPTIME:</span> <strong id="sideLoraUptime">-- ms</strong></div>
+            </div>
+
+            <!-- Dual Node Manual Controls: ESP32-A & ESP32-B (Cascaded Mode Architecture) -->
+            <div class="side-node-modes-strip" id="sideNodeModesStrip">
+              <div class="side-node-mode-row">
+                <div class="side-node-info">
+                  <span class="side-node-icon">📡</span>
+                  <div class="side-node-labels">
+                    <span class="side-node-name">ESP32-A MODE</span>
+                    <span class="side-node-desc">Sensor Node (PIR, Piezo, Mic)</span>
+                  </div>
+                </div>
+                <button type="button" id="toggleEsp32AMode" class="btn-node-toggle active" data-node="A" data-state="ON" title="Toggle ESP32-A Sensor Acquisition Node">
+                  <span class="node-toggle-led"></span>
+                  <span class="node-toggle-text" id="txtEsp32AMode">ACTIVE</span>
+                </button>
+              </div>
+
+              <div class="side-node-mode-row">
+                <div class="side-node-info">
+                  <span class="side-node-icon">🎛️</span>
+                  <div class="side-node-labels">
+                    <span class="side-node-name">ESP32-B MODE</span>
+                    <span class="side-node-desc">Gateway & LED Annunciator</span>
+                  </div>
+                </div>
+                <button type="button" id="toggleEsp32BMode" class="btn-node-toggle active" data-node="B" data-state="ON" title="Toggle ESP32-B Gateway & Physical LEDs">
+                  <span class="node-toggle-led"></span>
+                  <span class="node-toggle-text" id="txtEsp32BMode">ACTIVE</span>
+                </button>
+              </div>
+
+              <div class="side-node-cascade-notice" id="sideNodeCascadeNotice">
+                <span class="cascade-icon">⚡</span>
+                <span class="cascade-text" id="txtNodeCascadeNotice">Cascade Rule: Turning OFF ESP32-A automatically turns OFF ESP32-B</span>
+              </div>
+            </div>
+
+            <!-- Physical Sensors Row: PIR, Piezo, INMP441 Mic -->
+            <div class="side-sensors-container">
+              <!-- PIR Motion -->
+              <div class="side-sensor-box" id="sideBoxPir">
+                <div class="side-sensor-head">
+                  <span class="sensor-title">PIR MOTION</span>
+                  <span class="sensor-pin-tag">GPIO 32</span>
+                  <span class="sensor-state-tag" id="sidePirStatus">WARMING</span>
+                </div>
+                <div class="side-sensor-main">
+                  <span class="side-val" id="sidePirRaw">LOW (0)</span>
+                  <div class="side-status-dot" id="sidePirDot"></div>
+                </div>
+                <div class="side-sensor-foot">HC-SR501 Infrared</div>
+              </div>
+
+              <!-- Piezoelectric Disc (Vibration / Seismic) -->
+              <div class="side-sensor-box" id="sideBoxPiezo">
+                <div class="side-sensor-head">
+                  <span class="sensor-title">PIEZO SEISMIC</span>
+                  <span class="sensor-pin-tag">GPIO 35</span>
+                  <span class="sensor-state-tag disabled" id="sidePiezoStatus">NOT INSTALLED</span>
+                </div>
+                <div class="side-sensor-main">
+                  <span class="side-val" id="sidePiezoVal">-- ADC (Not Fitted)</span>
+                  <div class="side-status-dot" id="sidePiezoDot"></div>
+                </div>
+                <div class="side-sensor-controls">
+                  <div class="side-slider-row" title="Tune sensitivity for physical piezoelectric vibration disc (GPIO 35, 12-bit ADC 0-4095)">
+                    <label for="sidePiezoSlider">SENSITIVITY (THRESH): <span id="sidePiezoThreshVal">150</span> <small style="color:var(--text-dim);font-size:8.5px;">(0 - 4095 ADC)</small></label>
+                    <input type="range" id="sidePiezoSlider" min="0" max="4095" step="25" value="150" title="Adjust vibration trigger threshold (0 - 4095 ADC)">
+                  </div>
+                  <div class="side-sensor-action-row">
+                    <button class="btn-micro" id="btnSideTogglePiezo" title="Toggle piezoelectric ADC acquisition protection gate">CIRCUIT: ENABLED</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INMP441 Microphone (I2S Acoustic) -->
+              <div class="side-sensor-box" id="sideBoxMic">
+                <div class="side-sensor-head">
+                  <span class="sensor-title">INMP441 MIC</span>
+                  <span class="sensor-pin-tag">I²S BUS</span>
+                  <span class="sensor-state-tag" id="sideMicStatus">READY</span>
+                </div>
+                <div class="side-sensor-main">
+                  <span class="side-val" id="sideMicVal">-- RMS</span>
+                  <div class="side-status-dot" id="sideMicDot"></div>
+                </div>
+                <!-- Live VU Meter Track -->
+                <div class="side-vu-wrap" title="Live INMP441 Acoustic RMS Audio Level">
+                  <div class="side-vu-bar">
+                    <div class="side-vu-fill" id="sideMicVuFill" style="width: 0%;"></div>
+                    <div class="side-vu-threshold" id="sideMicVuThreshold" style="left: 7%;"></div>
+                  </div>
+                </div>
+                <div class="side-sensor-controls">
+                  <div class="side-slider-row" title="Tune acoustic RMS threshold for physical INMP441 microphone (GPIO 25/33/34, 0 - 500k RMS)">
+                    <label for="sideMicSlider">SENSITIVITY (THRESH): <span id="sideMicThreshVal">35,000</span> <small style="color:var(--text-dim);font-size:8.5px;">(0 - 500k RMS)</small></label>
+                    <input type="range" id="sideMicSlider" min="0" max="500000" step="2500" value="35000" title="Adjust acoustic RMS trigger threshold (0 - 500,000 RMS)">
+                  </div>
+                  <div class="side-sensor-action-row">
+                    <span class="btn-micro" style="cursor:default;" title="I2S Peripheral Bit Clock 25, Word Select 33, Data 34">I²S BUS: READY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ESP32-B Physical Six-LED Indicator Strip -->
+            <div class="side-six-leds-panel">
+              <div class="side-leds-title">
+                <span>ESP32-B SIX PHYSICAL LED OUTPUTS</span>
+                <span class="side-leds-sub">HARDWARE BENCH</span>
+              </div>
+              <div class="side-leds-grid">
+                <div class="side-led-item" title="LED 1: PIR Motion (GPIO 32) — Active on physical movement">
+                  <div class="side-led-bulb off" id="sideLed1"></div>
+                  <span class="side-led-label">LED 1</span>
+                  <span class="side-led-desc">PIR</span>
+                </div>
+                <div class="side-led-item" title="LED 2: Piezo Vibration (GPIO 33) — Active on physical vibration exceeding threshold">
+                  <div class="side-led-bulb off" id="sideLed2"></div>
+                  <span class="side-led-label">LED 2</span>
+                  <span class="side-led-desc">PIEZO</span>
+                </div>
+                <div class="side-led-item" title="LED 3: Microphone Acoustic (GPIO 25) — Active on acoustic sound exceeding threshold">
+                  <div class="side-led-bulb off" id="sideLed3"></div>
+                  <span class="side-led-label">LED 3</span>
+                  <span class="side-led-desc">MIC</span>
+                </div>
+                <div class="side-led-item" title="LED 4: Link / Connected (GPIO 13) — Activates once ESP32 is properly connected">
+                  <div class="side-led-bulb off" id="sideLed4"></div>
+                  <span class="side-led-label">LED 4</span>
+                  <span class="side-led-desc">CONNECT</span>
+                </div>
+                <div class="side-led-item" title="LED 5: LoRa RX Pulse (GPIO 21) — Pulses when LoRa signals are received">
+                  <div class="side-led-bulb off" id="sideLed5"></div>
+                  <span class="side-led-label">LED 5</span>
+                  <span class="side-led-desc">LORA RX</span>
+                </div>
+                <div class="side-led-item" title="LED 6: Overall Sensor Alert (GPIO 22) — Triggers on PIR, Piezo, or Mic alert">
+                  <div class="side-led-bulb off" id="sideLed6"></div>
+                  <span class="side-led-label">LED 6</span>
+                  <span class="side-led-desc">ALERT</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Physical Alerts Feed -->
+            <div class="side-alerts-box">
+              <div class="side-alerts-hdr">
+                <span>EDGE-TRIGGERED HARDWARE ALERTS</span>
+                <span class="side-alert-badge" id="sideAlertCountPill">0 ACTIVE</span>
+              </div>
+              <div class="side-alerts-feed" id="sideAlertsFeed">
+                <div class="side-alert-empty">All physical sensors quiet. System nominal.</div>
+              </div>
+            </div>
+
+            <!-- Footer: Quick Action Links -->
+            <div class="side-hw-footer">
+              <button class="side-btn-hw-lab" id="btnOpenHwLabFromSidebar" title="Open Full 3D Interactive Hardware Workbench & Pinout Register">
+                🔬 OPEN 3D HARDWARE LAB
+              </button>
+              <button class="side-btn-reconnect" id="btnSideReconnectCom" title="Reconnect USB Serial Bridge on COM7">
+                🔄 RECONNECT COM7
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-Animal Ecosystem Intelligence & Real Vision AI Panel -->
+        <div class="side-panel ecosystem-panel" id="ecosystemPanel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span class="panel-tag">WILDLIFE ECOSYSTEM INTELLIGENCE</span>
+              <span class="pop-count-badge" id="hudPopCountBadge">60 SIMULATED</span>
+            </div>
+            <span class="vision-status-chip" id="hudVisionBackendChip">AI VISION: ACTIVE</span>
+          </div>
+
+          <!-- Species Distribution Grid (16 Distinct Wildlife Species) -->
+          <div class="species-roster-grid" id="speciesRosterGrid">
+            <div class="species-chip elephant"><span class="sp-icon">🐘</span> Elephant <strong id="cnt_elephant">8</strong></div>
+            <div class="species-chip gaur"><span class="sp-icon">🐂</span> Gaur <strong id="cnt_gaur">6</strong></div>
+            <div class="species-chip tiger"><span class="sp-icon">🐅</span> Tiger <strong id="cnt_bengal_tiger">2</strong></div>
+            <div class="species-chip leopard"><span class="sp-icon">🐆</span> Leopard <strong id="cnt_indian_leopard">1</strong></div>
+            <div class="species-chip bear"><span class="sp-icon">🐻</span> Sloth Bear <strong id="cnt_sloth_bear">1</strong></div>
+            <div class="species-chip dhole"><span class="sp-icon">🐕</span> Dhole <strong id="cnt_dhole">2</strong></div>
+            <div class="species-chip boar"><span class="sp-icon">🐗</span> Boar <strong id="cnt_boar">12</strong></div>
+            <div class="species-chip sambar"><span class="sp-icon">🦌</span> Sambar <strong id="cnt_sambar">8</strong></div>
+            <div class="species-chip chital"><span class="sp-icon">🦌</span> Chital <strong id="cnt_chital">18</strong></div>
+            <div class="species-chip muntjac"><span class="sp-icon">🦌</span> Muntjac <strong id="cnt_indian_muntjac">1</strong></div>
+            <div class="species-chip jackal"><span class="sp-icon">🐺</span> Jackal <strong id="cnt_golden_jackal">1</strong></div>
+            <div class="species-chip macaque"><span class="sp-icon">🐒</span> Macaque <strong id="cnt_macaque">8</strong></div>
+            <div class="species-chip langur"><span class="sp-icon">🐒</span> Langur <strong id="cnt_gray_langur">2</strong></div>
+            <div class="species-chip porcupine"><span class="sp-icon">🦔</span> Porcupine <strong id="cnt_crested_porcupine">1</strong></div>
+            <div class="species-chip peafowl"><span class="sp-icon">🦚</span> Peafowl <strong id="cnt_indian_peafowl">1</strong></div>
+            <div class="species-chip hare"><span class="sp-icon">🐇</span> Hare <strong id="cnt_indian_hare">1</strong></div>
+          </div>
+
+          <!-- Real-Time AI Detection & Tracking Telemetry -->
+          <div class="vision-ai-telemetry-box">
+            <div class="vai-row">
+              <span>AI Visual Detections:</span>
+              <strong id="valAiDetections" class="text-cyan">0 DETECTED</strong>
+            </div>
+            <div class="vai-row">
+              <span>Active SORT Tracks:</span>
+              <strong id="valAiTracks" class="text-emerald">0 TRACKED</strong>
+            </div>
+            <div class="vai-row">
+              <span>Confidence Calibration:</span>
+              <strong class="text-amber">RAW (NOT CALIBRATED)</strong>
+            </div>
+            <div class="vai-row">
+              <span>Perimeter Crossing Risk:</span>
+              <strong id="valAiRiskScore" class="text-rose">0.00 (LOW)</strong>
+            </div>
+            <div class="vai-row">
+              <span>Predicted Warning ETA:</span>
+              <strong id="valAiEta" class="text-white">-- s</strong>
+            </div>
+          </div>
+
+          <!-- Dynamic Operator Manual Injection Controls -->
+          <div class="ecosystem-controls-section">
+            <div class="ec-section-title">MANUAL OPERATOR INJECTION</div>
+            <div class="ec-btn-row">
+              <button class="ec-btn inject-approach" id="btnInjectApproach" title="Force animal to approach perimeter fence">🚨 APPROACH</button>
+              <button class="ec-btn inject-turnaway" id="btnInjectTurnAway" title="Force animal to turn back into forest">↩ TURN AWAY</button>
+              <button class="ec-btn inject-cross" id="btnInjectCross" title="Trigger realistic perimeter fence breach">⚡ CROSS BREACH</button>
+            </div>
+            <div class="ec-slider-row">
+              <label for="popSizeSlider">POPULATION: <span id="lblPopSize">60</span></label>
+              <input type="range" id="popSizeSlider" min="50" max="75" value="60" step="1">
+              <button class="ec-btn-mini" id="btnApplyPopSize">RESET</button>
+            </div>
+          </div>
+
+          <!-- Ecological Resource Monitors -->
+          <div class="resource-monitor-section">
+            <div class="ec-section-title">ECOLOGICAL RESOURCES</div>
+            <div class="res-grid">
+              <div class="res-card">
+                <span class="res-label">💧 North Pond</span>
+                <div class="res-bar"><div class="res-fill water" id="res_water_north" style="width: 100%;"></div></div>
+              </div>
+              <div class="res-card">
+                <span class="res-label">💧 South Pond</span>
+                <div class="res-bar"><div class="res-fill water" id="res_water_south" style="width: 100%;"></div></div>
+              </div>
+              <div class="res-card">
+                <span class="res-label">🌿 Pasture</span>
+                <div class="res-bar"><div class="res-fill grass" id="res_grass" style="width: 100%;"></div></div>
+              </div>
+              <div class="res-card">
+                <span class="res-label">🌾 Farm Crops</span>
+                <div class="res-bar"><div class="res-fill crops" id="res_crops" style="width: 100%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Virtual Fencing Deterrent System -->
+          <div class="deterrent-controls-section">
+            <div class="ec-section-title">SMART FENCE DETERRENT SYSTEM</div>
+            <div class="deterrent-btn-grid">
+              <button class="det-btn beehive" onclick="triggerPerimeterDeterrent('beehive')" title="Simulate Acoustic Bee-Hive Sound (Proven Indian Elephant Deterrent)">
+                🐝 BEE-HIVE SOUND
+              </button>
+              <button class="det-btn ultrasonic" onclick="triggerPerimeterDeterrent('ultrasonic')" title="Simulate High-Frequency Directional Ultrasonic Pulse">
+                📡 ULTRASONIC
+              </button>
+              <button class="det-btn strobe" onclick="triggerPerimeterDeterrent('strobe')" title="Trigger Perimeter Strobe Warning Flasher">
+                ⚡ STROBE PULSE
+              </button>
+            </div>
+            <div class="deterrent-status-box" id="deterrentStatusText">Deterrent System: Ready (Autonomous Standby)</div>
+          </div>
+
+          <!-- Individual Animal Directory (74 Distinct Wildlife Agents) -->
+          <div class="animal-directory-section">
+            <div class="ec-section-title">INDIVIDUAL ANIMAL DIRECTORY (74 AGENTS • 16 SPECIES)</div>
+            <div class="animal-filter-bar">
+              <select id="selSpeciesFilter" class="animal-filter-select" onchange="renderIndividualAnimalDirectory()">
+                <option value="all">ALL SPECIES (74 AGENTS)</option>
+                <option value="asian_elephant">ASIAN ELEPHANTS (8)</option>
+                <option value="gaur_bison">INDIAN GAUR (8)</option>
+                <option value="bengal_tiger">BENGAL TIGERS (2)</option>
+                <option value="indian_leopard">INDIAN LEOPARDS (1)</option>
+                <option value="sloth_bear">SLOTH BEARS (1)</option>
+                <option value="dhole">DHOLES / WILD DOGS (2)</option>
+                <option value="wild_boar">INDIAN WILD BOARS (12)</option>
+                <option value="sambar_deer">SAMBAR DEER (8)</option>
+                <option value="chital_deer">CHITAL DEER (18)</option>
+                <option value="indian_muntjac">INDIAN MUNTJAC (1)</option>
+                <option value="golden_jackal">GOLDEN JACKALS (1)</option>
+                <option value="bonnet_macaque">BONNET MACAQUES (8)</option>
+                <option value="gray_langur">GRAY LANGURS (2)</option>
+                <option value="crested_porcupine">CRESTED PORCUPINES (1)</option>
+                <option value="indian_peafowl">INDIAN PEAFOWL (1)</option>
+                <option value="indian_hare">INDIAN HARES (1)</option>
+              </select>
+            </div>
+            <div class="individual-animal-scrollbox" id="individualAnimalList">
+              <!-- Rendered dynamically by app.js -->
+            </div>
+          </div>
+        </div>
+
         <!-- Gated Camera Viewport Simulator -->
         <div class="side-panel camera-panel">
           <div class="panel-header">
@@ -896,6 +1262,7 @@
 
           <div class="hw-view-mode-toggle">
             <button class="hw-view-btn active" id="btnHwModeWorkbench" title="3D Multi-Board Physical Assembly with real 3D curved jumper cables">3D WIRING WORKBENCH</button>
+            <button class="hw-view-btn" id="btnHwModeControl" title="Physical hardware control workbench: toggle Layer 1, 2, 3 outputs, switch operating mode, and emergency all-off">HARDWARE CONTROL BENCH</button>
             <button class="hw-view-btn" id="btnHwMode3D" title="Inspect individual 3D hardware components">3D COMPONENT</button>
             <button class="hw-view-btn" id="btnHwModeWiring" title="2D Schematic diagram fallback">2D SCHEMATIC</button>
             <button class="hw-view-btn" id="btnHwModePinout" title="Header pinout register & specs">PINOUT REGISTER</button>
@@ -908,6 +1275,17 @@
             <div class="hw-viewport-container">
               <!-- 3D Hardware Viewport -->
               <div id="hardwareLab3DContainer" class="hw-3d-viewport">
+                <!-- PUBG Tactical Inspection HUD Elements -->
+                <div class="pubg-hud-bracket pubg-tl"></div>
+                <div class="pubg-hud-bracket pubg-tr"></div>
+                <div class="pubg-hud-bracket pubg-bl"></div>
+                <div class="pubg-hud-bracket pubg-br"></div>
+                <div class="pubg-center-reticle" id="pubgReticle"></div>
+                <div class="pubg-telemetry-stamp">
+                  <span class="pubg-stamp-pill">MIL-SPEC 1:1</span>
+                  <span class="pubg-stamp-text">PRW-WILD TACTICAL HARDWARE INSPECTOR</span>
+                </div>
+
                 <!-- Overlay 3D Toolbar -->
                 <div class="hw-3d-toolbar">
                   <div class="hw-cam-presets">
@@ -936,6 +1314,22 @@
                   <button class="hw-tool-btn" id="btnTogglePinLabels" title="Toggle 3D Pin Callout Billboards">
                     🏷️ LABELS
                   </button>
+                  <button class="hw-tool-btn" id="btnHwFullscreen" title="Toggle Fullscreen 3D Hardware Inspection">
+                    ⛶ FULLSCREEN
+                  </button>
+                </div>
+
+                <!-- 3D Diagnostics Overlay -->
+                <div class="hw-3d-diagnostics" id="hwDiagnosticsOverlay">
+                  <div class="hw-diag-item"><span class="hw-diag-lbl">DEVICE:</span> <strong id="hwDiagDevice">ESP32-S3-DevKitC-1 v1.1</strong></div>
+                  <div class="hw-diag-item"><span class="hw-diag-lbl">MODE:</span> <strong id="hwDiagMode">3D WIRING WORKBENCH</strong></div>
+                  <div class="hw-diag-item"><span class="hw-diag-lbl">VIEWPORT:</span> <strong id="hwDiagViewport">--</strong></div>
+                  <div class="hw-diag-item"><span class="hw-diag-lbl">MESHES:</span> <strong id="hwDiagMeshes">--</strong></div>
+                  <div class="hw-diag-item"><span class="hw-diag-lbl">CABLES:</span> <strong id="hwDiagCables">11 Active</strong></div>
+                </div>
+                <!-- Error Fallback Banner if 3D scene geometry fails to render -->
+                <div class="hw-3d-error-banner hidden" id="hw3DErrorBanner">
+                  <span>⚠️ <strong>Rendering Alert:</strong> <span id="hw3DErrorMessage">No 3D meshes detected in viewport. Fallback geometry reconstruction active.</span></span>
                 </div>
 
                 <!-- 3D Click Hint -->
@@ -953,6 +1347,295 @@
                   <div class="wl-item"><span class="wl-color black"></span> Common Ground (GND)</div>
                   <div class="wl-item"><span class="wl-color cyan"></span> Digital Signal (GPIO4 / GPIO5)</div>
                   <div class="wl-item"><span class="wl-color purple"></span> I2S Audio Bus (GPIO7 / 8 / 9)</div>
+                </div>
+              </div>
+
+              <!-- Hardware Physical Control Bench Viewport -->
+              <div id="hardwareControlContainer" class="hw-control-viewport hidden">
+                <div class="hw-control-panel-inner">
+                  <!-- Operating Mode Selection Header -->
+                  <div class="hw-mode-selection-box">
+                    <div class="hw-box-title">
+                      <span class="icon">⚙️</span> SYSTEM OPERATING MODE:
+                      <span class="hw-active-mode-badge" id="hwActiveModeBadge">SIMULATION ONLY</span>
+                    </div>
+                    <div class="hw-mode-buttons">
+                      <button class="btn-hw-mode active" id="btnModeSimOnly" data-mode="SIMULATION_ONLY">
+                        <span class="mode-icon">🧪</span>
+                        <div class="mode-info">
+                          <strong>SIMULATION ONLY</strong>
+                          <small>Safe SIL virtualization — real hardware outputs disarmed</small>
+                        </div>
+                      </button>
+                      <button class="btn-hw-mode" id="btnModeHwTest" data-mode="HARDWARE_TEST">
+                        <span class="mode-icon">🛠️</span>
+                        <div class="mode-info">
+                          <strong>HARDWARE TEST</strong>
+                          <small>Manual bench test mode — toggle L1, L2, L3 independently</small>
+                        </div>
+                      </button>
+                      <button class="btn-hw-mode" id="btnModeAuto" data-mode="AUTO_HARDWARE_CONTROL">
+                        <span class="mode-icon">⚡</span>
+                        <div class="mode-info">
+                          <strong>AUTO HARDWARE CONTROL</strong>
+                          <small>Virtual animal movements dynamically command physical outputs</small>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Dual Domain Separation Header -->
+                  <div class="hw-domain-separation-banner">
+                    <div class="domain-badge domain-sim">
+                      <span class="domain-icon">🌐</span>
+                      <span class="domain-label">DOMAIN A: SIMULATION DATA</span>
+                      <span class="domain-desc">Three-Layer Virtual Kinematics &amp; Detection (Authoritative)</span>
+                    </div>
+                    <div class="domain-badge domain-phys">
+                      <span class="domain-icon">⚡</span>
+                      <span class="domain-label">DOMAIN B: PHYSICAL HARDWARE DATA</span>
+                      <span class="domain-desc">Dual ESP32 + RA-02 SX1278 LoRa + Six-LED Gateway</span>
+                    </div>
+                  </div>
+
+                  <!-- Physical USB Gateway Connection Bar (ESP32-B) -->
+                  <div class="hw-gateway-connection-card">
+                    <div class="card-header-row">
+                      <div class="gw-title-group">
+                        <span class="gw-badge">GATEWAY NODE B</span>
+                        <strong>ESP32-B USB Serial Link (115200 Baud)</strong>
+                      </div>
+                      <div class="gw-status-group">
+                        <span class="conn-pill simulated" id="esp32bConnPill">DISCONNECTED</span>
+                        <span class="freshness-pill" id="esp32bFreshnessPill">STALE</span>
+                      </div>
+                    </div>
+                    <div class="gw-controls-row">
+                      <div class="port-input-wrap">
+                        <label for="hwConfigPortInput">SERIAL PORT:</label>
+                        <input type="text" id="hwConfigPortInput" placeholder="Auto / COM3 / COM4" class="hw-port-input">
+                        <button class="btn-hw-action" id="btnHwConfigurePort" title="Configure COM Port">SET PORT</button>
+                        <button class="btn-hw-action" id="btnHwReconnect" title="Reconnect USB Serial">RECONNECT</button>
+                      </div>
+                      <div class="gw-stats-strip">
+                        <div class="gw-stat"><span class="lbl">BOOT ID:</span><strong id="loraBootId">--</strong></div>
+                        <div class="gw-stat"><span class="lbl">SEQ:</span><strong id="loraSeqNum">0</strong></div>
+                        <div class="gw-stat"><span class="lbl">UPTIME:</span><strong id="loraUptime">-- ms</strong></div>
+                        <div class="gw-stat"><span class="lbl">RSSI:</span><strong id="loraLastRssi">-- dBm</strong></div>
+                        <div class="gw-stat"><span class="lbl">SNR:</span><strong id="loraLastSnr">-- dB</strong></div>
+                        <div class="gw-stat"><span class="lbl">PACKETS:</span><strong id="loraValidPackets">0</strong></div>
+                        <div class="gw-stat"><span class="lbl">DUPLICATES:</span><strong id="loraDuplicates">0</strong></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Physical Sensor Suite (ESP32-A Remote Node) -->
+                  <div class="hw-sensors-suite-grid">
+                    <!-- Sensor 1: PIR -->
+                    <div class="hw-sensor-card" id="cardPhysPir">
+                      <div class="sensor-card-top">
+                        <span class="sensor-badge">PIR SENSOR</span>
+                        <span class="sensor-pin">GPIO32 (INPUT)</span>
+                        <span class="sensor-status-tag" id="pirStatusTag">WARMING</span>
+                      </div>
+                      <div class="sensor-main-reading">
+                        <span class="sensor-reading-val" id="pirRawVal">LOW (0)</span>
+                        <div class="sensor-dot" id="pirActiveDot"></div>
+                      </div>
+                      <div class="sensor-sub-info">
+                        <span>HC-SR501 Passive Infrared Motion</span>
+                        <small id="pirWarmupInfo">Warmup Period: 45s</small>
+                      </div>
+                    </div>
+
+                    <!-- Sensor 2: Piezoelectric Disc (Safety Gated) -->
+                    <div class="hw-sensor-card piezo-card" id="cardPhysPiezo">
+                      <div class="sensor-card-top">
+                        <span class="sensor-badge danger">PIEZO DISC</span>
+                        <span class="sensor-pin">GPIO35 (ADC1_CH7)</span>
+                        <span class="sensor-status-tag disabled" id="piezoStatusTag">DISABLED</span>
+                      </div>
+                      <div class="sensor-main-reading">
+                        <span class="sensor-reading-val muted" id="piezoRawVal">-- ADC</span>
+                        <div class="sensor-dot disabled" id="piezoActiveDot"></div>
+                      </div>
+                      <div class="sensor-safety-alert">
+                        <strong>⚠️ SAFETY GATE ACTIVE:</strong>
+                        <span>Circuit unverified. A 1MΩ resistor is not a voltage clamp. Sampling halted.</span>
+                      </div>
+                    </div>
+
+                    <!-- Sensor 3: INMP441 MEMS Microphone -->
+                    <div class="hw-sensor-card" id="cardPhysMic">
+                      <div class="sensor-card-top">
+                        <span class="sensor-badge">INMP441 MIC</span>
+                        <span class="sensor-pin">BCLK25 WS33 SD34</span>
+                        <span class="sensor-status-tag" id="micStatusTag">NOT_READY</span>
+                      </div>
+                      <div class="sensor-main-reading">
+                        <span class="sensor-reading-val" id="micRmsVal">-- RMS</span>
+                        <div class="sensor-dot" id="micActiveDot"></div>
+                      </div>
+                      <div class="sensor-sub-info">
+                        <span>I²S 24-bit PCM Mono Acoustic Sensing</span>
+                        <small id="micThresholdInfo">Threshold: 0 (Uncalibrated)</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Physical Six-LED Hardware Array Visualizer -->
+                  <div class="hw-six-led-visualizer">
+                    <div class="six-led-title">
+                      <span>PHYSICAL ESP32-B SIX-LED STATUS ARRAY (VERIFIED WIRING &amp; 2kΩ RESISTORS)</span>
+                      <span class="node-id">GATEWAY NODE: ESP32-B</span>
+                    </div>
+                    <div class="six-led-grid">
+                      <div class="led-indicator-unit" id="unitLed1">
+                        <div class="led-bulb off" id="physLed1"></div>
+                        <div class="led-name">LED 1 (GPIO32)</div>
+                        <div class="led-function">PIR MOTION</div>
+                      </div>
+                      <div class="led-indicator-unit" id="unitLed2">
+                        <div class="led-bulb off" id="physLed2"></div>
+                        <div class="led-name">LED 2 (GPIO33)</div>
+                        <div class="led-function">PIEZO (NOT FITTED)</div>
+                      </div>
+                      <div class="led-indicator-unit" id="unitLed3">
+                        <div class="led-bulb off" id="physLed3"></div>
+                        <div class="led-name">LED 3 (GPIO25)</div>
+                        <div class="led-function">MIC (NOT FITTED)</div>
+                      </div>
+                      <div class="led-indicator-unit" id="unitLed4">
+                        <div class="led-bulb off" id="physLed4"></div>
+                        <div class="led-name">LED 4 (GPIO13)</div>
+                        <div class="led-function">NODE CONNECTED</div>
+                      </div>
+                      <div class="led-indicator-unit" id="unitLed5">
+                        <div class="led-bulb off" id="physLed5"></div>
+                        <div class="led-name">LED 5 (GPIO21)</div>
+                        <div class="led-function">LORA RX PULSE</div>
+                      </div>
+                      <div class="led-indicator-unit" id="unitLed6">
+                        <div class="led-bulb off" id="physLed6"></div>
+                        <div class="led-name">LED 6 (GPIO22)</div>
+                        <div class="led-function">OVERALL ALERT</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Physical Alerts Banner & Table -->
+                  <div class="hw-physical-alerts-panel" id="hwPhysicalAlertsPanel">
+                    <div class="alerts-panel-hdr">
+                      <div class="hdr-left">
+                        <span class="alert-sec-badge">EDGE-TRIGGERED PHYSICAL ALERTS</span>
+                        <span class="alert-count-pill" id="hwAlertCountPill">0 ACTIVE</span>
+                      </div>
+                      <span class="alert-policy-note">Deduplicated: No flood on repeated packets</span>
+                    </div>
+                    <div class="alerts-list-wrap" id="hwPhysicalAlertsList">
+                      <div class="empty-alerts-msg">No active physical alerts. System nominal.</div>
+                    </div>
+                  </div>
+
+                  <!-- Three Fixed Layers Actuation Grid -->
+                  <div class="hw-layers-control-grid">
+                    <!-- Layer 1 Card -->
+                    <div class="hw-layer-actuator-card l1-card" id="cardLayer1">
+                      <div class="card-top">
+                        <div class="layer-title-wrap">
+                          <span class="l-badge l1">LAYER 1 (OUTER)</span>
+                          <h4>Wi-Fi CSI / ESP32 Actuator</h4>
+                        </div>
+                        <span class="conn-pill simulated" id="l1ConnStatus">SIMULATED (NO USB)</span>
+                      </div>
+                      <p class="hw-card-desc">Target: <code>ESP32-S3-DevKitC-1 v1.1</code> (GPIO38 / WS2812 RGB). Triggers outer perimeter CSI presence alert.</p>
+                      
+                      <div class="hw-state-row">
+                        <div class="hw-state-indicator" id="l1StateIndicator">
+                          <span class="state-dot"></span>
+                          <span class="state-text" id="l1StateText">STATE: OFF</span>
+                        </div>
+                        <div class="hw-latency-text" id="l1LatencyText">ACK: -- ms</div>
+                      </div>
+
+                      <div class="hw-button-row">
+                        <button class="btn-actuate on l1" id="btnL1On">ACTIVATE (ON)</button>
+                        <button class="btn-actuate off" id="btnL1Off">DEACTIVATE (OFF)</button>
+                      </div>
+                    </div>
+
+                    <!-- Layer 2 Card -->
+                    <div class="hw-layer-actuator-card l2-card" id="cardLayer2">
+                      <div class="card-top">
+                        <div class="layer-title-wrap">
+                          <span class="l-badge l2">LAYER 2 (MIDDLE)</span>
+                          <h4>Sensor Network Indicator</h4>
+                        </div>
+                        <span class="conn-pill simulated" id="l2ConnStatus">SIMULATED</span>
+                      </div>
+                      <p class="hw-card-desc">Target: <code>STATION_SENSOR_NET_01</code> Relay & Indication Bus. Actuates acoustic/PIR/vibration indicators.</p>
+                      
+                      <div class="hw-state-row">
+                        <div class="hw-state-indicator" id="l2StateIndicator">
+                          <span class="state-dot"></span>
+                          <span class="state-text" id="l2StateText">STATE: OFF</span>
+                        </div>
+                        <div class="hw-latency-text" id="l2LatencyText">ACK: -- ms</div>
+                      </div>
+
+                      <div class="hw-button-row">
+                        <button class="btn-actuate on l2" id="btnL2On">ACTIVATE (ON)</button>
+                        <button class="btn-actuate off" id="btnL2Off">DEACTIVATE (OFF)</button>
+                      </div>
+                    </div>
+
+                    <!-- Layer 3 Card -->
+                    <div class="hw-layer-actuator-card l3-card" id="cardLayer3">
+                      <div class="card-top">
+                        <div class="layer-title-wrap">
+                          <span class="l-badge l3">LAYER 3 (INNER)</span>
+                          <h4>Physical Camera Surveillance</h4>
+                        </div>
+                        <span class="conn-pill simulated" id="l3ConnStatus">SIMULATED</span>
+                      </div>
+                      <p class="hw-card-desc">Target: <code>CAM_01 / ESP32-CAM OV2640</code> PTZ mast. Wakes optical camera and initiates visual AI confirmation capture.</p>
+                      
+                      <div class="hw-state-row">
+                        <div class="hw-state-indicator" id="l3StateIndicator">
+                          <span class="state-dot"></span>
+                          <span class="state-text" id="l3StateText">STATE: OFF (STANDBY)</span>
+                        </div>
+                        <div class="hw-latency-text" id="l3LatencyText">ACK: -- ms</div>
+                      </div>
+
+                      <div class="hw-button-row">
+                        <button class="btn-actuate on l3" id="btnL3On">WAKE & CAPTURE (ON)</button>
+                        <button class="btn-actuate off" id="btnL3Off">STANDBY (OFF)</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Emergency Action & Master Bar -->
+                  <div class="hw-master-action-bar">
+                    <button class="btn-emergency-stop" id="btnHwEmergencyStop" title="Immediately halt all physical and simulated hardware outputs">
+                      <span class="em-icon">🚨</span>
+                      <span class="em-text">EMERGENCY ALL-OFF (HALT ALL OUTPUTS)</span>
+                    </button>
+                    <button class="btn-refresh-hw" id="btnRefreshHwStatus" title="Poll latest hardware state">
+                      🔄 REFRESH TELEMETRY
+                    </button>
+                  </div>
+
+                  <!-- Live Command Telemetry Terminal Log -->
+                  <div class="hw-telemetry-box">
+                    <div class="telemetry-hdr">
+                      <span>LIVE HARDWARE COMMAND & ACK TELEMETRY LOG</span>
+                      <span class="telemetry-count" id="telemetryCount">0 events logged</span>
+                    </div>
+                    <div class="telemetry-log" id="hwTelemetryLog">
+                      <div class="log-line info">[SYSTEM INIT] Hardware control service initialized. Operating mode: SIMULATION ONLY.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1026,7 +1709,8 @@
   <!-- Three.js Local Vendor Scripts -->
   <script src="vendor/three.min.js"></script>
   <script src="vendor/OrbitControls.js"></script>
+  <script src="vendor/GLTFLoader.js?v=20261016"></script>
   <!-- Application Script -->
-  <script src="app.js"></script>
+  <script src="app.js?v=20261108_hardware_realization"></script>
 </body>
 </html>

@@ -270,3 +270,126 @@ def test_app_js_wiring_manifest_and_fallback_consistency():
     assert "{ pos: 20, signal: 'GPIO19'" in content
     assert "{ pos: 21, signal: 'GND'" in content
     assert "{ pos: 22, signal: 'GND'" in content
+
+
+def test_authoritative_device_controller_synchronization():
+    """Verify single authoritative device controller and diagnostics in HTML/CSS/JS."""
+    app_js_path = PROJECT_ROOT / "src" / "prw_wild" / "web" / "static" / "app.js"
+    index_html_path = PROJECT_ROOT / "src" / "prw_wild" / "web" / "static" / "index.html"
+    style_css_path = PROJECT_ROOT / "src" / "prw_wild" / "web" / "static" / "style.css"
+
+    js_content = app_js_path.read_text(encoding="utf-8")
+    html_content = index_html_path.read_text(encoding="utf-8")
+    css_content = style_css_path.read_text(encoding="utf-8")
+
+    # Single authoritative state variable and controller
+    assert "let selectedDeviceId =" in js_content
+    assert "async function setSelectedHardwareDevice(deviceId, options = {})" in js_content
+
+    # Dynamic camera fitting and aspect NaN guard
+    assert "function fitHardwareCameraToObject(object, fovMultiplier = 1.35)" in js_content
+    assert "let aspect = width / height;" in js_content
+    assert "if (!isFinite(aspect) || aspect <= 0)" in js_content
+
+    # Viewport diagnostics overlay and fallback error banner
+    assert 'id="hwDiagnosticsOverlay"' in html_content
+    assert 'id="hw3DErrorBanner"' in html_content
+    assert ".hw-3d-diagnostics" in css_content
+    assert ".hw-3d-error-banner" in css_content
+
+    # ResizeObserver attachment
+    assert "new ResizeObserver" in js_content
+
+
+def test_all_device_tabs_and_3d_builders_exist():
+    """Verify that every hardware device has a dedicated 3D procedural builder and tab binding."""
+    app_js_path = PROJECT_ROOT / "src" / "prw_wild" / "web" / "static" / "app.js"
+    js_content = app_js_path.read_text(encoding="utf-8")
+
+    device_builders = [
+        ("workbench", "createMultiBoardWiringWorkbench"),
+        ("esp32_s3_devkitc1_v1_1", "createESP32DevKitModel"),
+        ("hc_sr501_reference", "createPIRSensorModel"),
+        ("sw420_reference", "createVibrationSensorModel"),
+        ("inmp441_breakout_reference", "createMicrophoneModel"),
+        ("ai_thinker_esp32_cam_ov2640", "createESP32CamModel"),
+        ("wifi_access_point_reference", "createRouterModelDetails"),
+        ("power_system_reference", "createSolarPowerModel"),
+    ]
+
+    for dev_id, builder_name in device_builders:
+        assert f"function {builder_name}" in js_content, f"Missing builder {builder_name}"
+        assert f"deviceId === '{dev_id}'" in js_content or f"targetDev = '{dev_id}'" in js_content, f"Device {dev_id} not handled in device controller"
+
+
+def test_3d_tube_geometry_cables_in_workbench():
+    """Verify all 11 nets use 3D TubeGeometry meshes with Catmull-Rom spline curves."""
+    app_js_path = PROJECT_ROOT / "src" / "prw_wild" / "web" / "static" / "app.js"
+    js_content = app_js_path.read_text(encoding="utf-8")
+
+    assert "THREE.CatmullRomCurve3" in js_content
+    assert "THREE.TubeGeometry(curve, 36, 0.042, 8, false)" in js_content
+    assert "THREE.MeshStandardMaterial({" in js_content
+    assert "wireMesh.userData = {" in js_content
+    assert "hwWireMeshes.push(wireMesh);" in js_content
+
+
+def test_all_five_hardware_glb_models_exist_and_valid():
+    """Verify all 5 Blender-authored GLB hardware models exist and are valid binary glTF v2."""
+    hw_assets_dir = STATIC_HW_DIR.parent / "assets" / "hardware"
+    assert hw_assets_dir.exists(), f"Hardware assets directory missing: {hw_assets_dir}"
+
+    models = [
+        "esp32_s3_devkitc1_v1_1.glb",
+        "esp32_cam_ov2640.glb",
+        "hc_sr501_pir.glb",
+        "sw420_vibration.glb",
+        "inmp441_microphone.glb",
+    ]
+
+    for m in models:
+        fp = hw_assets_dir / m
+        assert fp.exists(), f"Model {m} does not exist at {fp}"
+        assert fp.stat().st_size > 10_000, f"Model {m} is smaller than 10KB ({fp.stat().st_size} bytes)"
+
+        with open(fp, "rb") as f:
+            magic = f.read(4)
+            assert magic == b"glTF", f"Model {m} missing glTF binary magic"
+            version = int.from_bytes(f.read(4), "little")
+            assert version == 2, f"Model {m} expected glTF v2, got {version}"
+
+
+def test_pubg_tactical_hud_elements_and_fullscreen():
+    """Verify PUBG-inspired tactical inspection HUD elements and fullscreen controls."""
+    index_html = (STATIC_HW_DIR.parent / "index.html").read_text(encoding="utf-8")
+    assert "pubg-hud-bracket" in index_html, "index.html must include tactical corner brackets"
+    assert "pubg-center-reticle" in index_html, "index.html must include inspection reticle"
+    assert "pubg-telemetry-stamp" in index_html, "index.html must include inspection telemetry stamp"
+    assert "btnHwFullscreen" in index_html, "index.html must include fullscreen toggle button"
+
+    style_css = (STATIC_HW_DIR.parent / "style.css").read_text(encoding="utf-8")
+    assert ".pubg-hud-bracket" in style_css, "style.css must style tactical corner brackets"
+    assert ".pubg-center-reticle" in style_css, "style.css must style inspection reticle"
+    assert "#hardwareLab3DContainer:fullscreen" in style_css, "style.css must handle fullscreen container layout"
+
+
+def test_hardware_pinouts_and_manifest_coordinates_consistency():
+    """Verify that all 11 nets in wiring_manifest.json connect accurately without floating offsets."""
+    manifest_fp = PROJECT_ROOT / "hardware" / "wiring_manifest.json"
+    with open(manifest_fp, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    nets = data["wiring_nets"]
+    assert len(nets) == 11
+
+    for net in nets:
+        src_coord = net["source"]["rel_coord_3d"]
+        dst_coord = net["destination"]["rel_coord_3d"]
+        assert len(src_coord) == 3, f"Source coord invalid in {net['net_id']}"
+        assert len(dst_coord) == 3, f"Destination coord invalid in {net['net_id']}"
+        # Pin height is 0.35
+        assert src_coord[1] == pytest.approx(0.35, abs=0.01)
+        assert dst_coord[1] == pytest.approx(0.35, abs=0.01)
+
+
+

@@ -1,0 +1,22 @@
+{
+  "radio_transceiver": "Ai-Thinker RA-02 (Semtech SX1278)",
+  "frequency_hz": 433920000,
+  "frequency_mhz": 433.92,
+  "bandwidth_hz": 125000,
+  "bandwidth_khz": 125.0,
+  "spreading_factor": 7,
+  "coding_rate_denominator": 5,
+  "coding_rate_string": "4/5",
+  "preamble_length": 8,
+  "sync_word_hex": "0x12",
+  "crc_enabled": true,
+  "tx_power_dbm": 2,
+  "tx_power_pin": "PA_OUTPUT_PA_BOOST_PIN",
+  "modulation": "LoRa (CSS)",
+  "ack_timeout_ms": 2200,
+  "retry_delay_ms": 500,
+  "max_attempts": 3,
+  "inter_event_delay_ms": 1800,
+  "regulatory_region": "India (433.05 - 434.79 MHz ISM Band)"
+}
+

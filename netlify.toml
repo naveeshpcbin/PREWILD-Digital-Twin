@@ -1,0 +1,55 @@
+# Netlify Configuration for PRW-Wild 3D Wildlife Digital Twin
+
+[build]
+  # Directory to deploy (contains index.html, style.css, app.js, vendor/, assets/, hardware/, data/)
+  publish = "src/prw_wild/web/static"
+
+# GLB, GLTF and 3D model MIME types & CORS headers
+[[headers]]
+  for = "/*.glb"
+  [headers.values]
+    Content-Type = "model/gltf-binary"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.gltf"
+  [headers.values]
+    Content-Type = "model/gltf+json"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+# Static rewrites for API endpoints
+[[redirects]]
+  from = "/api/hardware/wiring"
+  to = "/hardware/wiring_manifest.json"
+  status = 200
+
+[[redirects]]
+  from = "/api/hardware/:device"
+  to = "/hardware/devices/:device.json"
+  status = 200
+
+[[redirects]]
+  from = "/api/scenarios"
+  to = "/data/scenarios.json"
+  status = 200
+
+[[redirects]]
+  from = "/api/contacts"
+  to = "/data/contacts.json"
+  status = 200
+
+[[redirects]]
+  from = "/api/counterfactual"
+  to = "/data/counterfactual.json"
+  status = 200
+
+[[redirects]]
+  from = "/api/batch"
+  to = "/data/batch.json"
+  status = 200

@@ -1,0 +1,135 @@
+{
+  "manifest_version": "2.1.0-INTEGRATED",
+  "system_name": "PRW-Wild Integrated Physical Dual-ESP32 Hardware Suite",
+  "architecture": "Dual ESP32 DevKit V1 (ESP32-WROOM-32) with Ai-Thinker RA-02 SX1278 (433.92 MHz) LoRa & Six-LED Gateway Array",
+  "verified_at": "2026-11-08T14:30:00+05:30",
+  "firmware_package": "PRW_Wild_Two_Node_Integrated_Firmware_20261108",
+  "nodes": {
+    "node_a_sensor_node": {
+      "role": "Remote Environmental Sensor Acquisition Node",
+      "microcontroller": "ESP32 DevKit V1 (ESP32-WROOM-32)",
+      "operating_voltage": "3.3V Logic / Regulated 5.0V External Supply",
+      "firmware_sketch": "firmware/esp32_a_sensor_node/ESP32_A_Sensor_Node.ino",
+      "rf_transceiver": {
+        "model": "Ai-Thinker RA-02 (Semtech SX1278)",
+        "frequency_mhz": 433.92,
+        "bandwidth_khz": 125,
+        "spreading_factor": 7,
+        "coding_rate": "4/5",
+        "sync_word": "0x12",
+        "interface": "Hardware VSPI",
+        "pin_connections": {
+          "sck": 18,
+          "miso": 19,
+          "mosi": 23,
+          "nss_cs": 27,
+          "rst": 14,
+          "dio0": 26
+        }
+      },
+      "sensors": {
+        "hc_sr501_pir": {
+          "gpio": 32,
+          "direction": "INPUT",
+          "warmup_delay_ms": 45000,
+          "active_state": "HIGH",
+          "description": "Passive Infrared motion detection"
+        },
+        "piezoelectric_vibration_disc": {
+          "gpio": 35,
+          "direction": "INPUT",
+          "type": "ANALOG_ADC1_CH7",
+          "safety_gate": "PIEZO_INPUT_CIRCUIT_VERIFIED",
+          "status": "DISABLED_UNVERIFIED_CIRCUIT",
+          "description": "Seismic ground vibration sensor (Sampling disabled until verified clamp circuit is confirmed)"
+        },
+        "inmp441_i2s_microphone": {
+          "bclk": 25,
+          "ws": 33,
+          "sd": 34,
+          "sample_rate_hz": 16000,
+          "bit_depth": "24-bit signed PCM in 32-bit slot",
+          "slot": "LEFT",
+          "description": "Digital I2S acoustic MEMS sensor"
+        }
+      },
+      "telemetry_protocol": {
+        "interval_ms": 700,
+        "frame_format": "PW1|TEL|A|<bootIdHex>|<seq>|<uptimeMs>|<flags>|<pirRaw>|<piezoP2P>|<micRms>|<pirActive>|<piezoActive>|<micActive>"
+      }
+    },
+    "node_b_led_gateway": {
+      "role": "LoRa Receiver, Six-LED Physical Controller & USB Telemetry Gateway",
+      "microcontroller": "ESP32 DevKit V1 (ESP32-WROOM-32)",
+      "operating_voltage": "3.3V Logic / 5.0V Laptop USB VBUS",
+      "firmware_sketch": "firmware/esp32_b_led_gateway/ESP32_B_LED_Gateway.ino",
+      "host_interface": {
+        "transport": "USB-UART Serial (CP2102 / CH340)",
+        "baud_rate": 115200,
+        "data_bits": 8,
+        "parity": "None",
+        "stop_bits": 1,
+        "usb_telemetry_format": "PW1|TEL_USB|B|<bootIdHex>|<seq>|<uptimeMs>|<flags>|<pirRaw>|<piezoP2P>|<micRms>|<pirActive>|<piezoActive>|<micActive>|<rssi>|<snr>"
+      },
+      "rf_transceiver": {
+        "model": "Ai-Thinker RA-02 (Semtech SX1278)",
+        "frequency_mhz": 433.92,
+        "bandwidth_khz": 125,
+        "spreading_factor": 7,
+        "coding_rate": "4/5",
+        "sync_word": "0x12",
+        "interface": "Hardware VSPI",
+        "pin_connections": {
+          "sck": 18,
+          "miso": 19,
+          "mosi": 23,
+          "nss_cs": 27,
+          "rst": 14,
+          "dio0": 26
+        }
+      },
+      "actuators": {
+        "indicator_type": "Discrete 5mm Green LEDs",
+        "current_limiting_resistors": "2000 ohm (2k ohm, ~0.60 mA per LED)",
+        "led_mappings": {
+          "led_1_pir": {
+            "gpio": 32,
+            "signal": "PIR Active",
+            "type": "STATE_LEVEL",
+            "description": "Illuminates when Node-A PIR is warmed up and detecting motion"
+          },
+          "led_2_piezo": {
+            "gpio": 33,
+            "signal": "Piezo Active",
+            "type": "STATE_LEVEL",
+            "description": "Illuminates when Piezo is verified and threshold is exceeded (currently OFF by safety gate)"
+          },
+          "led_3_mic": {
+            "gpio": 25,
+            "signal": "Mic Active",
+            "type": "STATE_LEVEL",
+            "description": "Illuminates when INMP441 RMS exceeds calibrated threshold"
+          },
+          "led_4_heartbeat": {
+            "gpio": 13,
+            "signal": "Node-A Heartbeat",
+            "type": "TIMEOUT_STEADY",
+            "description": "Steady ON while Node-A telemetry arrives within 2200 ms timeout; OFF when stale"
+          },
+          "led_5_lora_pulse": {
+            "gpio": 21,
+            "signal": "LoRa Packet RX Pulse",
+            "type": "PULSE_120MS",
+            "description": "Flashes for 120 ms upon receipt of every valid Node-A LoRa packet"
+          },
+          "led_6_alert": {
+            "gpio": 22,
+            "signal": "Overall Physical Alert",
+            "type": "LOGICAL_OR",
+            "description": "Illuminates when any physical sensor (PIR, Piezo, or Mic) is active"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "recipients": [
+    {
+      "id": "FARM_OPERATOR_01",
+      "name": "Arun Kumar (Lead Farm Operator)",
+      "role": "farmer",
+      "position_xy": [
+        115.0,
+        105.0
+      ],
+      "channels": [
+        "in_app",
+        "sms"
+      ],
+      "notification_radius_m": 160.0,
+      "zone": "protected_farm_zone",
+      "is_simulated": true
+    },
+    {
+      "id": "FIELD_WORKER_01",
+      "name": "Ramu & Crop Field Crew",
+      "role": "worker",
+      "position_xy": [
+        108.0,
+        92.0
+      ],
+      "channels": [
+        "in_app",
+        "sms"
+      ],
+      "notification_radius_m": 120.0,
+      "zone": "protected_farm_zone",
+      "is_simulated": true
+    },
+    {
+      "id": "LOCAL_RESIDENT_01",
+      "name": "Priya Sharma (North Hamlet)",
+      "role": "resident",
+      "position_xy": [
+        130.0,
+        75.0
+      ],
+      "channels": [
+        "in_app",
+        "sms"
+      ],
+      "notification_radius_m": 180.0,
+      "zone": "farm_adjacent",
+      "is_simulated": true
+    },
+    {
+      "id": "LOCAL_RESIDENT_02",
+      "name": "Devraj Singh (South Homestead)",
+      "role": "resident",
+      "position_xy": [
+        120.0,
+        140.0
+      ],
+      "channels": [
+        "in_app",
+        "sms"
+      ],
+      "notification_radius_m": 160.0,
+      "zone": "farm_adjacent",
+      "is_simulated": true
+    },
+    {
+      "id": "PATROL_UNIT_01",
+      "name": "Ranger Patrol Unit Alpha",
+      "role": "patrol",
+      "position_xy": [
+        85.0,
+        45.0
+      ],
+      "channels": [
+        "in_app",
+        "sms"
+      ],
+      "notification_radius_m": 200.0,
+      "zone": "buffer_corridor",
+      "is_simulated": true
+    }
+  ],
+  "authorities": [
+    {
+      "id": "WILDLIFE_CONTROL_ROOM",
+      "name": "State Wildlife 24/7 Rapid Response Desk",
+      "role": "wildlife_authority",
+      "jurisdiction": "all_zones",
+      "channels": [
+        "in_app",
+        "email",
+        "radio"
+      ],
+      "is_simulated": true
+    },
+    {
+      "id": "FOREST_RANGE_OFFICE",
+      "name": "Forest Range Office \u2014 Sector 4 Buffer Zone",
+      "role": "forest_dept",
+      "jurisdiction": "protected_farm_zone",
+      "channels": [
+        "in_app",
+        "email",
+        "radio"
+      ],
+      "is_simulated": true
+    },
+    {
+      "id": "LOCAL_EMERGENCY_COORDINATION",
+      "name": "District Agro-Wildlife Emergency Cell",
+      "role": "emergency_coord",
+      "jurisdiction": "all_zones",
+      "channels": [
+        "in_app",
+        "email",
+        "radio"
+      ],
+      "is_simulated": true
+    }
+  ]
+}

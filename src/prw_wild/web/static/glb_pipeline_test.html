@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRW-Wild — Blender GLB Pipeline Verification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0a0e17;
+      color: #e2e8f0;
+      font-family: 'Outfit', sans-serif;
+    }
+    #viewportCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #hud {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 380px;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 100;
+    }
+    .hud-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hud-subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    .status-loading {
+      background: rgba(234, 179, 8, 0.15);
+      color: #facc15;
+      border: 1px solid rgba(234, 179, 8, 0.3);
+    }
+    .status-success {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .status-error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .hud-details {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(3, 7, 18, 0.6);
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .detail-label {
+      color: #64748b;
+    }
+    .detail-value {
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+    .value-highlight {
+      color: #38bdf8;
+    }
+    #instructions {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #64748b;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 8px 14px;
+      border-radius: 6px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="hud">
+    <div class="hud-title">PRW-Wild GLB Pipeline</div>
+    <div class="hud-subtitle">Blender MCP ➔ Three.js r165 GLTFLoader Verification</div>
+    <div id="testStatus" class="status-badge status-loading">⏳ LOADING GLB...</div>
+    <div class="hud-details">
+      <div class="detail-row">
+        <span class="detail-label">Asset Path:</span>
+        <span class="detail-value" id="valAssetPath">assets/_mcp_test/PRW_MCP_TEST_CUBE.glb</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Object Name:</span>
+        <span class="detail-value value-highlight" id="valObjectName">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Mesh Count:</span>
+        <span class="detail-value" id="valMeshCount">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Material Name:</span>
+        <span class="detail-value value-highlight" id="valMaterialName">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Color Factor:</span>
+        <span class="detail-value" id="valColorFactor">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Position (X,Y,Z):</span>
+        <span class="detail-value" id="valPosition">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Bounding Box:</span>
+        <span class="detail-value" id="valBBox">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Load Time:</span>
+        <span class="detail-value" id="valLoadTime">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="instructions">Left-click & drag: Rotate camera | Scroll: Zoom | Right-click: Pan</div>
+  <canvas id="viewportCanvas"></canvas>
+
+  <!-- Vendor Three.js Stack -->
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/OrbitControls.js"></script>
+  <script src="vendor/GLTFLoader.js"></script>
+
+  <script>
+    const canvas = document.getElementById('viewportCanvas');
+    const statusEl = document.getElementById('testStatus');
+    const startTime = performance.now();
+
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0e17);
+
+    // Grid helper for spatial reference
+    const gridHelper = new THREE.GridHelper(20, 20, 0x38bdf8, 0x1e293b);
+    gridHelper.position.y = 0;
+    scene.add(gridHelper);
+
+    // Coordinate axes helper (X=red, Y=green, Z=blue)
+    const axesHelper = new THREE.AxesHelper(3);
+    scene.add(axesHelper);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight1.position.set(5, 10, 7);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.8);
+    dirLight2.position.set(-5, -5, -5);
+    scene.add(dirLight2);
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(8, 6, 8);
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+
+    // Orbit Controls
+    const controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.target.set(3, 1, 0); // Focus on the test cube's position
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // GLTF Loading
+    const gltfPath = 'assets/_mcp_test/PRW_MCP_TEST_CUBE.glb';
+    console.log('[GLB Test] Starting load of:', gltfPath);
+
+    if (typeof THREE.GLTFLoader !== 'function') {
+      const err = 'THREE.GLTFLoader is NOT defined or not loaded!';
+      console.error('[GLB Test]', err);
+      statusEl.className = 'status-badge status-error';
+      statusEl.textContent = '❌ ' + err;
+    } else {
+      const loader = new THREE.GLTFLoader();
+      loader.load(
+        gltfPath,
+        function (gltf) {
+          const elapsed = (performance.now() - startTime).toFixed(1);
+          console.log('[GLB Test] Successfully loaded GLB in ' + elapsed + 'ms', gltf);
+
+          scene.add(gltf.scene);
+
+          // Inspect loaded hierarchy
+          let meshCount = 0;
+          let testMesh = null;
+          let matName = 'None';
+          let colorFactor = 'N/A';
+
+          gltf.scene.traverse((child) => {
+            if (child.isMesh) {
+              meshCount++;
+              testMesh = child;
+              if (child.material) {
+                matName = child.material.name || 'Unnamed';
+                if (child.material.color) {
+                  const c = child.material.color;
+                  colorFactor = `RGB(${c.r.toFixed(2)}, ${c.g.toFixed(2)}, ${c.b.toFixed(2)})`;
+                }
+              }
+            }
+          });
+
+          const pos = gltf.scene.position;
+          // Calculate bounding box
+          const bbox = new THREE.Box3().setFromObject(gltf.scene);
+          const size = new THREE.Vector3();
+          bbox.getSize(size);
+
+          // Update HUD
+          statusEl.className = 'status-badge status-success';
+          statusEl.textContent = '✅ GLB PIPELINE PASS';
+
+          document.getElementById('valObjectName').textContent = gltf.scene.name || (testMesh ? testMesh.name : 'Scene');
+          document.getElementById('valMeshCount').textContent = meshCount;
+          document.getElementById('valMaterialName').textContent = matName;
+          document.getElementById('valColorFactor').textContent = colorFactor;
+          document.getElementById('valPosition').textContent = `[${testMesh ? testMesh.position.x.toFixed(1) : pos.x}, ${testMesh ? testMesh.position.y.toFixed(1) : pos.y}, ${testMesh ? testMesh.position.z.toFixed(1) : pos.z}]`;
+          document.getElementById('valBBox').textContent = `${size.x.toFixed(1)} x ${size.y.toFixed(1)} x ${size.z.toFixed(1)}m`;
+          document.getElementById('valLoadTime').textContent = elapsed + 'ms';
+
+          // Set test result flag for automated verification
+          window.__GLB_TEST_RESULT__ = {
+            status: 'PASS',
+            elapsedMs: elapsed,
+            meshCount: meshCount,
+            objectName: gltf.scene.name || (testMesh ? testMesh.name : 'Scene'),
+            materialName: matName,
+            colorFactor: colorFactor,
+            size: [size.x, size.y, size.z]
+          };
+        },
+        function (xhr) {
+          if (xhr.lengthComputable) {
+            const percent = ((xhr.loaded / xhr.total) * 100).toFixed(0);
+            statusEl.textContent = `⏳ DOWNLOADING ${percent}%...`;
+          }
+        },
+        function (error) {
+          console.error('[GLB Test] Failed to load GLB:', error);
+          statusEl.className = 'status-badge status-error';
+          statusEl.textContent = '❌ LOAD FAILED: ' + (error.message || 'Network/Parse Error');
+          window.__GLB_TEST_RESULT__ = {
+            status: 'FAIL',
+            error: error.message || String(error)
+          };
+        }
+      );
+    }
+
+    // Animation / Render loop
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

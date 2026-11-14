@@ -44,6 +44,8 @@ hardware/
 
 ---
 
+---
+
 ## 3. Verified Hardware Metadata & Engineering Models
 
 | Device Name | Hardware Revision | Source of Truth | Verification Status | Role in PRW-Wild |
@@ -56,6 +58,20 @@ hardware/
 | **Wi-Fi Router AP** | Representative AP | `hardware/devices/wifi_access_point_reference.json` | `REPRESENTATIVE_ARCHITECTURE_REFERENCE`| 802.11n 2.4GHz OFDM CSI transmitter |
 | **Camera Node CAM_01** | Telescoping Mast | `hardware/devices/camera_reference.json` | `REPRESENTATIVE_INFRASTRUCTURE_REFERENCE`| Optical field mast with solar panel & pan-tilt gimbal |
 | **Field Power Subsystem** | 25W Solar / LiFePO4 | `hardware/devices/power_system_reference.json` | `REPRESENTATIVE_FIELD_POWER_SUBSYSTEM` | Off-grid power supply & battery management |
+
+---
+
+## 3.1. Blender-Assisted 3D Hardware GLB Assets (Hardware Lab Overhaul)
+
+All hardware components are modeled in Blender 5.2.2 LTS according to authoritative physical datasheets and exported as glTF/GLB 2.0 with PBR Metallic-Roughness materials:
+
+| Asset Name | Local File Path | Physical Dimensions | Pinouts & Key Features | Creator & Licence | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **ESP32-S3-DevKitC-1 v1.1** | `src/prw_wild/web/static/assets/hardware/esp32_s3_devkitc1_v1_1.glb` | 25.4mm × 62.0mm × 1.6mm | Dual 22-pin headers (J1/J3, 2.54mm pitch), nickel RF shield, inverted-F PCB antenna, dual Type-C ports, BOOT & RESET buttons, RGB LED, AMS1117 LDO | PRW-Wild Engineering (MIT) | Verified & Active |
+| **ESP32-CAM with OV2640** | `src/prw_wild/web/static/assets/hardware/esp32_cam_ov2640.glb` | 27.0mm × 40.5mm × 1.6mm | OV2640 camera barrel & glass lens, ESP32-S shield, MicroSD socket, high-intensity flash LED, dual 8-pin headers | PRW-Wild Engineering (MIT) | Verified & Active |
+| **HC-SR501 PIR Sensor** | `src/prw_wild/web/static/assets/hardware/hc_sr501_pir.glb` | 32.0mm × 24.0mm × 1.6mm | Faceted hemispherical Fresnel lens dome, BISS0001 IC, dual sensitivity/time potentiometers, 3-pin interface header | PRW-Wild Engineering (MIT) | Verified & Active |
+| **SW-420 Vibration Sensor**| `src/prw_wild/web/static/assets/hardware/sw420_vibration.glb` | 14.0mm × 32.0mm × 1.6mm | Gold vibration switch cylinder with heatshrink, LM393 comparator, trimmer potentiometer, status LEDs, 3-pin header | PRW-Wild Engineering (MIT) | Verified & Active |
+| **INMP441 I2S Microphone**| `src/prw_wild/web/static/assets/hardware/inmp441_microphone.glb` | 14.0mm × 14.0mm × 1.6mm | Acoustic sound port, gold-plated MEMS package, decoupling capacitor, 6-pin inline header (SCK, WS, L/R, SD, VDD, GND) | PRW-Wild Engineering (MIT) | Verified & Active |
 
 ---
 
@@ -101,9 +117,60 @@ All 3D models and actors are procedurally modeled and rigged in Three.js without
 
 ---
 
-## 5. Procedural PBR Canvas Textures
+## 5. Production 3D Assets & Blender MCP Pipeline Register
 
-To eliminate external image downloads and ensure instant offline loading, PBR textures are synthesized in real-time onto off-screen 256×256 HTML5 Canvases:
+All production 3D models and terrain PBR materials have been processed through the verified **Blender MCP -> glTF 2.0 -> Three.js r165** pipeline, adhering strictly to CC0/Public Domain licensing:
+
+### A. Asian Wildlife Elephant Model (`ELEPHANT_01`)
+* **File Path:** `src/prw_wild/web/static/assets/animals/asian_elephant_production.glb` (1.7 MB)
+* **Creator / Provenance:** Poly/Mind wildlife scan reference, cleaned, merged (562 continuous manifold vertices), rigged and animated via Blender 5.2.2 LTS.
+* **Licence:** Creative Commons Zero (CC0) / Public Domain.
+* **Anatomical Structure:** Recognizable Asian elephant cranial twin-domes, convex dorsal spine, 4 column legs, 10-ring tapering proboscis, curved ivory tusks, fan-shaped ears, and tail.
+* **Rigging & Armature:** Full skeletal armature with 9 vertex groups (`Root`, `Spine`, `Head`, `Trunk_01`, `Trunk_02`, `Leg_FL`, `Leg_FR`, `Leg_BL`, `Leg_BR`, `Ear_L`, `Ear_R`, `Tail`).
+* **Animations:** Seamless 40-frame diagonal quadruped gait walk cycle (`Walk`).
+* **Pipeline Status:**
+  - Blender MCP Import/Process: **PASS**
+  - GLTF 2.0 Export: **PASS**
+  - Three.js Browser Load (`GLTFLoader`): **PASS** (load time ~247ms)
+  - Animation Mixer Playback: **PASS** (synchronized to simulation locomotion velocity)
+* **Fallback:** Procedural multi-segment articulated elephant maintained as instantaneous fallback.
+
+### B. Terrain PBR 1K Texture Maps (Poly Haven CC0)
+* **Directory:** `src/prw_wild/web/static/assets/environment/terrain/`
+* **Licence:** CC0 (Public Domain), Poly Haven ([polyhaven.com](https://polyhaven.com/)).
+* **Texture Sets:**
+  1. **Farmland Furrow Soil:**
+     - `farm_soil_diff.jpg` (Albedo / Base Color)
+     - `farm_soil_nor.jpg` (Tangent Space Normal Map)
+     - `farm_soil_rough.jpg` (Roughness Map)
+  2. **Forest Loam Ground:**
+     - `forest_ground_diff.jpg` (Albedo / Base Color)
+     - `forest_ground_nor.jpg` (Tangent Space Normal Map)
+     - `forest_ground_rough.jpg` (Roughness Map)
+  3. **Winding Approach Corridor Mud:**
+     - `corridor_mud_diff.jpg` (Albedo / Base Color)
+     - `corridor_mud_nor.jpg` (Tangent Space Normal Map)
+     - `corridor_mud_rough.jpg` (Roughness Map)
+* **Pipeline Status:** Verified in Three.js with anisotropic filtering, repeat wrapping, and PCF soft shadow reception.
+
+### C. Vegetation & Landscape 3D Models
+* **Directory:** `src/prw_wild/web/static/assets/environment/`
+* **Licence:** CC0 (Public Domain), Poly Haven / Blender MCP procedural generators.
+* **Models:**
+  1. `trees/tree_acacia_umbrella.glb` (10.7 KB): Spreading flat-topped umbrella thorn canopy.
+  2. `trees/tree_sal_forest.glb` (10.1 KB): Tall columnar trunk with multi-tier cluster foliage (Shorea robusta).
+  3. `trees/tree_ficus_banyan.glb` (11.8 KB): Buttressed trunk with prop aerial roots (Ficus benghalensis).
+  4. `vegetation/fern_02.glb` (180 KB): Poly Haven Fern undergrowth.
+  5. `vegetation/grass_medium_01.glb` (2.5 MB): Poly Haven meadow grass clumps.
+  6. `vegetation/shrub_01.glb` (3.2 MB): Poly Haven dense bush foliage.
+  7. `rocks/boulder_01.glb` (1.4 MB): Poly Haven weathered granite boulder.
+* **Pipeline Status:** Instanced and clustered across forest edge (X: 0–95) and approach corridor borders with randomized rotation and scale variations.
+
+---
+
+## 6. Procedural PBR Canvas Textures (Fallbacks)
+
+To ensure instant offline loading prior to network asset delivery, procedural PBR textures are synthesized in real-time onto off-screen 256×256 HTML5 Canvases:
 
 | Texture Name | Canvas Dimensions | Procedural Synthesis Algorithm |
 | :--- | :--- | :--- |
@@ -115,7 +182,7 @@ To eliminate external image downloads and ensure instant offline loading, PBR te
 
 ---
 
-## 6. Acoustic Sound Synthesis
+## 7. Acoustic Sound Synthesis
 
 All audible alarms are synthesized client-side via the **Web Audio API** (`OscillatorNode`, `GainNode`):
 * **Approach Warning Chime:** Two-tone melodic chime ($587\text{ Hz} \to 880\text{ Hz}$).
@@ -125,8 +192,10 @@ All audible alarms are synthesized client-side via the **Web Audio API** (`Oscil
 
 ---
 
-## 7. Scientific & Ethical Honesty Disclaimers
+## 8. Scientific & Ethical Honesty Disclaimers
 
 1. **Synthetic Sensor Observations:** The simulated RF wave pulses and sensor scores represent synthetic observations derived from the simulation configuration. They are labeled `SYNTHETIC RF/CSI OBSERVATION` and do not constitute physical electromagnetic solutions to Maxwell's equations.
 2. **Simulated Delivery:** Dispatches are processed internally in-memory and clearly labeled `SIMULATED DELIVERY — NOT SENT TO A REAL PERSON`. External telecommunications networks are not invoked.
 3. **Ground-Truth Isolation:** Ground truth is strictly segregated from controller observations and utilized solely by the evaluation engine for benchmark validation.
+4. **Proprietary Asset Isolation:** No assets, geometry, or code from PUBG, commercial game packages, or the separate Codex project (`D:\PRW-Wild-Codex-Immersive`) were accessed or utilized. All assets are 100% CC0 / Public Domain or native procedural code.
+

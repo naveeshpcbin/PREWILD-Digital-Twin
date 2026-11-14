@@ -28,7 +28,11 @@
         "connector": "Header J1",
         "pin_position": 21,
         "pin_signal": "5V",
-        "rel_coord_3d": [-1.14, 0.35, 2.42]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          2.42
+        ]
       },
       "destination": {
         "device_id": "hc_sr501_reference",
@@ -36,7 +40,11 @@
         "connector": "3-Pin Header",
         "pin_position": 1,
         "pin_signal": "VCC",
-        "rel_coord_3d": [-2.6, 0.45, -1.8]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          -1.754
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "HC-SR501 Datasheet (internal 7133-1 LDO requires >=4.5V input) & DevKitC-1 v1.1 Schematic Sheet 1 (J1 Pin 21 is 5V)",
@@ -58,7 +66,11 @@
         "connector": "Header J3",
         "pin_position": 22,
         "pin_signal": "GND",
-        "rel_coord_3d": [1.14, 0.35, 2.66]
+        "rel_coord_3d": [
+          1.14,
+          0.35,
+          2.66
+        ]
       },
       "destination": {
         "device_id": "hc_sr501_reference",
@@ -66,7 +78,11 @@
         "connector": "3-Pin Header",
         "pin_position": 3,
         "pin_signal": "GND",
-        "rel_coord_3d": [-2.6, 0.45, -1.2]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          -1.246
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J3 Pin 22 is GND) & Kuongshun HC-SR501 Specification",
@@ -88,7 +104,11 @@
         "connector": "3-Pin Header",
         "pin_position": 2,
         "pin_signal": "OUT",
-        "rel_coord_3d": [-2.6, 0.45, -1.5]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          -1.5
+        ]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -96,7 +116,11 @@
         "connector": "Header J1",
         "pin_position": 4,
         "pin_signal": "GPIO4",
-        "rel_coord_3d": [-1.14, 0.35, -1.9]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          -1.9
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "BISS0001 PIR Controller IC Datasheet Section 4 (3.3V TTL active high output)",
@@ -118,7 +142,11 @@
         "connector": "Header J1",
         "pin_position": 1,
         "pin_signal": "3V3",
-        "rel_coord_3d": [-1.14, 0.35, -2.66]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          -2.66
+        ]
       },
       "destination": {
         "device_id": "sw420_reference",
@@ -126,7 +154,11 @@
         "connector": "3-Pin Header",
         "pin_position": 1,
         "pin_signal": "VCC",
-        "rel_coord_3d": [-2.6, 0.35, 1.2]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          1.246
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "LM393 Dual Comparator Datasheet & Waveshare Vibration Sensor Wiki",
@@ -148,7 +180,11 @@
         "connector": "Header J3",
         "pin_position": 1,
         "pin_signal": "GND",
-        "rel_coord_3d": [1.14, 0.35, -2.66]
+        "rel_coord_3d": [
+          1.14,
+          0.35,
+          -2.66
+        ]
       },
       "destination": {
         "device_id": "sw420_reference",
@@ -156,7 +192,11 @@
         "connector": "3-Pin Header",
         "pin_position": 2,
         "pin_signal": "GND",
-        "rel_coord_3d": [-2.6, 0.35, 1.5]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          1.5
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "DevKitC-1 v1.1 Pin Map (J3 Pin 1 is GND) & LM393 Pinout",
@@ -178,7 +218,11 @@
         "connector": "3-Pin Header",
         "pin_position": 3,
         "pin_signal": "DO",
-        "rel_coord_3d": [-2.6, 0.35, 1.8]
+        "rel_coord_3d": [
+          -2.6,
+          0.35,
+          1.754
+        ]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -186,7 +230,11 @@
         "connector": "Header J1",
         "pin_position": 5,
         "pin_signal": "GPIO5",
-        "rel_coord_3d": [-1.14, 0.35, -1.65]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          -1.64
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "Waveshare SW-420 Schematic (LM393 open-collector with onboard 10k pull-up to VCC)",
@@ -208,7 +256,11 @@
         "connector": "Header J1",
         "pin_position": 2,
         "pin_signal": "3V3",
-        "rel_coord_3d": [-1.14, 0.35, -2.42]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          -2.42
+        ]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -216,7 +268,11 @@
         "connector": "6-Pin Header",
         "pin_position": 5,
         "pin_signal": "VDD",
-        "rel_coord_3d": [2.7, 0.35, 0.8]
+        "rel_coord_3d": [
+          2.7,
+          0.35,
+          0.681
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "InvenSense INMP441 Datasheet Table 3 (Operating range 1.62V - 3.63V)",
@@ -238,7 +294,11 @@
         "connector": "Header J3",
         "pin_position": 21,
         "pin_signal": "GND",
-        "rel_coord_3d": [1.14, 0.35, 2.42]
+        "rel_coord_3d": [
+          1.14,
+          0.35,
+          2.42
+        ]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -246,7 +306,11 @@
         "connector": "6-Pin Header",
         "pin_position": 6,
         "pin_signal": "GND & L/R",
-        "rel_coord_3d": [2.7, 0.35, 1.1]
+        "rel_coord_3d": [
+          2.7,
+          0.35,
+          0.935
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J3 Pin 21 is GND) & INMP441 Datasheet Section 7 (L/R tied to GND selects Left audio channel for mono stream)",
@@ -268,7 +332,11 @@
         "connector": "6-Pin Header",
         "pin_position": 4,
         "pin_signal": "SD",
-        "rel_coord_3d": [2.7, 0.35, 0.5]
+        "rel_coord_3d": [
+          2.7,
+          0.35,
+          0.427
+        ]
       },
       "destination": {
         "device_id": "esp32_s3_devkitc1_v1_1",
@@ -276,7 +344,11 @@
         "connector": "Header J1",
         "pin_position": 7,
         "pin_signal": "GPIO7",
-        "rel_coord_3d": [-1.14, 0.35, -1.14]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          -1.14
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "ESP-IDF I2S API Guide (ESP32-S3 I2S0 peripheral routing to GPIO matrix)",
@@ -298,7 +370,11 @@
         "connector": "Header J1",
         "pin_position": 12,
         "pin_signal": "GPIO8",
-        "rel_coord_3d": [-1.14, 0.35, 0.12]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          0.13
+        ]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -306,7 +382,11 @@
         "connector": "6-Pin Header",
         "pin_position": 2,
         "pin_signal": "WS",
-        "rel_coord_3d": [2.7, 0.35, -0.1]
+        "rel_coord_3d": [
+          2.7,
+          0.35,
+          -0.081
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "ESP32-S3 Technical Reference Manual (I2S0_WS master frame sync at 16 kHz)",
@@ -328,7 +408,11 @@
         "connector": "Header J1",
         "pin_position": 15,
         "pin_signal": "GPIO9",
-        "rel_coord_3d": [-1.14, 0.35, 0.90]
+        "rel_coord_3d": [
+          -1.14,
+          0.35,
+          0.9
+        ]
       },
       "destination": {
         "device_id": "inmp441_breakout_reference",
@@ -336,7 +420,11 @@
         "connector": "6-Pin Header",
         "pin_position": 1,
         "pin_signal": "SCK",
-        "rel_coord_3d": [2.7, 0.35, -0.4]
+        "rel_coord_3d": [
+          2.7,
+          0.35,
+          -0.335
+        ]
       },
       "verification_status": "VERIFIED_OFFICIAL_DOCUMENTATION",
       "verification_source": "Espressif DevKitC-1 v1.1 Pin Layout (J1 Pin 15 is GPIO9) & INMP441 Timing Diagram & ESP-IDF I2S Driver",

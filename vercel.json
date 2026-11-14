@@ -1,0 +1,72 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "src/prw_wild/web/static",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*).glb",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "model/gltf-binary"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*).gltf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "model/gltf+json"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/hardware/wiring",
+      "destination": "/hardware/wiring_manifest.json"
+    },
+    {
+      "source": "/api/hardware/:device",
+      "destination": "/hardware/devices/:device.json"
+    },
+    {
+      "source": "/api/scenarios",
+      "destination": "/data/scenarios.json"
+    },
+    {
+      "source": "/api/contacts",
+      "destination": "/data/contacts.json"
+    },
+    {
+      "source": "/api/counterfactual",
+      "destination": "/data/counterfactual.json"
+    },
+    {
+      "source": "/api/batch",
+      "destination": "/data/batch.json"
+    }
+  ]
+}

@@ -1,4 +1,6 @@
-# PRW-Wild Digital Twin
+# PRW-Wild Digital Twin — Git Ignore Configuration
+
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -7,12 +9,53 @@ __pycache__/
 dist/
 build/
 *.egg
+
+# Python Wheels & Archives
+*.whl
+*.tar.gz
+*.zip
+
+# Virtual Environments
 venv/
 .venv/
 env/
+ENV/
+
+# Environment Variables & Secrets
 .env
+.env.local
+.env.*.local
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Test & Coverage Caches
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Logs & Runtime Dumps
 *.log
 outputs/runs/
-*.blend1
+prompt_dump.txt
+
+# Editor & OS Artifacts
 .DS_Store
 Thumbs.db
+ehthumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.bak_*
+
+# Agent & Local Machine Configurations
+.agents/
+
+# 3D Tooling Temporary Files
+*.blend1

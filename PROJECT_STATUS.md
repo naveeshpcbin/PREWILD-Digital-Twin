@@ -38,18 +38,28 @@
 * **Non-Blocking Toasts:** Replaced browser blocking `alert()` dialogs with sleek floating glassmorphism toast notifications (`showToastNotification()`).
 * **Strict Numeric Guards:** Enforced strict type guards on `.toFixed()` calls in HUD telemetry, eliminating runtime TypeErrors when predictions or tracks diverge.
 
+#### F. 3D Viewport Rendering Lifecycle Repair (Hardware Lab)
+* **Zero-Dimension Fallbacks & Aspect NaN Guard:** Eliminated blank viewports caused by hidden modal container initialization by providing dimension fallbacks (`width = clientWidth || 700`) and guarding `aspect = width / height` against `NaN`/`0`.
+* **Dynamic Reflow & Auto-Framing:** Integrated `ResizeObserver` on `#hardwareLab3DContainer` and implemented `fitHardwareCameraToObject()` to calculate dynamic bounding box spheres and frame any selected model or multi-board assembly.
+* **Viewport Diagnostics HUD & Error Banner:** Added live `#hwDiagnosticsOverlay` and `#hw3DErrorBanner` reporting device, mode, viewport dimensions, mesh count, and wire count directly on canvas.
+
+#### G. Authoritative Device Selection & Inspector Card Synchronization
+* **Single Source of Truth:** Replaced decoupled state updates with authoritative controller `setSelectedHardwareDevice(deviceId, options)`.
+* **Strict Tab & Inspector Alignment:** Selecting `ESP32-S3-DevKitC-1 v1.1` strictly displays the ESP32-S3 board, J1 pinout table, and v1.1 specifications. Selecting `ESP32-CAM OV2640` strictly displays the ESP32-CAM board, DVP camera bus, and OV2640 specifications.
+* **Header Pill Reset:** Individual components default to primary pinouts (`Header J1`), while Workbench defaults to `All Sensor Nets (11)`.
+
 ---
 
 ## 2. Automated Test Suite Results
 
-* **Total Tests Executed:** **62 passed out of 62 tests (100% pass rate)**
-* **Execution Duration:** **3.86 seconds**
+* **Total Tests Executed:** **65 passed out of 65 tests (100% pass rate)**
+* **Execution Duration:** **3.25 seconds**
 * **Test Modules:**
   - `tests/test_config.py` (13 tests)
   - `tests/test_dispatch.py` (4 tests)
   - `tests/test_fusion.py` (8 tests)
   - `tests/test_geometry.py` (14 tests)
-  - `tests/test_hardware.py` (5 tests)
+  - `tests/test_hardware.py` (8 tests)
   - `tests/test_leakage.py` (2 tests)
   - `tests/test_scenarios_e2e.py` (5 tests)
   - `tests/test_sensor_models.py` (7 tests)

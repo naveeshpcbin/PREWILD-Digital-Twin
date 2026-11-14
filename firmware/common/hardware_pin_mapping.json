@@ -1,0 +1,44 @@
+{
+  "system": "PRW-Wild Dual ESP32 Digital Twin Physical Hardware Suite",
+  "revision": "2.0.0-BENCH-UPGRADE",
+  "nodes": {
+    "esp32_a_sensor_node": {
+      "soc": "ESP32 DevKit V1 (ESP32-WROOM-32)",
+      "role": "Edge Sensor Node (Battery / Field Unit)",
+      "usb_uart_bridge": "Silicon Labs CP2102 / CH340",
+      "default_baud": 115200,
+      "pins": {
+        "lora_sck": {"gpio": 18, "direction": "OUTPUT", "signal": "SPI SCK", "status": "VERIFIED"},
+        "lora_miso": {"gpio": 19, "direction": "INPUT", "signal": "SPI MISO", "status": "VERIFIED"},
+        "lora_mosi": {"gpio": 23, "direction": "OUTPUT", "signal": "SPI MOSI", "status": "VERIFIED"},
+        "lora_nss_cs": {"gpio": 27, "direction": "OUTPUT", "signal": "SX1278 CS/NSS", "status": "VERIFIED"},
+        "lora_rst": {"gpio": 14, "direction": "OUTPUT", "signal": "SX1278 RESET", "status": "VERIFIED"},
+        "lora_dio0": {"gpio": 26, "direction": "INPUT", "signal": "SX1278 DIO0 IRQ", "status": "VERIFIED"},
+        "sensor_pir": {"gpio": 32, "direction": "INPUT", "signal": "HC-SR501 PIR Digital Out (45s warmup filter)", "status": "VERIFIED"},
+        "sensor_piezo": {"gpio": 35, "direction": "INPUT", "signal": "Piezoelectric Vibration Disc (ADC1_CH7, Input-Only, Protected)", "status": "VERIFIED_GATE_ENABLED"},
+        "sensor_inmp441_bclk": {"gpio": 25, "direction": "OUTPUT", "signal": "I2S Bit Clock (BCLK)", "status": "VERIFIED"},
+        "sensor_inmp441_ws": {"gpio": 33, "direction": "OUTPUT", "signal": "I2S Word Select (WS)", "status": "VERIFIED"},
+        "sensor_inmp441_sd": {"gpio": 34, "direction": "INPUT", "signal": "I2S Serial Data (SD, Input-Only Pin)", "status": "VERIFIED"}
+      }
+    },
+    "esp32_b_led_gateway": {
+      "soc": "ESP32 DevKit V1 (ESP32-WROOM-32)",
+      "role": "LoRa Receiver, Six-LED Annunciator & USB Gateway to Host",
+      "usb_uart_bridge": "Silicon Labs CP210x (COM7 @ 115200 baud)",
+      "pins": {
+        "lora_sck": {"gpio": 18, "direction": "OUTPUT", "signal": "SPI SCK", "status": "VERIFIED"},
+        "lora_miso": {"gpio": 19, "direction": "INPUT", "signal": "SPI MISO", "status": "VERIFIED"},
+        "lora_mosi": {"gpio": 23, "direction": "OUTPUT", "signal": "SPI MOSI", "status": "VERIFIED"},
+        "lora_nss_cs": {"gpio": 27, "direction": "OUTPUT", "signal": "SX1278 CS/NSS", "status": "VERIFIED"},
+        "lora_rst": {"gpio": 14, "direction": "OUTPUT", "signal": "SX1278 RESET", "status": "VERIFIED"},
+        "lora_dio0": {"gpio": 26, "direction": "INPUT", "signal": "SX1278 DIO0 IRQ", "status": "VERIFIED"},
+        "led_1_pir": {"gpio": 32, "direction": "OUTPUT", "signal": "LED 1: Physical HC-SR501 PIR Motion Active", "resistor": "2k ohm", "status": "VERIFIED"},
+        "led_2_piezo": {"gpio": 33, "direction": "OUTPUT", "signal": "LED 2: Physical Piezoelectric Vibration Threshold Exceeded", "resistor": "2k ohm", "status": "VERIFIED"},
+        "led_3_mic": {"gpio": 25, "direction": "OUTPUT", "signal": "LED 3: Physical INMP441 Microphone RMS Threshold Exceeded", "resistor": "2k ohm", "status": "VERIFIED"},
+        "led_4_heartbeat": {"gpio": 13, "direction": "OUTPUT", "signal": "LED 4: Node A Heartbeat / Connection Active (<2200ms)", "resistor": "2k ohm", "status": "VERIFIED"},
+        "led_5_lora_pulse": {"gpio": 21, "direction": "OUTPUT", "signal": "LED 5: LoRa RF Packet Pulse (120ms)", "resistor": "2k ohm", "status": "VERIFIED"},
+        "led_6_alert": {"gpio": 22, "direction": "OUTPUT", "signal": "LED 6: Physical Alert Combined (PIR || Piezo || Mic)", "resistor": "2k ohm", "status": "VERIFIED"}
+      }
+    }
+  }
+}

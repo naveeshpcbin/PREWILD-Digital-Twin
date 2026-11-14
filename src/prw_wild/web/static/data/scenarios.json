@@ -1,0 +1,194 @@
+{
+  "scenarios": [
+    {
+      "id": "approach_crossing",
+      "filename": "approach_crossing.json",
+      "path": "D:\\Simulation For DT\\prw-wild-digital-twin\\configs\\scenarios\\approach_crossing.json",
+      "duration_s": 120.0,
+      "time_step_s": 0.5,
+      "animals": [
+        {
+          "id": "elephant_01",
+          "species": "elephant",
+          "waypoints": [
+            [
+              20.0,
+              100.0
+            ],
+            [
+              50.0,
+              100.0
+            ],
+            [
+              80.0,
+              100.0
+            ],
+            [
+              110.0,
+              100.0
+            ],
+            [
+              140.0,
+              100.0
+            ]
+          ],
+          "speed_m_s": 1.5,
+          "pause_s": 0.0
+        }
+      ],
+      "description": "Scenario: approach_crossing"
+    },
+    {
+      "id": "camera_gating_predictive",
+      "filename": "camera_gating.json",
+      "path": "D:\\Simulation For DT\\prw-wild-digital-twin\\configs\\scenarios\\camera_gating.json",
+      "duration_s": 120.0,
+      "time_step_s": 0.5,
+      "animals": [
+        {
+          "id": "elephant_01",
+          "species": "elephant",
+          "waypoints": [
+            [
+              20.0,
+              100.0
+            ],
+            [
+              50.0,
+              100.0
+            ],
+            [
+              80.0,
+              100.0
+            ],
+            [
+              110.0,
+              100.0
+            ],
+            [
+              140.0,
+              100.0
+            ]
+          ],
+          "speed_m_s": 1.5,
+          "pause_s": 0.0
+        }
+      ],
+      "description": "Scenario: camera_gating"
+    },
+    {
+      "id": "degraded_network",
+      "filename": "degraded_network.json",
+      "path": "D:\\Simulation For DT\\prw-wild-digital-twin\\configs\\scenarios\\degraded_network.json",
+      "duration_s": 120.0,
+      "time_step_s": 0.5,
+      "animals": [
+        {
+          "id": "elephant_01",
+          "species": "elephant",
+          "waypoints": [
+            [
+              20.0,
+              100.0
+            ],
+            [
+              50.0,
+              100.0
+            ],
+            [
+              80.0,
+              100.0
+            ],
+            [
+              110.0,
+              100.0
+            ],
+            [
+              140.0,
+              100.0
+            ]
+          ],
+          "speed_m_s": 1.5,
+          "pause_s": 0.0
+        }
+      ],
+      "description": "Scenario: degraded_network"
+    },
+    {
+      "id": "nuisance_triggers",
+      "filename": "nuisance_triggers.json",
+      "path": "D:\\Simulation For DT\\prw-wild-digital-twin\\configs\\scenarios\\nuisance_triggers.json",
+      "duration_s": 120.0,
+      "time_step_s": 0.5,
+      "animals": [
+        {
+          "id": "bird_flock",
+          "species": "bird",
+          "waypoints": [
+            [
+              50.0,
+              50.0
+            ],
+            [
+              55.0,
+              52.0
+            ],
+            [
+              60.0,
+              48.0
+            ],
+            [
+              55.0,
+              50.0
+            ]
+          ],
+          "speed_m_s": 0.3,
+          "pause_s": 5.0
+        }
+      ],
+      "description": "Scenario: nuisance_triggers"
+    },
+    {
+      "id": "turns_away",
+      "filename": "turns_away.json",
+      "path": "D:\\Simulation For DT\\prw-wild-digital-twin\\configs\\scenarios\\turns_away.json",
+      "duration_s": 120.0,
+      "time_step_s": 0.5,
+      "animals": [
+        {
+          "id": "elephant_01",
+          "species": "elephant",
+          "waypoints": [
+            [
+              20.0,
+              100.0
+            ],
+            [
+              50.0,
+              100.0
+            ],
+            [
+              75.0,
+              105.0
+            ],
+            [
+              70.0,
+              120.0
+            ],
+            [
+              50.0,
+              140.0
+            ],
+            [
+              30.0,
+              150.0
+            ]
+          ],
+          "speed_m_s": 1.2,
+          "pause_s": 2.0
+        }
+      ],
+      "description": "Scenario: turns_away"
+    }
+  ]
+}

@@ -10,14 +10,15 @@
 ### URL
 👉 **[http://localhost:8000/](http://localhost:8000/)** *(or `http://127.0.0.1:8000/`)*
 
-### Command
+### Quick Launch Command (Opens Browser Automatically)
+In PowerShell / Antigravity Terminal:
 ```powershell
-python -m prw_wild.cli web --port 8000
+$env:PYTHONPATH="src"; python -m prw_wild.web --port 8000 --open
 ```
-*Or directly:*
-```powershell
-python -m prw_wild.web --port 8000
-```
+
+*Or run the one-click script:*
+- **Windows File Explorer:** Double-click [`run.bat`](file:///d:/Simulation%20For%20DT/prw-wild-digital-twin/run.bat)
+- **PowerShell:** `.\run.ps1`
 
 ---
 
